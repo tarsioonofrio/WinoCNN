@@ -55,7 +55,7 @@ void input_feed_underconstruction(
 
 	ap_uint<16>  first_col_idx=0;
 
-	ap_uint<INDEPTH_MINITILE_SIZE_BITWIDTH> loop_indepth_minitile_idx=0;
+	ap_uint<INDEPTH_MINITILE_IDX_BITWIDTH> loop_indepth_minitile_idx=0;
 
 	ap_uint<16> loop_wino_tile_row_cnt=1;
 	ap_uint<16> loop_wino_tile_col_cnt=1;
@@ -197,7 +197,11 @@ void input_feed_underconstruction(
 				for(int j=0;j<INBUFFER_WIDTH;j++)
 				{
 					#pragma HLS unroll
-					ap_uint<INPUT_BUFFER_DEPTH_BITWIDTH-2> common=((ap_uint<INBUFFER_MID_ADDR_BITWIDTH-1> )col_pix_address_offset[j],loop_indepth_minitile_idx);
+					#if INDEPTH_MINITILE_SIZE_BITWIDTH == 0
+					ap_uint<INPUT_BUFFER_DEPTH_BITWIDTH-2> common=((ap_uint<INBUFFER_MID_ADDR_BITWIDTH-1> )col_pix_address_offset[j]);
+					#else
+					ap_uint<INPUT_BUFFER_DEPTH_BITWIDTH-2> common=((ap_uint<INBUFFER_MID_ADDR_BITWIDTH-1> )col_pix_address_offset[j],(ap_uint<INDEPTH_MINITILE_SIZE_BITWIDTH>)loop_indepth_minitile_idx);
+					#endif
 					ap_uint<2> headbits=row_address_bitnumber_flag?
 										(row_address_offset_bit1[i],col_pix_address_offset[j][INBUFFER_MID_ADDR_BITWIDTH-1]):
 										row_address_offset_bit2[i];
@@ -360,7 +364,7 @@ void input_feed_underconstruction(
 			{
 				loop_wino_tile_col_cnt++;
 			}
-			loop_indepth_minitile_idx++;							
+			if(loop_indepth_minitile_idx==INDEPTH_MINITILE_SIZE-1) loop_indepth_minitile_idx=0; else loop_indepth_minitile_idx++;							
 		}
 	}	
 }

@@ -109,7 +109,7 @@ void load_bias_value(
 // 	#endif
 
 
-// 	ap_uint<INDEPTH_MINITILE_SIZE_BITWIDTH> buffer_address_mini_tile=0;
+// 	ap_uint<INDEPTH_MINITILE_IDX_BITWIDTH> buffer_address_mini_tile=0;
 
 // 	ap_uint<8> read_inwidth_counter=1;
 // 	ap_uint<8> write_inwidth_counter=1;
@@ -214,7 +214,7 @@ void load_bias_value(
 // 		if(write_inwidth_counter == inwidth_align8/INFM_WORD_BYTES)
 // 		{
 // 			write_inwidth_counter=1;
-// 			buffer_address_mini_tile++;
+// 			if(buffer_address_mini_tile==INDEPTH_MINITILE_SIZE-1) buffer_address_mini_tile=0; else buffer_address_mini_tile++;
 // 			bank_split_idx=0;
 // 		}
 // 		else
@@ -292,7 +292,7 @@ void load_input_row_from_ddr(
 
 
 
-	ap_uint<INDEPTH_MINITILE_SIZE_BITWIDTH> buffer_address_mini_tile=0;
+	ap_uint<INDEPTH_MINITILE_IDX_BITWIDTH> buffer_address_mini_tile=0;
 
 	ap_uint<9> read_inwidth_counter=1;
 	ap_uint<9> write_inwidth_counter=1;
@@ -540,7 +540,7 @@ void load_input_row_from_ddr(
 				buffer_address_mid_offset += inwidth_ceildiv_inbufferwidth;
 			}
 
-			buffer_address_mini_tile++;
+			if(buffer_address_mini_tile==INDEPTH_MINITILE_SIZE-1) buffer_address_mini_tile=0; else buffer_address_mini_tile++;
 			#if INBUFFER_WIDTH_BITWIDTH>3
 			if(write_inwidth_counter == inwidth_align8)
 			{
@@ -747,7 +747,7 @@ void load_input_row_from_ddr(
 		{
 			buffer_address_mid_offset += inwidth_ceildiv_inbufferwidth;
 		}
-		buffer_address_mini_tile++;
+		if(buffer_address_mini_tile==INDEPTH_MINITILE_SIZE-1) buffer_address_mini_tile=0; else buffer_address_mini_tile++;
 	}
 }
 

@@ -98,6 +98,10 @@
 // but it is CEIL_DIV so that Q=1 (unpaired) still has one slot.
 #define UV_MUL_TILE_DIM CEIL_DIV(INDEPTH_MINITILE_SIZE, 2)
 
+// Loop index width for the channel-within-minitile counter. Must be >=1 bit
+// because INDEPTH_MINITILE_SIZE_BITWIDTH is 0 when Q=1.
+#define INDEPTH_MINITILE_IDX_BITWIDTH (INDEPTH_MINITILE_SIZE_BITWIDTH>0?INDEPTH_MINITILE_SIZE_BITWIDTH:1)
+
 // Weight-buffer entries packed per 128-bit DDR word (each entry holds 4
 // transformed weights). Total entries per minitile is WINO_DOMAIN_SIZE_SQUARE*Q/4.
 #define WEIGHT_ENTRIES_PER_WORD (WINO_DOMAIN_SIZE_SQUARE*INDEPTH_MINITILE_SIZE/4/UV_MUL_TILE_DIM)

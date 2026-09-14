@@ -16,27 +16,28 @@ Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do c
 
 3. **`software/buffer.cpp`** (`weight_to_ddr`) e **`src/wino_buffer.cpp`** (`load_weight_ddr_one_port`): empacotamento de peso generalizado (`UV_MUL_TILE_DIM`, `WEIGHT_ENTRIES_PER_WORD`, `counter_boundary = UV_MUL_TILE_DIM-1`).
 
-## Status funcional (C-sim, `compare`, entrada de baixa magnitude)
+## Status funcional (C-sim, `compare`)
 
 | Q | config | csim | observação |
 |---|---|---|---|
-| 4 | M=4 N=2 B=2 | ✅ MATCH | regressão preservada |
+| 4 | M=4 N=2 B=2 | ✅ MATCH | regressão preservada (4..16) |
 | 2 | M=4 N=2 B=2 | ✅ MATCH | 16 `mac16x2` no hadamard |
-| 1 | M=4 N=2 B=2 | 🟡 PARCIAL | MATCH p/ `zero`/`center`; mismatch em `kernel_order`/`random` (poucas bordas) |
+| 1 | M=4 N=2 B=2 | 🟡 PARCIAL | MATCH p/ 4×4, 6×6, 8×8 (zero/center/kernel_order/random); falha p/ 10×10+ |
 
-## Causa-raiz do Q=1 (encontrada)
+## Causa-raiz do Q=1 (encontrada e corrigida)
 
-O datapath **real** dos PEs (`winoPEB_*`) usa `element_wise_mult_block` (não `element_wise_mult_4x4_cell`, que está em código morto). Essa função **também** tinha o pareamento `INDEPTH_MINITILE_SIZE/2` sem tratamento do canal ímpar, então para Q=1 o loop ficava vazio e `UV_MUL_TILE` não era escrito (lixo). Correção aplicada: mesmo tratamento ímpar do `_4x4_cell` em `element_wise_mult_block`.
-
-Também foi descoberto que o `output_buffer0/1` do topo **não era inicializado** (o `clear_output_buffer_content` só rodava sob `DEBUG_FILE_PRINT`); com `clear_flag=0` (3×3) o PE acumulava sobre lixo. Adicionada limpeza incondicional em `wino_systolic_top`.
+1. **Datapath real** (`element_wise_mult_block`, usado pelos `winoPEB_*`; o `element_wise_mult_4x4_cell` está em código morto): tinha o pareamento `INDEPTH_MINITILE_SIZE/2` sem tratamento do canal ímpar → Q=1 deixava `UV_MUL_TILE` sem escrever. Corrigido.
+2. **`output_buffer0/1` não inicializado** no topo (clear só sob `DEBUG_FILE_PRINT`); com `clear_flag=0` (3×3) acumulava sobre lixo. Corrigido.
+3. **`ap_uint<0>` degenerado**: `loop_indepth_minitile_idx` (`wino_buffer.cpp`) e `buffer_address_mini_tile` (`wino_IO.cpp`) têm largura `INDEPTH_MINITILE_SIZE_BITWIDTH = 0` para Q=1; em C-sim incrementam **sem limite** (1,2,3,…), então `==INDEPTH_MINITILE_SIZE-1` (==0) nunca é verdade e **a coluna nunca avança**. Corrigido com `INDEPTH_MINITILE_IDX_BITWIDTH = max(1, INDEPTH_MINITILE_SIZE_BITWIDTH)` + incremento com reset condicional.
+4. **Concatenação `common`** no `input_feed` usava a largura do índice; ajustada para Q=1 (sem o bit do minitile).
 
 ## Pendência Q=1
 
-Restam mismatches em poucas posições de borda para `kernel_order` (peso todo-1) e `random`: o hardware produz `-1` onde o golden produz `0` (diferença pequena, não saturação). Investigado e descartado: padding de entrada (`0xCD`) e padding do weight DDR (`0xff`). Provável detalhe de arredondamento/mascaramento de borda no `input_feed` para Q=1.
+Para imagens com `inwidth_ceildiv_inbufferwidth >= 2` (largura > 8), ainda há mismatch. Provável causa: a fórmula de `buffer_address_mid_increment_step` (`inwidth_ceildiv_inbufferwidth*(8-indepth_minitile_size)/indepth_minitile_size + 1` → 7·ceildiv+1 para Q=1) ou o endereçamento do input buffer entre bancos para Q=1. Isolado: 4×4/6×6/8×8 batem; 10×10+ não.
 
 ## Próximos passos
 
-1. Fechar o mismatch de borda do Q=1 (`input_feed_underconstruction`).
+1. Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).
 2. Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`) — grid codegen.
 3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — macros `WEIGHT_PORT_NUM`/`OUT_PORT_BATCH_NUM`.
 4. Reduzir B=1 (`BATCH_SIZE=1`) — empacotamento de batch.
