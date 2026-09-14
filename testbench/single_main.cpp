@@ -230,6 +230,7 @@ if(dump_method!="dump_param" )
         use_kernel_size
     );
 
+#if BATCH_SIZE>1
     wino_model_int(fmap_dict["in"].buffers_int[1],
         input_depth,
         input_height,
@@ -249,6 +250,7 @@ if(dump_method!="dump_param" )
         Scale_oback_int,
         use_kernel_size
     );
+#endif
 }
     char* inputddr=fmap_dict["in"].buffers_hw[0];
     char* outputddr=fmap_dict["out"].buffers_hw[0];
@@ -423,7 +425,11 @@ if(dump_method!="dump_param" )
         );
 
         bool yes1=diff_feature_map<char>(fmap_dict["out"].buffers_int[0], out_hw1,linfo_vect[0].outdim[1],linfo_vect[0].outdim[2],linfo_vect[0].outdim[0]);
+#if BATCH_SIZE>1
         bool yes2=diff_feature_map<char>(fmap_dict["out"].buffers_int[1], out_hw2,linfo_vect[0].outdim[1],linfo_vect[0].outdim[2],linfo_vect[0].outdim[0]);
+#else
+        bool yes2=true;
+#endif
 
         delete [] out_hw1;
         delete [] out_hw2;
