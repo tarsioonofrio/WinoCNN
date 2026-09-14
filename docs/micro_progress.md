@@ -22,17 +22,21 @@ Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do c
 |---|---|---|---|
 | 4 | M=4 N=2 B=2 | ✅ MATCH | regressão preservada |
 | 2 | M=4 N=2 B=2 | ✅ MATCH | 16 `mac16x2` no hadamard |
-| 1 | M=4 N=2 B=2 | ❌ MISMATCH | ver bloqueio |
+| 1 | M=4 N=2 B=2 | 🟡 PARCIAL | MATCH p/ `zero`/`center`; mismatch em `kernel_order`/`random` (poucas bordas) |
 
-## Bloqueio atual (Q=1)
+## Causa-raiz do Q=1 (encontrada)
 
-Com Q=1 o hardware gera saída não-zero mesmo com **peso zero** (o golden gera 0). O caminho de leitura (input) está OK; o defeito está na **sincronização de endereço do weight buffer** entre `load_weight_ddr_one_port` (escritor) e `weight_streamer` (leitor): para Q=1 o escritor avança `buffer_address_offset_x2` a cada palavra (`counter_boundary=0`), enquanto a estrutura de endereçamento assume 2 canais/palavra. É um ajuste localizado no endereçamento do weight buffer, não um rewrite.
+O datapath **real** dos PEs (`winoPEB_*`) usa `element_wise_mult_block` (não `element_wise_mult_4x4_cell`, que está em código morto). Essa função **também** tinha o pareamento `INDEPTH_MINITILE_SIZE/2` sem tratamento do canal ímpar, então para Q=1 o loop ficava vazio e `UV_MUL_TILE` não era escrito (lixo). Correção aplicada: mesmo tratamento ímpar do `_4x4_cell` em `element_wise_mult_block`.
 
-Já corrigido neste ramo: `software/param.cpp` `weightDDR_buffer_burst_length = CEIL_DIV(indepth_minitile_size,2)*...` (era 0 para Q=1). Ainda restam dependências do empacotamento de 2 canais/palavra no endereçamento do `weight_buff` (escritor/leitor).
+Também foi descoberto que o `output_buffer0/1` do topo **não era inicializado** (o `clear_output_buffer_content` só rodava sob `DEBUG_FILE_PRINT`); com `clear_flag=0` (3×3) o PE acumulava sobre lixo. Adicionada limpeza incondicional em `wino_systolic_top`.
+
+## Pendência Q=1
+
+Restam mismatches em poucas posições de borda para `kernel_order` (peso todo-1) e `random`: o hardware produz `-1` onde o golden produz `0` (diferença pequena, não saturação). Investigado e descartado: padding de entrada (`0xCD`) e padding do weight DDR (`0xff`). Provável detalhe de arredondamento/mascaramento de borda no `input_feed` para Q=1.
 
 ## Próximos passos
 
-1. Corrigir o endereçamento do weight buffer para Q=1 (escritor/leitor).
+1. Fechar o mismatch de borda do Q=1 (`input_feed_underconstruction`).
 2. Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`) — grid codegen.
 3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — macros `WEIGHT_PORT_NUM`/`OUT_PORT_BATCH_NUM`.
 4. Reduzir B=1 (`BATCH_SIZE=1`) — empacotamento de batch.

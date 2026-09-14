@@ -386,6 +386,14 @@ void element_wise_mult_block(
 					UV_MUL_TILE[0][id2][wr][wc][b]=weight_tile[0][id][wr][wc]*input_tile[id][wr][wc][b]+weight_tile[0][id+1][wr][wc]*input_tile[id+1][wr][wc][b];
 				}
 			}
+			#if (INDEPTH_MINITILE_SIZE % 2) == 1
+			for(int b=0;b<BATCH_SIZE;b++)
+			{
+			#pragma HLS unroll
+				UV_MUL_TILE[1][INDEPTH_MINITILE_SIZE/2][wr][wc][b]=weight_tile[1][INDEPTH_MINITILE_SIZE-1][wr][wc]*input_tile[INDEPTH_MINITILE_SIZE-1][wr][wc][b];
+				UV_MUL_TILE[0][INDEPTH_MINITILE_SIZE/2][wr][wc][b]=weight_tile[0][INDEPTH_MINITILE_SIZE-1][wr][wc]*input_tile[INDEPTH_MINITILE_SIZE-1][wr][wc][b];
+			}
+			#endif
 		}
 	}
 }

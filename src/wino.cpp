@@ -695,6 +695,14 @@ void wino_systolic_top(
     #pragma HLS resource variable=output_buffer1 core=RAM_T2P_BRAM 
     ConvDesc_t conv_desc;
 
+    for(int i=0;i<WINO_OUT_SIZE_CELL;i++)
+    for(int j=0;j<OUTDEPTH_MINITILE_SIZE/WINO_H2;j++)
+    for(int k=0;k<WINO_WIDTH/WINO_W2;k++)
+    for(int l=0;l<WINO_H2;l++)
+    for(int m=0;m<WINO_W2;m++)
+    for(int n=0;n<WINO_OUT_SIZE_CELL;n++)
+    for(int o=0;o<OUTPUT_BUFFER_DEPTH;o++){ output_buffer0[i][j][k][l][m][n][o]=0; output_buffer1[i][j][k][l][m][n][o]=0; }
+
 	ap_int<16> bias_buffer0[8][BIAS_BUFFER_DEPTH];
     #pragma HLS array_partition variable=bias_buffer0 complete dim=1 
 
