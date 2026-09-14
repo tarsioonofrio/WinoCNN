@@ -304,7 +304,7 @@ void process_element6x6_soft(
 
     int weightbuffer_load_size=indepth_factor*outdepth_factor;
 
-    conv_desc.weightDDR_buffer_burst_length = (indepth_minitile_size/2)*weightbuffer_load_size;
+    conv_desc.weightDDR_buffer_burst_length = CEIL_DIV(indepth_minitile_size,2)*weightbuffer_load_size;
   
 
 

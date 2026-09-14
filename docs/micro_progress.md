@@ -28,6 +28,8 @@ Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do c
 
 Com Q=1 o hardware gera saída não-zero mesmo com **peso zero** (o golden gera 0). O caminho de leitura (input) está OK; o defeito está na **sincronização de endereço do weight buffer** entre `load_weight_ddr_one_port` (escritor) e `weight_streamer` (leitor): para Q=1 o escritor avança `buffer_address_offset_x2` a cada palavra (`counter_boundary=0`), enquanto a estrutura de endereçamento assume 2 canais/palavra. É um ajuste localizado no endereçamento do weight buffer, não um rewrite.
 
+Já corrigido neste ramo: `software/param.cpp` `weightDDR_buffer_burst_length = CEIL_DIV(indepth_minitile_size,2)*...` (era 0 para Q=1). Ainda restam dependências do empacotamento de 2 canais/palavra no endereçamento do `weight_buff` (escritor/leitor).
+
 ## Próximos passos
 
 1. Corrigir o endereçamento do weight buffer para Q=1 (escritor/leitor).
