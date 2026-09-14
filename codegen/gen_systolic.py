@@ -52,7 +52,7 @@ def generate_wino_systolic_kernel_wrapper( config: Config_t):
     ret_string+="void wino_systolic_kernel_wrapper(\n\
     WEIGHT_PORTS_DECLARE(weight_DDR),\n\
     ap_uint<16> input_buffer[INBUFFER_HEIGHT][INBUFFER_WIDTH][INPUT_BUFFER_DEPTH],\n\
-    ap_uint<OUT_WIDTH*2> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],\n\
+    ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],\n\
     ap_uint<16> start_output_row,\n\
     ap_int<16> start_row_idx_minus_pad_size,\n\
     ap_int<16> start_col_idx_minus_pad_size,\n\
@@ -102,7 +102,7 @@ def generate_wino_systolic(config:Config_t):
     for i in range(config.WINO_OUT_SIZE_CELL):
         for j in range(config.OUTDEPTH_MINITILE_SIZE//config.WINO_H2):
             for k in range(config.WINO_WIDTH//config.WINO_W2):
-                ret_string+="\tap_uint<OUT_WIDTH*2> out_buffer{}_{}_{}[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],\n".format(i,j,k)
+                ret_string+="\tap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer{}_{}_{}[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],\n".format(i,j,k)
     ret_string+="\tap_uint<16> start_output_row,\n\
     ap_int<16> start_row_idx_minus_pad_size,\n\
     ap_int<16> start_col_idx_minus_pad_size,\n\

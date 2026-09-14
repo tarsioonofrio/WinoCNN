@@ -996,7 +996,7 @@ void load_input_rowtile_from_ddr(
 template<int port_idx>
 void write_output_row(
 	ap_uint<ODDR_WIDTH*BATCH_SIZE*OUT_PORT_BATCH_NUM>* out_DDR,
-	ap_uint<OUT_WIDTH*2> out_buffer0[OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
+	ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer0[OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 	ap_uint<OUTPUT_BUFFER_DEPTH_BITWIDTH> rowtile_baseaddr0,
 	ap_uint<16> row_idx,
 	ap_uint<1> skip_flag,
@@ -1319,7 +1319,7 @@ void write_output_row(
 // template<int port_idx>
 // void write_output_to_DDR_onerow(
 // 	ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR,
-// 	ap_uint<OUT_WIDTH*2> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
+// 	ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
 // 	ap_uint<16> outheight,
 // 	ap_uint<16> outwidth_align8,
 // 	ap_uint<4> wino_output_tile_size,
@@ -1538,10 +1538,10 @@ template<int port_idx>
 void write_output_to_DDR_two_row_two_port(
 	ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR_row0,
 	ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR_row1,
-	ap_uint<OUT_WIDTH*2> out_buffer0[OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
-	ap_uint<OUT_WIDTH*2> out_buffer1[OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
+	ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer0[OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
+	ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer1[OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 		
-	// ap_uint<OUT_WIDTH*2> out_buffer1[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
+	// ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer1[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
 	ap_uint<OUTPUT_BUFFER_DEPTH_BITWIDTH> rowtile_baseaddr0,
 	ap_uint<OUTPUT_BUFFER_DEPTH_BITWIDTH> rowtile_baseaddr1,
 	ap_uint<16> start_row_idx,
@@ -1633,7 +1633,7 @@ void write_output_to_DDR_two_row_two_port(
 				#pragma HLS unroll
 				outbuffer_data_row0[od]=out_buffer0[od/2][wino_widthtile_idx/2][od%2][wino_widthtile_idx%2][wino_col_pix_idx][buffer_address0];
 
-			// ap_uint<OUT_WIDTH*2> out_buffer0[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
+			// ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer0[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
 	// [WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 
 
@@ -1936,7 +1936,7 @@ void write_output_to_DDR2(
 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR1,
 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR2,
 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR3,
-		ap_uint<OUT_WIDTH*2> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
+		ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/2][WINO_WIDTH/2][2][2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 		ap_int<16> start_row_idx,
 		ap_uint<1> first_flag,
 		ap_int<16> bias_buffer0[8][BIAS_BUFFER_DEPTH],
@@ -2035,7 +2035,7 @@ void write_output_to_DDR3(
 		ap_uint<ODDR_WIDTH*BATCH_SIZE*OUT_PORT_BATCH_NUM>* out_DDR1,
 		// ap_uint<ODDR_WIDTH*BATCH_SIZE*OUT_PORT_BATCH_NUM>* out_DDR2,
 		// ap_uint<ODDR_WIDTH*BATCH_SIZE*OUT_PORT_BATCH_NUM>* out_DDR3,
-		ap_uint<OUT_WIDTH*2> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
+		ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer[WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE/WINO_H2][WINO_WIDTH/WINO_W2][WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 		ap_int<16> start_row_idx,
 		ap_uint<1> first_flag,
 		ConvDesc_t conv_desc
@@ -2163,7 +2163,7 @@ void write_output_to_DDR3(
 // 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR1,
 // 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR2,
 // 		ap_uint<ODDR_WIDTH*BATCH_SIZE*8>* out_DDR3,
-// 		ap_uint<OUT_WIDTH*2> out_buffer[WINO_OUT_SIZE_CELL][WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
+// 		ap_uint<OUT_WIDTH*BATCH_SIZE> out_buffer[WINO_OUT_SIZE_CELL][WINO_OUT_SIZE_CELL][OUTDEPTH_MINITILE_SIZE][WINO_WIDTH][OUTPUT_BUFFER_DEPTH],
 // 		ap_int<16> start_row_idx,
 // 		ap_uint<1> first_flag,
 // 		ap_int<18> oback_scale,

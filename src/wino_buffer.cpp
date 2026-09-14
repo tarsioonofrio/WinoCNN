@@ -249,7 +249,7 @@ void input_feed_underconstruction(
 
 
 
-			ap_uint<16*WINO_DOMAIN_SIZE_SQUARE> input_plane_tile[WINO_WIDTH];
+			ap_uint<8*BATCH_SIZE*WINO_DOMAIN_SIZE_SQUARE> input_plane_tile[WINO_WIDTH];
 			#pragma HLS array_partition variable=input_plane_tile complete dim=1
 
 
@@ -263,9 +263,9 @@ void input_feed_underconstruction(
 					{
 					#pragma HLS unroll
 						if(col_legal_flag[i][k])
-							input_plane_tile[i].range((j*WINO_DOMAIN_SIZE+k)*16+15,(j*WINO_DOMAIN_SIZE+k)*16)=input_plane_tile_row[j][ (ap_uint<INBUFFER_WIDTH_BITWIDTH>) input_col_idx[i][k].range(INBUFFER_WIDTH_BITWIDTH-1,0) ];
+							input_plane_tile[i].range((j*WINO_DOMAIN_SIZE+k)*8*BATCH_SIZE+8*BATCH_SIZE-1,(j*WINO_DOMAIN_SIZE+k)*8*BATCH_SIZE)=input_plane_tile_row[j][ (ap_uint<INBUFFER_WIDTH_BITWIDTH>) input_col_idx[i][k].range(INBUFFER_WIDTH_BITWIDTH-1,0) ].range(8*BATCH_SIZE-1,0);
 						else
-							input_plane_tile[i].range((j*WINO_DOMAIN_SIZE+k)*16+15,(j*WINO_DOMAIN_SIZE+k)*16)=0;
+							input_plane_tile[i].range((j*WINO_DOMAIN_SIZE+k)*8*BATCH_SIZE+8*BATCH_SIZE-1,(j*WINO_DOMAIN_SIZE+k)*8*BATCH_SIZE)=0;
 					}
 				}
 			}
