@@ -29,13 +29,19 @@ class Config_t():
 
         if(self.WINO_HEIGHT >4):
             self.WEIGHT_PORT_NUM=4
-            self.WEIGHT_FEED_NUMBER_PER_PORT=self.WINO_HEIGHT/4
+            self.WEIGHT_FEED_NUMBER_PER_PORT=self.WINO_HEIGHT//4
+        elif(self.WINO_HEIGHT==2):
+            self.WEIGHT_PORT_NUM=1
+            self.WEIGHT_FEED_NUMBER_PER_PORT=2
+        elif(self.WINO_HEIGHT==1):
+            self.WEIGHT_PORT_NUM=1
+            self.WEIGHT_FEED_NUMBER_PER_PORT=1
         else:
-            self.WEIGHT_PORT_NUM=self.WINO_HEIGHT/2
+            self.WEIGHT_PORT_NUM=self.WINO_HEIGHT//2
             self.WEIGHT_FEED_NUMBER_PER_PORT=self.WINO_HEIGHT
         
     
-        if (self.WINO_HEIGHT==2):
+        if (self.WINO_HEIGHT==2 or self.WINO_HEIGHT==1):
             self.OUT_PORT_BATCH_NUM= 4
         else:
             self.OUT_PORT_BATCH_NUM= 8 
@@ -130,7 +136,7 @@ def generate_wino_systolic(config:Config_t):
     #pragma HLS stream variable=weight_stream depth=2\n\
     #pragma HLS resource variable=weight_stream core=FIFO_SRL\n"
 
-    if(config.WINO_HEIGHT==8 or config.WINO_HEIGHT==2):
+    if(config.WINO_HEIGHT==8 or config.WINO_HEIGHT==2 or config.WINO_HEIGHT==1):
         ret_string+="\tstatic hls::stream<ap_uint<W_WIDTH*INDEPTH_MINITILE_SIZE*WINO_DOMAIN_SIZE_SQUARE> >  weight_stream_out[WEIGHT_PORT_NUM][WEIGHT_FEED_NUMBER_PER_PORT];\n\
     #pragma HLS stream variable=weight_stream_out depth=2\n\
     #pragma HLS resource variable=weight_stream_out core=FIFO_SRL\n\n"
@@ -318,7 +324,7 @@ def generate_wino_systolic(config:Config_t):
         ,conv_desc	\n\
         #endif\n\
     );\n\n"
-    elif(config.WINO_HEIGHT==2):
+    elif(config.WINO_HEIGHT==2 or config.WINO_HEIGHT==1):
         ret_string+="\tweight_feed_one_port<0>(\n\
         weight_DDR0,\n\
         weight_stream_out[0],\n\

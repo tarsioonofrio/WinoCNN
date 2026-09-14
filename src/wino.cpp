@@ -296,7 +296,7 @@ void wino_flatten_kernel(
 
     weight_feed_one_port<0>(
         weight_DDR0,
-        #if WINO_HEIGHT==8 || WINO_HEIGHT==2
+        #if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
         weight_stream[0],
         #else
         weight_stream[0][0],
@@ -319,7 +319,7 @@ void wino_flatten_kernel(
     #if WINO_HEIGHT  >4 
     weight_feed_one_port<1>(
         weight_DDR1,
-        #if WINO_HEIGHT==8 || WINO_HEIGHT==2
+        #if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
         weight_stream[1],
         #else
         weight_stream[1][0],
@@ -341,7 +341,7 @@ void wino_flatten_kernel(
     );
     weight_feed_one_port<2>(
         weight_DDR2,
-        #if WINO_HEIGHT==8 || WINO_HEIGHT==2
+        #if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
         weight_stream[2],
         #else
         weight_stream[2][0],
@@ -364,7 +364,7 @@ void wino_flatten_kernel(
     
     weight_feed_one_port<3>(
         weight_DDR3,
-        #if WINO_HEIGHT==8 || WINO_HEIGHT==2
+        #if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
         weight_stream[3],
         #else
         weight_stream[3][0],

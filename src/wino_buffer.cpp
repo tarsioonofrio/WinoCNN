@@ -864,7 +864,7 @@ void load_weight_ddr_one_port(
 
 void weight_streamer(
 	ap_uint<W_WIDTH*4> weight_buff[WEIGHT_FEED_NUMBER_PER_PORT][WINO_DOMAIN_SIZE_SQUARE*INDEPTH_MINITILE_SIZE/4][WEIGHT_BUFFER_DEPTH],
-	#if WINO_HEIGHT==8 || WINO_HEIGHT==2
+	#if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
 	hls::stream<ap_uint<W_WIDTH*INDEPTH_MINITILE_SIZE*WINO_DOMAIN_SIZE_SQUARE> >  weight_stream[WEIGHT_FEED_NUMBER_PER_PORT],
 	#else
 	hls::stream<ap_uint<W_WIDTH*INDEPTH_MINITILE_SIZE*WINO_DOMAIN_SIZE_SQUARE> >  &weight_stream,
@@ -956,7 +956,7 @@ void weight_streamer(
 		for(int buffer_idx =0; buffer_idx< WEIGHT_FEED_NUMBER_PER_PORT; buffer_idx++)
 		{
 			#pragma HLS unroll
-			#if WINO_HEIGHT==8 || WINO_HEIGHT==2
+			#if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
 			weight_stream[buffer_idx]<<temp16x36[buffer_idx];
 			#else
 			weight_stream<<temp16x36[buffer_idx];
@@ -988,7 +988,7 @@ void weight_streamer(
 template<int dummy> // the dummy template is to make sure each module have indepedent weight buffer
 void weight_feed_one_port(
 	ap_uint<128>* weight_DDR0,
-	#if WINO_HEIGHT==8 || WINO_HEIGHT==2
+	#if WINO_HEIGHT==8 || WINO_HEIGHT==2 || WINO_HEIGHT==1
 	hls::stream<ap_uint<W_WIDTH*INDEPTH_MINITILE_SIZE*WINO_DOMAIN_SIZE_SQUARE> >  weight_stream[WEIGHT_FEED_NUMBER_PER_PORT],
 	#else
 	hls::stream<ap_uint<W_WIDTH*INDEPTH_MINITILE_SIZE*WINO_DOMAIN_SIZE_SQUARE> >  &weight_stream,
