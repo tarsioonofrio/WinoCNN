@@ -388,9 +388,9 @@ def generate_wino_cell_call(config:Config_t, wino_h, wino_w):
         
     if(wino_w== config.WINO_WIDTH//config.WINO_W2-1 and wino_h== config.WINO_HEIGHT//config.WINO_H2-1):
         call="\twinoPEB_CORN(\n"
-    elif(wino_w== config.WINO_WIDTH//2-1 ):
+    elif(wino_w== config.WINO_WIDTH//config.WINO_W2-1 ):
         call="\twinoPEB_EDG(\n"
-    elif(wino_h== config.WINO_HEIGHT//2-1):
+    elif(wino_h== config.WINO_HEIGHT//config.WINO_H2-1):
         call="\twinoPEB_BOT(\n"
     else:
         call="\twinoPEB_CENT(\n"

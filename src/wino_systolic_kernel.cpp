@@ -50,7 +50,7 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
     #pragma HLS array_partition variable =input_buffer dim=1 complete
 	#pragma HLS array_partition variable =input_buffer dim=2 complete
 	static hls::stream< ap_uint<8*BATCH_SIZE*WINO_DOMAIN_SIZE_SQUARE> > input_tile_stream[WINO_WIDTH];
-    #pragma HLS stream variable=input_tile_stream depth=2
+    #pragma HLS stream variable=input_tile_stream depth=1
 	static hls::stream< ap_uint<BTB_WIDTH*BATCH_SIZE*WINO_DOMAIN_SIZE_SQUARE> > input_tile_transformed_stream[WINO_HEIGHT/WINO_H2][WINO_WIDTH/WINO_W2][WINO_W2];
     #pragma HLS stream variable=input_tile_transformed_stream depth=2
     #pragma HLS resource variable=input_tile_transformed_stream core=FIFO_SRL

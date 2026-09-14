@@ -265,6 +265,10 @@
 #define WEIGHT_PORT_NUM 1
 #define WEIGHT_PORTS_DECLARE(x)  ap_uint<128>* x##0
 #define WEIGHT_PORTS_CALL(x)     x##0
+#elif WINO_HEIGHT ==1
+#define WEIGHT_PORT_NUM 1
+#define WEIGHT_PORTS_DECLARE(x)  ap_uint<128>* x##0
+#define WEIGHT_PORTS_CALL(x)     x##0
 #endif
 
 
