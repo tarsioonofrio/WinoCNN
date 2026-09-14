@@ -11,6 +11,10 @@ Legenda das colunas: **M** = `WINO_HEIGHT`, **N** = `WINO_WIDTH`, **Q** = `INDEP
 |  4 |  2 |  2 |  2 | F(2×2,3×3) | ✅      | ❌   | —      | `INDEPTH_MINITILE_SIZE=2` quebra correção |
 |  2 |  2 |  4 |  2 | F(2×2,3×3) | ✅      | ❌   | —      | `WINO_HEIGHT=2` quebra correção |
 |  2 |  2 |  2 |  2 | F(2×2,3×3) | ✅      | ❌   | —      | combinação também quebra |
+|  2 |  1 |  1 |  2 | F(2×2,3×3) | ✅      | ✅   | —      | baseline funcional atual; 1 PE, Q=1 |
+|  2 |  1 |  1 |  1 | F(2×2,3×3) | ✅      | ✅   | —      | B=1 após generalizar pack/unpack de saída; 1 PE, 32 mult escalares |
+|  1 |  1 |  1 | 2 | F(2×2,3×3) | ✅      | ❌   | —      | `winoPEB_*` ainda assume duas linhas de peso/saída; ASan em `weight_tile[1]` |
+|  1 |  1 |  1 | 1 | F(2×2,3×3) | ✅      | ❌   | —      | não testada após o bloqueio estrutural de M=1 |
 
 ¹ *após correção do caminho F(2,3) incompleto (ver abaixo).* ² *em execução.*
 
@@ -69,6 +73,12 @@ Reduções adicionais **quebram a correção** (não são mudanças só de confi
 | `N=1` / `M=1` | grid sistólico (`WINO_HEIGHT/WINO_H2 × WINO_WIDTH/WINO_W2`) e codegen não suportam 1×1 |
 
 Todos exigem alteração estrutural (permitida apenas na versão `micro`, seção 9 do plano), não apenas edição de `wino_hw_config.h`.
+
+Na execução do runbook, `B=1` foi fechado sem alterar a ordem do dataflow: o
+problema era exclusivamente o desempacotamento de palavras de saída com duas
+lanes hardcoded. Já `M=1` falha antes do compare porque o PE usa duas linhas de
+pesos e duas linhas de write-back mesmo quando `WINO_H2=1`; isso requer uma
+refatoração conjunta do PE, do feed de pesos e do codegen.
 
 ## Contagem de multiplicadores (datapath element-wise)
 

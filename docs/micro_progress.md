@@ -46,6 +46,42 @@ Hipótese: o endereçamento do input buffer (`load_input_row_from_ddr`) assume `
 5. Wrapper de memória síncrona (substituir AXI) + black-box das memórias.
 6. Síntese ASIC (Genus) core-only e system-level.
 
+## Execução do runbook — B=1
+
+Configuração testada: `WINO_DOMAIN_SIZE=4`, `M=2`, `N=1`, `H2=2`, `W2=1`, `Q=1`, `B=1`.
+
+Resultado: compilação e os quatro testes do protocolo passaram (`one/center`,
+`one/kernel_order`, `order/center`, `random/center`; todos `Not different!`).
+
+Causa do primeiro failure: as variantes ativas de `winoPEB_*` desempacotavam cada
+palavra de saída sempre como `(batch1,batch0)`, escrevendo `out_value[..][1]`
+mesmo quando `BATCH_SIZE=1`. O ASan confirmou stack-buffer-overflow nessa escrita.
+Foi introduzido `WINO_BATCH_UNPACK/WINO_BATCH_PACK` em `wino_macro.h`, preservando
+o layout de dois batches e usando uma transferência de lane única para `B=1`.
+
+Regressão `B=2` após a mudança: os quatro testes passaram.
+
+## Execução do runbook — M=1
+
+Configuração testada: `WINO_DOMAIN_SIZE=4`, `M=1`, `N=1`, `H2=1`, `W2=1`, `Q=1`, `B=2`.
+
+Resultado: compilação concluída, mas o C-sim abortou com ASan antes do compare.
+O primeiro acesso inválido ocorre em `winoPEB_CORN`, ao copiar `weight_tile[1]`
+para `weight_tile_reg[1]`, embora `weight_tile` tenha primeira dimensão `WINO_H2=1`.
+O mesmo PE contém acessos posteriores a `out_buffer_*[1]`, também incompatíveis
+com `WINO_H2=1`. Portanto, `M=1` não é suportado pelo source atual por simples
+configuração: requer parametrizar o número de linhas do PE, o feed de pesos e o
+write-back de saída em conjunto.
+
+Fallback funcional escolhido: `M=2,H2=2,N=1,W2=1,Q=1,B=1`. Ele mantém uma única
+célula PE (`M/H2=N/W2=1`) e o hadamard F(2×2,3×3) usa `32` multiplicadores
+escalares (duas linhas de saída × 16 pontos × um batch). A combinação `M=1,B=1`
+fica explicitamente pendente até uma refatoração estrutural do PE.
+
+Regressão final nessa configuração: compilação com `-O1 -fsigned-char` e ASan,
+seguida dos quatro testes (`one/center`, `one/kernel_order`, `order/center`,
+`random/center`), todos com `Not different!` e exit code 0.
+
 ## Alternativa pragmática
 
 Q=2 mantém o pareamento (`mac16x2`) e já é funcional: o hadamard 4×4 fica com **16 unidades `mac16x2`** (≈16 MACs físicos, comparável ao TC), sem rework do weight path. Se a comparação de área aceitar `mac16x2` como multiplicador, Q=2 é um micro válido com muito menos risco.

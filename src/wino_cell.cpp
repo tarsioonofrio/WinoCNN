@@ -1044,19 +1044,19 @@ void winoPEB_CENT(
 							data1[5]=out_buffer_5[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
-						(out_value[0][4][c][1],out_value[0][4][c][0])=data0[4];
-						(out_value[0][5][c][1],out_value[0][5][c][0])=data0[5];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
+						WINO_BATCH_UNPACK(out_value[0][4][c], data0[4]);
+						WINO_BATCH_UNPACK(out_value[0][5][c], data0[5]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
-						(out_value[1][4][c][1],out_value[1][4][c][0])=data1[4];
-						(out_value[1][5][c][1],out_value[1][5][c][0])=data1[5];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
+						WINO_BATCH_UNPACK(out_value[1][4][c], data1[4]);
+						WINO_BATCH_UNPACK(out_value[1][5][c], data1[5]);
 					#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0[4];
 						#pragma HLS array_partition variable=data0 factor=4
@@ -1085,15 +1085,15 @@ void winoPEB_CENT(
 							data1[3]=out_buffer_3[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
 					#endif
 					
 				}
@@ -1206,31 +1206,31 @@ void winoPEB_CENT(
 					for(int c=0;c<WINO_OUT_SIZE_CELL;c++)
 					{
 						#if WINO_DOMAIN_SIZE == 6
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
-						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][4][c][1],out_value_back[0][4][c][0]);
-						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][5][c][1],out_value_back[0][5][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
+						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][4][c]);
+						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][5][c]);
 
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
-						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][4][c][1],out_value_back[1][4][c][0]);
-						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][5][c][1],out_value_back[1][5][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
+						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][4][c]);
+						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][5][c]);
 
 
 						#else
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
 						
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
 						#endif
 					}
 				}
@@ -1879,19 +1879,19 @@ void winoPEB_BOT(
 							data1[5]=out_buffer_5[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
-						(out_value[0][4][c][1],out_value[0][4][c][0])=data0[4];
-						(out_value[0][5][c][1],out_value[0][5][c][0])=data0[5];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
+						WINO_BATCH_UNPACK(out_value[0][4][c], data0[4]);
+						WINO_BATCH_UNPACK(out_value[0][5][c], data0[5]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
-						(out_value[1][4][c][1],out_value[1][4][c][0])=data1[4];
-						(out_value[1][5][c][1],out_value[1][5][c][0])=data1[5];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
+						WINO_BATCH_UNPACK(out_value[1][4][c], data1[4]);
+						WINO_BATCH_UNPACK(out_value[1][5][c], data1[5]);
 					#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0[4];
 						#pragma HLS array_partition variable=data0 factor=4
@@ -1920,15 +1920,15 @@ void winoPEB_BOT(
 							data1[3]=out_buffer_3[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
 					#endif
 					
 				}
@@ -2041,31 +2041,31 @@ void winoPEB_BOT(
 					for(int c=0;c<WINO_OUT_SIZE_CELL;c++)
 					{
 						#if WINO_DOMAIN_SIZE == 6
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
-						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][4][c][1],out_value_back[0][4][c][0]);
-						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][5][c][1],out_value_back[0][5][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
+						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][4][c]);
+						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][5][c]);
 
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
-						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][4][c][1],out_value_back[1][4][c][0]);
-						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][5][c][1],out_value_back[1][5][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
+						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][4][c]);
+						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][5][c]);
 
 
 						#else
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
 						
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
 						#endif
 					}
 				}
@@ -2716,19 +2716,19 @@ void winoPEB_EDG(
 							data1[5]=out_buffer_5[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
-						(out_value[0][4][c][1],out_value[0][4][c][0])=data0[4];
-						(out_value[0][5][c][1],out_value[0][5][c][0])=data0[5];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
+						WINO_BATCH_UNPACK(out_value[0][4][c], data0[4]);
+						WINO_BATCH_UNPACK(out_value[0][5][c], data0[5]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
-						(out_value[1][4][c][1],out_value[1][4][c][0])=data1[4];
-						(out_value[1][5][c][1],out_value[1][5][c][0])=data1[5];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
+						WINO_BATCH_UNPACK(out_value[1][4][c], data1[4]);
+						WINO_BATCH_UNPACK(out_value[1][5][c], data1[5]);
 					#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0[4];
 						#pragma HLS array_partition variable=data0 factor=4
@@ -2757,15 +2757,15 @@ void winoPEB_EDG(
 							data1[3]=out_buffer_3[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
 					#endif
 					
 				}
@@ -2878,31 +2878,31 @@ void winoPEB_EDG(
 					for(int c=0;c<WINO_OUT_SIZE_CELL;c++)
 					{
 						#if WINO_DOMAIN_SIZE == 6
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
-						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][4][c][1],out_value_back[0][4][c][0]);
-						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][5][c][1],out_value_back[0][5][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
+						out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][4][c]);
+						out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][5][c]);
 
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
-						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][4][c][1],out_value_back[1][4][c][0]);
-						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][5][c][1],out_value_back[1][5][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
+						out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][4][c]);
+						out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][5][c]);
 
 
 						#else
-						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
+						out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+						out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+						out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+						out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
 						
-						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
+						out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+						out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+						out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+						out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
 						#endif
 					}
 				}
@@ -3552,19 +3552,19 @@ void winoPEB_CORN(
 							data1[5]=out_buffer_5[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
-						(out_value[0][4][c][1],out_value[0][4][c][0])=data0[4];
-						(out_value[0][5][c][1],out_value[0][5][c][0])=data0[5];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
+						WINO_BATCH_UNPACK(out_value[0][4][c], data0[4]);
+						WINO_BATCH_UNPACK(out_value[0][5][c], data0[5]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
-						(out_value[1][4][c][1],out_value[1][4][c][0])=data1[4];
-						(out_value[1][5][c][1],out_value[1][5][c][0])=data1[5];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
+						WINO_BATCH_UNPACK(out_value[1][4][c], data1[4]);
+						WINO_BATCH_UNPACK(out_value[1][5][c], data1[5]);
 					#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0[4];
 						#pragma HLS array_partition variable=data0 factor=4
@@ -3593,15 +3593,15 @@ void winoPEB_CORN(
 							data1[3]=out_buffer_3[1][wino_w2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][0][c][1],out_value[0][0][c][0])=data0[0];
-						(out_value[0][1][c][1],out_value[0][1][c][0])=data0[1];
-						(out_value[0][2][c][1],out_value[0][2][c][0])=data0[2];
-						(out_value[0][3][c][1],out_value[0][3][c][0])=data0[3];
+						WINO_BATCH_UNPACK(out_value[0][0][c], data0[0]);
+						WINO_BATCH_UNPACK(out_value[0][1][c], data0[1]);
+						WINO_BATCH_UNPACK(out_value[0][2][c], data0[2]);
+						WINO_BATCH_UNPACK(out_value[0][3][c], data0[3]);
 
-						(out_value[1][0][c][1],out_value[1][0][c][0])=data1[0];
-						(out_value[1][1][c][1],out_value[1][1][c][0])=data1[1];
-						(out_value[1][2][c][1],out_value[1][2][c][0])=data1[2];
-						(out_value[1][3][c][1],out_value[1][3][c][0])=data1[3];
+						WINO_BATCH_UNPACK(out_value[1][0][c], data1[0]);
+						WINO_BATCH_UNPACK(out_value[1][1][c], data1[1]);
+						WINO_BATCH_UNPACK(out_value[1][2][c], data1[2]);
+						WINO_BATCH_UNPACK(out_value[1][3][c], data1[3]);
 					#endif
 					
 				}
@@ -3716,31 +3716,31 @@ void winoPEB_CORN(
 						if(loop_omini_base_cnt<=weightbuffer_outdepth_minitile_number)
 						{
 							#if WINO_DOMAIN_SIZE == 6
-							out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-							out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-							out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-							out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
-							out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][4][c][1],out_value_back[0][4][c][0]);
-							out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][5][c][1],out_value_back[0][5][c][0]);
+							out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+							out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+							out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+							out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
+							out_buffer_4[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][4][c]);
+							out_buffer_5[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][5][c]);
 
-							out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-							out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-							out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-							out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
-							out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][4][c][1],out_value_back[1][4][c][0]);
-							out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][5][c][1],out_value_back[1][5][c][0]);
+							out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+							out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+							out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+							out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
+							out_buffer_4[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][4][c]);
+							out_buffer_5[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][5][c]);
 
 
 							#else
-							out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][0][c][1],out_value_back[0][0][c][0]);
-							out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][1][c][1],out_value_back[0][1][c][0]);
-							out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][2][c][1],out_value_back[0][2][c][0]);
-							out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=(out_value_back[0][3][c][1],out_value_back[0][3][c][0]);
+							out_buffer_0[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][0][c]);
+							out_buffer_1[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][1][c]);
+							out_buffer_2[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][2][c]);
+							out_buffer_3[0][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[0][3][c]);
 							
-							out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][0][c][1],out_value_back[1][0][c][0]);
-							out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][1][c][1],out_value_back[1][1][c][0]);
-							out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][2][c][1],out_value_back[1][2][c][0]);
-							out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=(out_value_back[1][3][c][1],out_value_back[1][3][c][0]);
+							out_buffer_0[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][0][c]);
+							out_buffer_1[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][1][c]);
+							out_buffer_2[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][2][c]);
+							out_buffer_3[1][wino_w2][c][outbuffer_addr_reg]=WINO_BATCH_PACK(out_value_back[1][3][c]);
 							#endif
 						}
 					}
@@ -4423,7 +4423,7 @@ void wino_stream_block2(
 							data=0;
 						else
 							data=out_buffer[r][c][wino_array_idx%WINO_HEIGHT][wino_array_idx/WINO_HEIGHT][outbuffer_addr_reg];
-						(out_value[r][c][1],out_value[r][c][0])=data;
+						WINO_BATCH_UNPACK(out_value[r][c], data);
 						#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0;
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data1;
@@ -4438,8 +4438,8 @@ void wino_stream_block2(
 							data1=out_buffer[r][wino_array_idx%WINO_HEIGHT/2][wino_array_idx/WINO_HEIGHT/2][1][wino_array_idx/WINO_HEIGHT%2][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][r][c][1],out_value[0][r][c][0])=data0;
-						(out_value[1][r][c][1],out_value[1][r][c][0])=data1;
+						WINO_BATCH_UNPACK(out_value[0][r][c], data0);
+						WINO_BATCH_UNPACK(out_value[1][r][c], data1);
 						#endif
 					}
 				}
@@ -5194,7 +5194,7 @@ void wino_stream_block(
 							data=0;
 						else
 							data=out_buffer[r][c][wino_array_idx%WINO_HEIGHT][wino_array_idx/WINO_HEIGHT][outbuffer_addr_reg];
-						(out_value[r][c][1],out_value[r][c][0])=data;
+						WINO_BATCH_UNPACK(out_value[r][c], data);
 						#else
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data0;
 						ap_uint<OUT_WIDTH*BATCH_SIZE> data1;
@@ -5209,8 +5209,8 @@ void wino_stream_block(
 							data1=out_buffer[r][wino_array_idx%WINO_HEIGHT+1][wino_array_idx/WINO_HEIGHT][c][outbuffer_addr_reg];
 						
 						}
-						(out_value[0][r][c][1],out_value[0][r][c][0])=data0;
-						(out_value[1][r][c][1],out_value[1][r][c][0])=data1;
+						WINO_BATCH_UNPACK(out_value[0][r][c], data0);
+						WINO_BATCH_UNPACK(out_value[1][r][c], data1);
 						#endif
 					}
 				}

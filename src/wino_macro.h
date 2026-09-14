@@ -35,7 +35,18 @@
 
 
 #define AP_INT_MAX_W 4096
-#define BATCH_SIZE 2
+#define BATCH_SIZE 1
+
+// Output-buffer words are interleaved by batch.  The published PE code used
+// the two-batch form unconditionally; keep that layout for B=2 while making
+// the single-batch micro configuration a real one-element transfer.
+#if BATCH_SIZE > 1
+#define WINO_BATCH_UNPACK(dst, data) ((dst)[1], (dst)[0]) = (data)
+#define WINO_BATCH_PACK(src) ((src)[1], (src)[0])
+#else
+#define WINO_BATCH_UNPACK(dst, data) (dst)[0] = (data)
+#define WINO_BATCH_PACK(src) (src)[0]
+#endif
 
 #define WINO5x5_EN 0
 #define WINO3x3_EN 1
