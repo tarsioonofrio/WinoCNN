@@ -1413,13 +1413,19 @@ void featuremap_hw_to_int_pointers(
                     {
                         int feature_map_address= depth_idx*height*width +row*width +col;
                         char data1=featuremap_buffer_hw[ddr_address++] ;
-                        char data2=featuremap_buffer_hw[ddr_address++];
                         feature_map1[feature_map_address]=data1;
+#if BATCH_SIZE>1
+                        char data2=featuremap_buffer_hw[ddr_address++];
                         feature_map2[feature_map_address]=data2;
+#endif
                     }
                     else
                     {
+#if BATCH_SIZE>1
                         ddr_address+=2;
+#else
+                        ddr_address+=1;
+#endif
                     }
                 }
             }
