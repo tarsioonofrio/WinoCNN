@@ -76,9 +76,14 @@ Todos exigem alteração estrutural (permitida apenas na versão `micro`, seçã
 
 Na execução do runbook, `B=1` foi fechado sem alterar a ordem do dataflow: o
 problema era exclusivamente o desempacotamento de palavras de saída com duas
-lanes hardcoded. Já `M=1` falha antes do compare porque o PE usa duas linhas de
-pesos e duas linhas de write-back mesmo quando `WINO_H2=1`; isso requer uma
-refatoração conjunta do PE, do feed de pesos e do codegen.
+lanes hardcoded. A correção (`WINO_BATCH_UNPACK/WINO_BATCH_PACK`) foi aplicada
+somente em `winoPEB_CORN`, a única variante instanciada pela malha 1×1. Já `M=1`
+falha antes do compare porque o PE usa duas linhas de pesos e duas linhas de
+write-back mesmo quando `WINO_H2=1`; isso requer uma refatoração conjunta do PE,
+do feed de pesos e do codegen.
+
+> Documentação detalhada da correção de `B=1`:
+> [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md).
 
 ## Contagem de multiplicadores (datapath element-wise)
 

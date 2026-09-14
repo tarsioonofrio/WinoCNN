@@ -40,11 +40,15 @@ Hipótese: o endereçamento do input buffer (`load_input_row_from_ddr`) assume `
 ## Próximos passos
 
 1. Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).
-2. Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`) — grid codegen.
-3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — macros `WEIGHT_PORT_NUM`/`OUT_PORT_BATCH_NUM`.
-4. Reduzir B=1 (`BATCH_SIZE=1`) — empacotamento de batch.
+2. ~~Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`)~~ ✅ feito.
+3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — **bloqueio estrutural** (ver abaixo).
+4. ~~Reduzir B=1 (`BATCH_SIZE=1`)~~ ✅ feito; detalhes completos em
+   [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md).
 5. Wrapper de memória síncrona (substituir AXI) + black-box das memórias.
 6. Síntese ASIC (Genus) core-only e system-level.
+
+Configuração funcional atual: `M=2, N=1, H2=2, W2=1, Q=1, B=1` → 1 PE, 32
+multiplicadores escalares. Bloqueio do alvo de 16 MACs: `M=1` (item 3).
 
 ## Execução do runbook — B=1
 
@@ -59,7 +63,17 @@ mesmo quando `BATCH_SIZE=1`. O ASan confirmou stack-buffer-overflow nessa escrit
 Foi introduzido `WINO_BATCH_UNPACK/WINO_BATCH_PACK` em `wino_macro.h`, preservando
 o layout de dois batches e usando uma transferência de lane única para `B=1`.
 
+A correção foi aplicada **apenas em `winoPEB_CORN`** — a malha 1×1 instancia só
+essa variante; `CENT/BOT/EDG` e `wino_stream_block(2)` são código morto nesta
+config (o único chamador de `wino_stream_block2`, `wino_flatten_kernel`, está
+comentado em `src/wino.cpp:445`). O commit `7a410b5` reverteu a aplicação ampla
+do commit `2db3347`, deixando o diff em 42/42 linhas em `wino_cell.cpp`.
+
 Regressão `B=2` após a mudança: os quatro testes passaram.
+
+> Documentação detalhada (layout da palavra, `operator,`/`ap_concat_ref`, causa do
+> overflow, contagem de multiplicadores e referências de linha):
+> [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md).
 
 ## Execução do runbook — M=1
 
