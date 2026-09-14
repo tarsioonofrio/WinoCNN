@@ -93,6 +93,15 @@
 #define INDEPTH_MINITILE_SIZE (1<<INDEPTH_MINITILE_SIZE_BITWIDTH)
 #define OUTDEPTH_MINITILE_SIZE (1<<OUTDEPTH_MINITILE_SIZE_BITWIDTH)
 
+// Number of hadamard-product accumulator slots per minitile.
+// With channel pairing (2 channels per MAC) this is INDEPTH_MINITILE_SIZE/2,
+// but it is CEIL_DIV so that Q=1 (unpaired) still has one slot.
+#define UV_MUL_TILE_DIM CEIL_DIV(INDEPTH_MINITILE_SIZE, 2)
+
+// Weight-buffer entries packed per 128-bit DDR word (each entry holds 4
+// transformed weights). Total entries per minitile is WINO_DOMAIN_SIZE_SQUARE*Q/4.
+#define WEIGHT_ENTRIES_PER_WORD (WINO_DOMAIN_SIZE_SQUARE*INDEPTH_MINITILE_SIZE/4/UV_MUL_TILE_DIM)
+
 #if WINO_HEIGHT ==4
 #define WEIGHT_FEED_NUMBER_PER_PORT (WINO_HEIGHT/4)
 #define WEIGHT_FEED_NUMBER_PER_PORT_BITWIDTH (WINO_HEIGHT_BITWIDTH-2)

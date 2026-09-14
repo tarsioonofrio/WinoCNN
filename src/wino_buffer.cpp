@@ -599,10 +599,10 @@ void load_weight_ddr_one_port(
 	// if(kernel_size==5)
 	// 	counter_boundary=WEIGHTDDR_INDEPTH_MINITILE_128BIT_STEP-1;
 	// else
-	// 	counter_boundary=INDEPTH_MINITILE_SIZE/2-1;
-		counter_boundary=INDEPTH_MINITILE_SIZE/2-1;
+	// 	counter_boundary=UV_MUL_TILE_DIM-1;
+		counter_boundary=UV_MUL_TILE_DIM-1;
 	#else
-		counter_boundary=INDEPTH_MINITILE_SIZE/2-1;
+		counter_boundary=UV_MUL_TILE_DIM-1;
 	#endif
 
 	ap_uint<128>* offseted_weight_DDR=weight_DDR+ddr_address_offset;
@@ -749,7 +749,7 @@ void load_weight_ddr_one_port(
 
 			if(counter_x2/2==0)
 			{
-				for(int i=0;i<WINO_DOMAIN_SIZE_SQUARE/2;i++)
+				for(int i=0;i<WEIGHT_ENTRIES_PER_WORD;i++)
 				{
 					#pragma HLS unroll
 					trans_weight_reg[i]=(GgG_tile_flat[i*4+3],GgG_tile_flat[i*4+2],GgG_tile_flat[i*4+1],GgG_tile_flat[i*4]);
@@ -757,10 +757,10 @@ void load_weight_ddr_one_port(
 			}
 			else
 			{
-				for(int i=0;i<WINO_DOMAIN_SIZE_SQUARE/2;i++)
+				for(int i=0;i<WEIGHT_ENTRIES_PER_WORD;i++)
 				{
 					#pragma HLS unroll
-					trans_weight_reg[i+WINO_DOMAIN_SIZE_SQUARE*INDEPTH_MINITILE_SIZE/4/2]=(GgG_tile_flat[i*4+3],GgG_tile_flat[i*4+2],GgG_tile_flat[i*4+1],GgG_tile_flat[i*4]);
+					trans_weight_reg[i+WEIGHT_ENTRIES_PER_WORD]=(GgG_tile_flat[i*4+3],GgG_tile_flat[i*4+2],GgG_tile_flat[i*4+1],GgG_tile_flat[i*4]);
 				}
 			}
 			

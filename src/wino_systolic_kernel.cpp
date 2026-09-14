@@ -10,10 +10,6 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
 	ap_uint<OUT_WIDTH*2> out_buffer2_1_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 	ap_uint<OUT_WIDTH*2> out_buffer3_0_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 	ap_uint<OUT_WIDTH*2> out_buffer3_1_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
-	ap_uint<OUT_WIDTH*2> out_buffer4_0_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
-	ap_uint<OUT_WIDTH*2> out_buffer4_1_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
-	ap_uint<OUT_WIDTH*2> out_buffer5_0_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
-	ap_uint<OUT_WIDTH*2> out_buffer5_1_0[WINO_H2][WINO_W2][WINO_OUT_SIZE_CELL][OUTPUT_BUFFER_DEPTH],
 	ap_uint<16> start_output_row,
     ap_int<16> start_row_idx_minus_pad_size,
     ap_int<16> start_col_idx_minus_pad_size,
@@ -24,10 +20,6 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
     ConvDesc_t conv_desc,
     ap_uint<1> ap_clk_div2
     ){
-    #pragma HLS interface m_axi port=weight_DDR0
-    #pragma HLS interface m_axi port=weight_DDR1
-    #pragma HLS interface m_axi port=weight_DDR2
-    #pragma HLS interface m_axi port=weight_DDR3
 	#pragma HLS array_partition variable=out_buffer0_0_0 dim=1 complete
 	#pragma HLS array_partition variable=out_buffer0_0_0 dim=2 complete
 	#pragma HLS array_partition variable=out_buffer0_0_0 dim=2 complete
@@ -52,18 +44,6 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
 	#pragma HLS array_partition variable=out_buffer3_1_0 dim=1 complete
 	#pragma HLS array_partition variable=out_buffer3_1_0 dim=2 complete
 	#pragma HLS array_partition variable=out_buffer3_1_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer4_0_0 dim=1 complete
-	#pragma HLS array_partition variable=out_buffer4_0_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer4_0_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer4_1_0 dim=1 complete
-	#pragma HLS array_partition variable=out_buffer4_1_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer4_1_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer5_0_0 dim=1 complete
-	#pragma HLS array_partition variable=out_buffer5_0_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer5_0_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer5_1_0 dim=1 complete
-	#pragma HLS array_partition variable=out_buffer5_1_0 dim=2 complete
-	#pragma HLS array_partition variable=out_buffer5_1_0 dim=2 complete
 
 	#pragma HLS dataflow
     #pragma HLS interface ap_stable port=conv_desc
@@ -193,8 +173,6 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
 		out_buffer1_0_0,
 		out_buffer2_0_0,
 		out_buffer3_0_0,
-		out_buffer4_0_0,
-		out_buffer5_0_0,
 		conv_desc.weightbuffer_outdepth_minitile_number,
         conv_desc.total_input_stream_tile,
         conv_desc.loop_omini_base_reset_cycle,
@@ -217,8 +195,6 @@ void wino_systolic_kernel(    WEIGHT_PORTS_DECLARE(weight_DDR),
 		out_buffer1_1_0,
 		out_buffer2_1_0,
 		out_buffer3_1_0,
-		out_buffer4_1_0,
-		out_buffer5_1_0,
 		conv_desc.weightbuffer_outdepth_minitile_number,
         conv_desc.total_input_stream_tile,
         conv_desc.loop_omini_base_reset_cycle,
@@ -254,8 +230,6 @@ void wino_systolic_kernel_wrapper(
 	#pragma HLS array_partition variable=out_buffer dim=2 complete
 	#pragma HLS array_partition variable=out_buffer dim=3 complete
 	#pragma HLS array_partition variable=out_buffer dim=4 complete
-
-    std::cout<<" wino_systolic_kernel_wrapper "<<std::endl;
 	wino_systolic_kernel(
         WEIGHT_PORTS_CALL(weight_DDR),
         input_buffer,
@@ -267,10 +241,6 @@ void wino_systolic_kernel_wrapper(
 		out_buffer[2][1][0],
 		out_buffer[3][0][0],
 		out_buffer[3][1][0],
-		out_buffer[4][0][0],
-		out_buffer[4][1][0],
-		out_buffer[5][0][0],
-		out_buffer[5][1][0],
 		start_output_row,
         start_row_idx_minus_pad_size,
         start_col_idx_minus_pad_size,

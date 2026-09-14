@@ -216,7 +216,7 @@ void load_weight_tile_cell(
 
 template<int dummy>
 void element_wise_mult_6x6(
-		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
+		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<BTB_WIDTH> input_tile[INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<W_WIDTH> weight_tile[INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE],
 		ap_int<1> ap_clk_div2
@@ -287,7 +287,7 @@ void element_wise_mult_6x6(
 
 template<int dummy>
 void element_wise_mult_4x4_cell(
-		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
+		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<BTB_WIDTH> input_tile[INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<W_WIDTH> weight_tile[INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE],
 		ap_int<1> ap_clk_div2
@@ -329,6 +329,13 @@ void element_wise_mult_4x4_cell(
 					// UV_MUL_TILE[1][id2][wr][wc][b]=__builtin_mac16x2( weight_tile[1][id][wr][wc],weight_tile[1][id+1][wr][wc],input_tile[id][wr][wc][b],input_tile[id+1][wr][wc][b],0,1,ap_clk_div2);
 				}
 			}
+			#if (INDEPTH_MINITILE_SIZE % 2) == 1
+			for(int b=0;b<BATCH_SIZE;b++)
+			{
+			#pragma HLS unroll
+				UV_MUL_TILE[INDEPTH_MINITILE_SIZE/2][wr][wc][b]=weight_tile[INDEPTH_MINITILE_SIZE-1][wr][wc]*input_tile[INDEPTH_MINITILE_SIZE-1][wr][wc][b];
+			}
+			#endif
 		}
 	}
 }
@@ -336,7 +343,7 @@ void element_wise_mult_4x4_cell(
 
 template<int dummy>
 void element_wise_mult_block(
-		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
+		ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<BTB_WIDTH> input_tile[INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE],
 		ap_int<W_WIDTH> weight_tile[2][INDEPTH_MINITILE_SIZE][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE]
 )
@@ -734,7 +741,7 @@ void winoPEB_CENT(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=2
@@ -862,7 +869,7 @@ void winoPEB_CENT(
 						{
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];
@@ -1569,7 +1576,7 @@ void winoPEB_BOT(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=2
@@ -1697,7 +1704,7 @@ void winoPEB_BOT(
 						{
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];
@@ -2406,7 +2413,7 @@ void winoPEB_EDG(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=2
@@ -2534,7 +2541,7 @@ void winoPEB_EDG(
 						{
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];
@@ -3240,7 +3247,7 @@ void winoPEB_CORN(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=2
@@ -3369,7 +3376,7 @@ void winoPEB_CORN(
 						{
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];
@@ -4087,9 +4094,9 @@ void wino_stream_block2(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 				#if WINO_DOMAIN_SIZE==6
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#else
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#endif
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
@@ -4222,7 +4229,7 @@ void wino_stream_block2(
 
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];
@@ -4896,9 +4903,9 @@ void wino_stream_block(
 				#pragma HLS array_partition variable = weight_tile_reg complete dim=1
 
 				#if WINO_DOMAIN_SIZE==6
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#else
-				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][INDEPTH_MINITILE_SIZE/2][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
+				ap_int<UV_MUL_WIDTH> UV_MUL_TILE[2][UV_MUL_TILE_DIM][WINO_DOMAIN_SIZE][WINO_DOMAIN_SIZE][BATCH_SIZE];
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=5
 				#endif
 				#pragma HLS array_partition variable=UV_MUL_TILE complete dim=1
@@ -5032,7 +5039,7 @@ void wino_stream_block(
 
 							ap_int<UV_MUL_WIDTH> temp0=0;
 							ap_int<UV_MUL_WIDTH> temp1=0;
-							for(int id2=0;id2<INDEPTH_MINITILE_SIZE/2;id2++)
+							for(int id2=0;id2<UV_MUL_TILE_DIM;id2++)
 							{
 								#pragma HLS unroll
 								temp0+=UV_MUL_TILE[0][id2][wino_row][wino_col][b];

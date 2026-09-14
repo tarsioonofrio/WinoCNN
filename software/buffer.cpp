@@ -293,11 +293,11 @@ void weight_to_ddr(
 
 
 
-                        ap_uint<128> indepth_minitile_data[INDEPTH_MINITILE_SIZE/2];
-                        ap_uint<128> indepth_minitile_data_tranposed[INDEPTH_MINITILE_SIZE/2*sizeof(ap_uint<128>)];
+                        ap_uint<128> indepth_minitile_data[UV_MUL_TILE_DIM];
+                        ap_uint<128> indepth_minitile_data_tranposed[UV_MUL_TILE_DIM*sizeof(ap_uint<128>)];
                         
-                        memset(indepth_minitile_data_tranposed,0,INDEPTH_MINITILE_SIZE/2*sizeof(ap_uint<128>));
-                        memset(indepth_minitile_data,0,INDEPTH_MINITILE_SIZE/2*sizeof(ap_uint<128>));
+                        memset(indepth_minitile_data_tranposed,0,UV_MUL_TILE_DIM*sizeof(ap_uint<128>));
+                        memset(indepth_minitile_data,0,UV_MUL_TILE_DIM*sizeof(ap_uint<128>));
            
                         for(int indepth_minitile_idx=0;indepth_minitile_idx<INDEPTH_MINITILE_SIZE;indepth_minitile_idx++)
                         {
@@ -336,10 +336,10 @@ void weight_to_ddr(
                         
                         int write_address_128bit = buffer_128_address+buffer_segment_offset;
                         
-                        memcpy(weight_wino_128bit+write_address_128bit,indepth_minitile_data,INDEPTH_MINITILE_SIZE/2*sizeof(ap_uint<128>));
+                        memcpy(weight_wino_128bit+write_address_128bit,indepth_minitile_data,UV_MUL_TILE_DIM*sizeof(ap_uint<128>));
                         // buffer_128_address[outdepth_minitile_idx]+=WEIGHTDDR_INDEPTH_MINITILE_128BIT_STEP;
                     }
-                    buffer_128_address+=INDEPTH_MINITILE_SIZE/2;
+                    buffer_128_address+=UV_MUL_TILE_DIM;
                 }
             }
             weight_load_idx++;
