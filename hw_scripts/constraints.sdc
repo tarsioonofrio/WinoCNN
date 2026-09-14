@@ -8,11 +8,12 @@ set_load_unit -femtofarads
 set_time_unit -nanoseconds
 
 ### Creating the clock of 500 MHz
+### WinoCNN top (Vivado HLS) uses ap_clk / ap_rst.
 set period_clock 2;
-create_clock -name {clk} -period $period_clock [get_ports {clk}]
+create_clock -name {ap_clk} -period $period_clock [get_ports {ap_clk}]
 
 ### Ignoring the time analysis for the Reset
-set_false_path -from [get_ports {reset}]
+set_false_path -from [get_ports {ap_rst}]
 
 ### INPUTS
 set_driving_cell -lib_cell GINVD1BWP30P140 [all_inputs]
