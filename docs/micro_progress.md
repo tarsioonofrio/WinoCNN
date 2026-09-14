@@ -33,7 +33,9 @@ Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do c
 
 ## Pendência Q=1
 
-Para imagens com `inwidth_ceildiv_inbufferwidth >= 2` (largura > 8), ainda há mismatch. Provável causa: a fórmula de `buffer_address_mid_increment_step` (`inwidth_ceildiv_inbufferwidth*(8-indepth_minitile_size)/indepth_minitile_size + 1` → 7·ceildiv+1 para Q=1) ou o endereçamento do input buffer entre bancos para Q=1. Isolado: 4×4/6×6/8×8 batem; 10×10+ não.
+Funcional apenas quando **h ≤ 8 e w ≤ 8** (um conjunto de linhas/banco do input buffer). Falha para `h > 8` **ou** `w > 8` (ciclismo do input buffer). Isolado: 8×8 ✅; 16×8 ❌; 8×16 ❌; 10×10+ ❌. Q=4 funciona em todos.
+
+Hipótese: o endereçamento do input buffer (`load_input_row_from_ddr`) assume `INDEPTH_MINITILE_SIZE>=2`. Com Q=1 o `buffer_address_mini_tile` é sempre 0, então `buffer_address_mini_tile == INDEPTH_MINITILE_SIZE-1` (==0) é sempre verdadeira e `buffer_address_mid_offset += inwidth_ceildiv_inbufferwidth` dispara a cada ciclo — quebrando o endereçamento quando há ciclismo de banco/linha. Somado a isso, a fórmula de `buffer_address_mid_increment_step` para Q=1 (`7·ceildiv+1`) merece verificação.
 
 ## Próximos passos
 
