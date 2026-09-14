@@ -6,6 +6,7 @@
 #define DEBUG_SIM 0
 
 #include "wino_hw_config.h"
+#include "wino_mem_if.h"
 
 
 #define NEEDS_BIT(N, B)     (N > (1<<B) ? 1:0 )

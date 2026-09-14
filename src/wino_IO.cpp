@@ -247,7 +247,7 @@ void load_input_row_from_ddr(
 		ap_int<16> row_load_bound)
 {
 	#pragma HLS array_partition variable = input_buffer dim=1 complete
-	#pragma HLS interface m_axi port = DDR_port
+	WINO_MEM_IF_PORT(DDR_port)
 	if(row_idx >= inheight || row_idx >= row_load_bound ) return;
 
 	bool bufferflag= (row_idx%INBUFFER_HEIGHT/4 == 0);
@@ -786,8 +786,8 @@ void load_input_rowtile_from_ddr(
 {
 	if(skip_flag) return;
 	printf("****load_input_rowtile_from_ddr****\n");
-	#pragma HLS interface m_axi port = DDR_port0
-	#pragma HLS interface m_axi port = DDR_port1
+	WINO_MEM_IF_PORT(DDR_port0)
+	WINO_MEM_IF_PORT(DDR_port1)
 	// #pragma HLS interface m_axi port = DDR_port2
 	// #pragma HLS interface m_axi port = DDR_port3
 

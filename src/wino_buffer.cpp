@@ -586,7 +586,7 @@ void load_weight_ddr_one_port(
 	#endif
 	)
 {
-	#pragma HLS interface m_axi port=weight_DDR
+	WINO_MEM_IF_PORT(weight_DDR)
 	#if DEBUG_FILE_PRINT
 	printf("\t^^load_weight_ddr_one_port^^ \n\t SKIP FLAG:%d \n\t Pingpong %d \n", (int) skip_flag, (int) pingpong);fflush(stdout);
 	#endif

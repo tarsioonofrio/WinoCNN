@@ -660,25 +660,20 @@ void wino_systolic_top(
     ap_uint<1> ap_clk_div2=0;
     // #endif
 
-    // #pragma HLS interface m_axi port= input_DDR3 offset=slave   bundle=input_DDR3 depth=65535
-    // #pragma HLS interface m_axi port= input_DDR2 offset=slave   bundle=input_DDR2 depth=65535
-    #pragma HLS interface m_axi port= input_DDR1 offset=slave   bundle=input_DDR1 depth=524288
-    #pragma HLS interface m_axi port= input_DDR0 offset=slave   bundle=input_DDR0 depth=524288
-    #pragma HLS interface m_axi port= weight_DDR0 offset=slave  bundle=weight_DDR0 depth=1179648
-    #pragma HLS interface m_axi port= weight_DDR1 offset=slave  bundle=weight_DDR1 depth=1179648
-    #pragma HLS interface m_axi port= weight_DDR2 offset=slave  bundle=weight_DDR2 depth=1179648
-    #pragma HLS interface m_axi port= weight_DDR3 offset=slave  bundle=weight_DDR3 depth=1179648
-    // #pragma HLS interface m_axi port= output_DDR3 offset=slave  bundle=output_DDR3 depth=65535
-    // #pragma HLS interface m_axi port= output_DDR2 offset=slave  bundle=output_DDR2 depth=65535
-    #pragma HLS interface m_axi port= output_DDR1 offset=slave  bundle=output_DDR1 depth=524288
-    #pragma HLS interface m_axi port= output_DDR0 offset=slave  bundle=output_DDR0 depth=524288
-    // #pragma HLS interface m_axi port= weight_DDR3 offset=slave depth=65535
-    // #pragma HLS interface m_axi port= weight_DDR2 offset=slave depth=65535
-    // #pragma HLS interface m_axi port= weight_DDR1 offset=slave depth=65535
-
-    #pragma HLS interface m_axi port= mem_params offset=slave  bundle=mem_params depth=65535
-    // #pragma HLS interface m_axi port= bias_mem offset=slave  bundle=bias_mem depth=65535
+    // External memory interfaces.  On the ASIC flow (WINO_ASIC) these are
+    // simple synchronous RAM ports (ap_memory); otherwise AXI master ports.
+    WINO_MEM_IF_AXI(input_DDR1, input_DDR1, 524288)
+    WINO_MEM_IF_AXI(input_DDR0, input_DDR0, 524288)
+    WINO_MEM_IF_AXI(weight_DDR0, weight_DDR0, 1179648)
+    WINO_MEM_IF_AXI(weight_DDR1, weight_DDR1, 1179648)
+    WINO_MEM_IF_AXI(weight_DDR2, weight_DDR2, 1179648)
+    WINO_MEM_IF_AXI(weight_DDR3, weight_DDR3, 1179648)
+    WINO_MEM_IF_AXI(output_DDR1, output_DDR1, 524288)
+    WINO_MEM_IF_AXI(output_DDR0, output_DDR0, 524288)
+    WINO_MEM_IF_AXI(mem_params, mem_params, 65535)
+#ifndef WINO_ASIC
 	#pragma HLS INTERFACE s_axilite register port=return
+#endif
 
     //input buffer declaration
     ap_uint<16> input_buffer[INBUFFER_HEIGHT][INBUFFER_WIDTH][INPUT_BUFFER_DEPTH];
