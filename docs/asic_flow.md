@@ -71,25 +71,44 @@ vivado_hls -f hw_scripts/script_asic.tcl
 # gera HLS_asic/solution_asic/impl/verilog/*.v
 ```
 
-### 4.3 Genus (onde houver Genus + PDK)
+### 4.3 Genus — mesma metodologia do FastConv
 
-Preencher os caminhos das bibliotecas em `hw_scripts/genus_core.tcl` e rodar:
+O host com Genus é o **paxos** (`paxos.inf.pucrs.br`, porta 8888), onde o
+FastConv foi sintetizado. O WinoCNN reusa **exatamente** o mesmo cenário:
+
+- PDK **TSMC 28 nm** `tcbn28hpcplusbwp30p140` (BWP30P140), via MMMC
+  (`hw_scripts/mmmc_tsmc_28_bv.tcl`, copiado do template do FastConv);
+- 3 corners: `ssg0p81v125c` (setup) / `tt0p9v25c` / `ffg0p99vm40c` (hold);
+- clock **500 MHz (2 ns)** e as mesmas restrições de driving cell / load
+  (`hw_scripts/constraints.sdc`);
+- `syn_generic` → `syn_map` → `syn_opt` + relatórios de área/timing/potência.
+
+No paxos:
 
 ```
-genus -f hw_scripts/genus_core.tcl
-# reports/area.rpt, timing.rpt, power.rpt, qor.rpt
+module load vivado_hls && bash hw_scripts/run_asic_flow.sh hls
+module load genus      && bash hw_scripts/run_asic_flow.sh genus
+# ou, em uma sessão com ambos: bash hw_scripts/run_asic_flow.sh all
 ```
+
+Saída: `reports/genus/wino_area.rpt`, `wino_timing_*.rpt`, `wino_power_*.rpt`,
+`wino_qor.rpt`.
 
 ## 5. Hipóteses e o que falta
 
-- **PDK**: os caminhos das libs (std cell, IO, SRAM) são placeholders.
-- **Macros de memória**: `wino_sram_bb.v` é um stub vazio; deve ser substituído
-  pela macro SRAM do PDK com o mesmo port list (ou fazer bind via biblioteca).
-- **Constantes de timing**: os delays de I/O e a incerteza de clock precisam ser
-  ajustados ao PDK.
+- **Ferramentas/PDK só no paxos**: este ambiente de autoria não tem
+  `vivado_hls`/`vitis_hls`/`genus` nem `/pdk`. O acesso SSH não-interativo ao
+  paxos foi negado (`Permission denied (publickey)`), então a síntese precisa
+  ser disparada lá por quem tem credencial.
+- **Macros de memória internas**: as RAMs inferidas pelo HLS
+  (`input_buffer`, `out_buffer`, `weight_buff`) viram registradores por padrão.
+  Para comparar lógica com lógica, black-boxá-las e mapear às macros SRAM do
+  PDK (linha comentada em `genus_core.tcl`). `wino_sram_bb.v` é o stub.
 - **Instrumentação de tráfego**: contadores de leitura/escrita por porta ainda
-  não foram adicionados (útil para validar o modelo de memória e a banda).
-- **Síntese real**: não executada aqui (sem ferramentas).
+  não foram adicionados.
+- **Síntese real**: não executada (sem ferramentas no ambiente de autoria).
+- **Paridade com o FastConv**: usar a mesma lib, mesmo clock (2 ns) e mesmo
+  critério de black-box — o script já foi montado assim.
 
 ## 6. Definição de pronto para a comparação
 
