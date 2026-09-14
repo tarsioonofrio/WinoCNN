@@ -605,12 +605,12 @@ void wino_model_int(
                         #if WINO_DOMAIN_SIZE==4
                         if(use_kernel_size==3)
                         {
-                            input_right_mul_16<int>(input_tile,dBT);
+                            input_right_mul_16<long int>(input_tile,dBT);
 
                             apply_quant_int<DB_QUANT_BIT>(dBT,WINO_DOMAIN_SIZE_SQUARE);
                             // print_tile<float>(dBT,WINO_DOMAIN_SIZE,"dBT");
 
-                            input_left_mul_16<int>(dBT,wino_input_tile);
+                            input_left_mul_16<long int>(dBT,wino_input_tile);
 
                             apply_quant_int<BTB_QUANT_BIT>(wino_input_tile,WINO_DOMAIN_SIZE_SQUARE);
                         }
@@ -736,10 +736,10 @@ void wino_model_int(
                         #if WINO_DOMAIN_SIZE==4
                             if(use_kernel_size==3)
                             {
-                                output_right_mul_4to2<int>(wino_output_tile,vA);
+                                output_right_mul_4to2<long int>(wino_output_tile,vA);
                                 apply_quant_int<UVA_QUANT_BIT>(vA,WINO_OUT_SIZE*WINO_DOMAIN_SIZE);
                                 // print_tile<int>(vA,WINO_OUT_SIZE*WINO_DOMAIN_SIZE,"vA");
-                                output_left_mul_4to2<int>(vA,output_tile);
+                                output_left_mul_4to2<long int>(vA,output_tile);
                                 apply_quant_int<ATA_QUANT_BIT>(output_tile,WINO_OUT_SIZE_SQUARE);
                             }
                             else

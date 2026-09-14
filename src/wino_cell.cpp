@@ -619,14 +619,18 @@ void winoPEB_CENT(
 		#pragma HLS dependence variable=out_buffer_1 inter false
 		#pragma HLS dependence variable=out_buffer_2 inter false
 		#pragma HLS dependence variable=out_buffer_3 inter false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 inter false
 		#pragma HLS dependence variable=out_buffer_5 inter false
+#endif
 		#pragma HLS dependence variable=out_buffer_0 intra false
 		#pragma HLS dependence variable=out_buffer_1 intra false
 		#pragma HLS dependence variable=out_buffer_2 intra false
 		#pragma HLS dependence variable=out_buffer_3 intra false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 intra false
 		#pragma HLS dependence variable=out_buffer_5 intra false
+#endif
 
 
 		ap_uint<1> load_input_flag_reg = (load_input_flag  && loaded_input_stream_tile_number !=  total_input_stream_tile);
@@ -1450,14 +1454,18 @@ void winoPEB_BOT(
 		#pragma HLS dependence variable=out_buffer_1 inter false
 		#pragma HLS dependence variable=out_buffer_2 inter false
 		#pragma HLS dependence variable=out_buffer_3 inter false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 inter false
 		#pragma HLS dependence variable=out_buffer_5 inter false
+#endif
 		#pragma HLS dependence variable=out_buffer_0 intra false
 		#pragma HLS dependence variable=out_buffer_1 intra false
 		#pragma HLS dependence variable=out_buffer_2 intra false
 		#pragma HLS dependence variable=out_buffer_3 intra false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 intra false
 		#pragma HLS dependence variable=out_buffer_5 intra false
+#endif
 
 
 		ap_uint<1> load_input_flag_reg = (load_input_flag  && loaded_input_stream_tile_number !=  total_input_stream_tile);
@@ -2283,14 +2291,18 @@ void winoPEB_EDG(
 		#pragma HLS dependence variable=out_buffer_1 inter false
 		#pragma HLS dependence variable=out_buffer_2 inter false
 		#pragma HLS dependence variable=out_buffer_3 inter false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 inter false
 		#pragma HLS dependence variable=out_buffer_5 inter false
+#endif
 		#pragma HLS dependence variable=out_buffer_0 intra false
 		#pragma HLS dependence variable=out_buffer_1 intra false
 		#pragma HLS dependence variable=out_buffer_2 intra false
 		#pragma HLS dependence variable=out_buffer_3 intra false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 intra false
 		#pragma HLS dependence variable=out_buffer_5 intra false
+#endif
 
 
 		ap_uint<1> load_input_flag_reg = (load_input_flag  && loaded_input_stream_tile_number !=  total_input_stream_tile);
@@ -3113,14 +3125,18 @@ void winoPEB_CORN(
 		#pragma HLS dependence variable=out_buffer_1 inter false
 		#pragma HLS dependence variable=out_buffer_2 inter false
 		#pragma HLS dependence variable=out_buffer_3 inter false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 inter false
 		#pragma HLS dependence variable=out_buffer_5 inter false
+#endif
 		#pragma HLS dependence variable=out_buffer_0 intra false
 		#pragma HLS dependence variable=out_buffer_1 intra false
 		#pragma HLS dependence variable=out_buffer_2 intra false
 		#pragma HLS dependence variable=out_buffer_3 intra false
+#if WINO_DOMAIN_SIZE == 6
 		#pragma HLS dependence variable=out_buffer_4 intra false
 		#pragma HLS dependence variable=out_buffer_5 intra false
+#endif
 
 		ap_uint<1> load_input_flag_reg = (load_input_flag  && loaded_input_stream_tile_number !=  total_input_stream_tile);
 
@@ -4158,7 +4174,8 @@ void wino_stream_block2(
 				#else
 				// element_wise_mult_6x6<0>(UV_MUL_TILE[0],input_tile_reg,weight_tile_reg[0], ap_clk_div2 );
 				// element_wise_mult_6x6<0>(UV_MUL_TILE[1],input_tile_reg,weight_tile_reg[1], ap_clk_div2 );
-				element_wise_mult_4x4<0>(UV_MUL_TILE,input_tile_reg,weight_tile_reg, ap_clk_div2 );
+				element_wise_mult_4x4_cell<0>(UV_MUL_TILE[0],input_tile_reg,weight_tile_reg[0], ap_clk_div2 );
+				element_wise_mult_4x4_cell<0>(UV_MUL_TILE[1],input_tile_reg,weight_tile_reg[1], ap_clk_div2 );
 				#endif
 				
 
@@ -4966,7 +4983,8 @@ void wino_stream_block(
 				#else
 				// element_wise_mult_6x6<0>(UV_MUL_TILE[0],input_tile_reg,weight_tile_reg[0], ap_clk_div2 );
 				// element_wise_mult_6x6<0>(UV_MUL_TILE[1],input_tile_reg,weight_tile_reg[1], ap_clk_div2 );
-				element_wise_mult_4x4<0>(UV_MUL_TILE,input_tile_reg,weight_tile_reg, ap_clk_div2 );
+				element_wise_mult_4x4_cell<0>(UV_MUL_TILE[0],input_tile_reg,weight_tile_reg[0], ap_clk_div2 );
+				element_wise_mult_4x4_cell<0>(UV_MUL_TILE[1],input_tile_reg,weight_tile_reg[1], ap_clk_div2 );
 				#endif
 				
 
