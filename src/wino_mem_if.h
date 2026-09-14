@@ -29,14 +29,16 @@
 
 #ifdef WINO_ASIC
 
-/* Simple synchronous RAM port.  depth is kept for documentation only. */
-#define WINO_MEM_IF_AXI(port, bundle, depth) \
-    _Pragma(WINO_XSTR_(HLS interface ap_memory port=port))
+/* Simple synchronous RAM port.  depth is kept for documentation only.
+ * NOTE: parameter names must not be `port`/`bundle`/`depth`, otherwise the
+ * tokens in `port=`, `bundle=`, `depth=` would be substituted too. */
+#define WINO_MEM_IF_AXI(p, b, d) \
+    _Pragma(WINO_XSTR_(HLS interface ap_memory port=p depth=d))
 
 #else /* default: AXI master (FPGA / Zynq) */
 
-#define WINO_MEM_IF_AXI(port, bundle, depth) \
-    _Pragma(WINO_XSTR_(HLS interface m_axi port=port offset=slave bundle=bundle depth=depth))
+#define WINO_MEM_IF_AXI(p, b, d) \
+    _Pragma(WINO_XSTR_(HLS interface m_axi port=p offset=slave bundle=b depth=d))
 
 #endif /* WINO_ASIC */
 
@@ -46,11 +48,11 @@
  * flow the top level already binds the bundle, so no extra clause is needed.
  */
 #ifdef WINO_ASIC
-#define WINO_MEM_IF_PORT(port) \
-    _Pragma(WINO_XSTR_(HLS interface ap_memory port=port))
+#define WINO_MEM_IF_PORT(p) \
+    _Pragma(WINO_XSTR_(HLS interface ap_memory port=p))
 #else
-#define WINO_MEM_IF_PORT(port) \
-    _Pragma(WINO_XSTR_(HLS interface m_axi port=port))
+#define WINO_MEM_IF_PORT(p) \
+    _Pragma(WINO_XSTR_(HLS interface m_axi port=p))
 #endif
 
 #endif /* _WINO_MEM_IF_H_ */

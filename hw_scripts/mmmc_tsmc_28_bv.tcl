@@ -1,5 +1,7 @@
-# The caller defines CONFIG_ROOT for the project-local synthesis directory.
-set CONSTRAINTS_PATH [file join $CONFIG_ROOT scripts]
+# The caller defines CONFIG_ROOT for the directory holding this file.
+# In the FastConv layout the constraints live in <config>/scripts; here both
+# the MMMC and constraints.sdc live directly in hw_scripts/.
+set CONSTRAINTS_PATH $CONFIG_ROOT
 
 #################################################################################
 # tsmc 28 nm

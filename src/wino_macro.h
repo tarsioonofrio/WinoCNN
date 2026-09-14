@@ -243,11 +243,18 @@
 
 #if INPUT_PORT_NUM==2
 
-
+#ifdef WINO_ASIC
+/* ASIC flow: ap_memory needs a compile-time size, so the buffers are
+ * arrays.  In C++ they decay to pointers at the call sites, so the rest of
+ * the design (and the testbench) is unchanged. */
+#define INPUT_PORTS_DECLARE(x)  ap_uint<128> x##0[FEATURE_PORT_DEPTH],\
+                                ap_uint<128> x##1[FEATURE_PORT_DEPTH]
+#else
 #define INPUT_PORTS_DECLARE(x)  ap_uint<128>* x##0,\
                                 ap_uint<128>* x##1
                                 // ap_uint<128>* x##2,\
                                 // ap_uint<128>* x##3
+#endif
 
 #define INPUT_PORTS_CALL(x)     x##0,\
                                 x##1
@@ -268,10 +275,17 @@
 
 #if WINO_HEIGHT >=4 
 #define WEIGHT_PORT_NUM 4
+#ifdef WINO_ASIC
+#define WEIGHT_PORTS_DECLARE(x)  ap_uint<128> x##0[WEIGHT_PORT_DEPTH],\
+                                ap_uint<128> x##1[WEIGHT_PORT_DEPTH],\
+                                ap_uint<128> x##2[WEIGHT_PORT_DEPTH],\
+                                ap_uint<128> x##3[WEIGHT_PORT_DEPTH]
+#else
 #define WEIGHT_PORTS_DECLARE(x)  ap_uint<128>* x##0,\
                                 ap_uint<128>* x##1,\
                                 ap_uint<128>* x##2,\
                                 ap_uint<128>* x##3
+#endif
 
 #define WEIGHT_PORTS_CALL(x)     x##0,\
                                 x##1,\
@@ -280,11 +294,19 @@
 
 #elif WINO_HEIGHT ==2
 #define WEIGHT_PORT_NUM 1
+#ifdef WINO_ASIC
+#define WEIGHT_PORTS_DECLARE(x)  ap_uint<128> x##0[WEIGHT_PORT_DEPTH]
+#else
 #define WEIGHT_PORTS_DECLARE(x)  ap_uint<128>* x##0
+#endif
 #define WEIGHT_PORTS_CALL(x)     x##0
 #elif WINO_HEIGHT ==1
 #define WEIGHT_PORT_NUM 1
+#ifdef WINO_ASIC
+#define WEIGHT_PORTS_DECLARE(x)  ap_uint<128> x##0[WEIGHT_PORT_DEPTH]
+#else
 #define WEIGHT_PORTS_DECLARE(x)  ap_uint<128>* x##0
+#endif
 #define WEIGHT_PORTS_CALL(x)     x##0
 #endif
 
