@@ -25,6 +25,31 @@
 #include <cstdint>
 
 
+// Load a logical dataset file when the pattern string is "file:<path>".
+// The layouts match software/buffer.cpp: feature[c*H*W + h*W + w] and
+// weight[(od*Cin + id)*kh*kw + ks], both int8 (see fast-convolution-rtl's
+// fast_convolution/winocnn.py exporter).  Returns false for pattern strings.
+static bool load_dataset_file(const std::string& spec, char* dst, size_t n)
+{
+    if (spec.rfind("file:", 0) != 0) return false;
+    const char* path = spec.c_str() + 5;
+    FILE* f = fopen(path, "rb");
+    if (f == NULL) {
+        std::cerr << "load_dataset_file: cannot open " << path << std::endl;
+        return false;
+    }
+    size_t got = fread(dst, 1, n, f);
+    fclose(f);
+    if (got != n) {
+        std::cerr << "load_dataset_file: short read " << path << " ("
+                  << got << "/" << n << " bytes)" << std::endl;
+        return false;
+    }
+    std::cout << "loaded dataset " << path << " (" << n << " bytes)" << std::endl;
+    return true;
+}
+
+
 int main(int argc, char** argv)
 {
 
@@ -201,7 +226,11 @@ int main(int argc, char** argv)
     alloc_hw_featuremap_mem_single_blob(fmap_dict["out"]);
 
 
-    feature_map_init(fmap_dict["in"],input_gold);
+    if (!load_dataset_file(input_gold,
+                           fmap_dict["in"].buffers_int[0],
+                           (size_t)input_depth*input_height*input_width)) {
+        feature_map_init(fmap_dict["in"],input_gold);
+    }
  
 
     featuremap_int_to_hw_pointers(
@@ -217,7 +246,11 @@ int main(int argc, char** argv)
   
 
 
-    init_weight<char>(linfo_vect[0].weightbuffer_quant[0],input_depth,output_depth,kernel_size_h,kernel_size_w,weight_gold);
+    if (!load_dataset_file(weight_gold,
+                           linfo_vect[0].weightbuffer_quant[0],
+                           (size_t)input_depth*output_depth*kernel_size_h*kernel_size_w)) {
+        init_weight<char>(linfo_vect[0].weightbuffer_quant[0],input_depth,output_depth,kernel_size_h,kernel_size_w,weight_gold);
+    }
 
     process_hw_weight_buffer_single_layer(linfo_vect[0]);
     // print_weight<0>( (ap_uint<128>*) linfo_vect[0].weightbuffers_hw[0],"idepthweight.txt", linfo_vect[0].port_segment_size[0]*WEIGHT_PORT_NUM*128/8);
