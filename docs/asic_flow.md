@@ -162,8 +162,13 @@ Relatórios completos em `reports/genus/*.rpt`. Os artefatos grandes
 
 ## 7. O que falta
 
-- **Instrumentação de tráfego**: contadores de leitura/escrita por porta ainda
-  não foram adicionados (só simulação, não sintetizados).
+- **RTL funcional do micro**: o C/RTL co-simulation do HLS **falha** e o
+  testbench RTL mostra escrita de saída incompleta (102 vs 128 palavras). A
+  infraestrutura de simulação RTL + SHM está pronta e documentada em
+  `docs/rtl_simulation.md`, mas o RTL do micro precisa ser corrigido antes de
+  qualquer PPA. Veja os próximos passos naquele documento.
+- **Instrumentação de tráfego**: os contadores já existem no testbench RTL
+  (reads/writes/ciclos); falta levá-los para o fluxo oficial.
 - **Power com estímulo**: gerar testbench RTL + SHM (Xcelium) para potência
   realista; ou aplicar a mesma aproximação ao FastConv.
 - **Macros SRAM do PDK**: hoje as memórias são black-box (área excluída). Para

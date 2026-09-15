@@ -52,6 +52,22 @@ int main(int argc, char** argv)
 
 
     // load input arguments
+    // Default arguments let the HLS C/RTL co-simulation (cosim_design) run
+    // the same self-checking test without command-line arguments.
+    static char* default_argv[] = {
+        (char*)"single_main",
+        (char*)"8", (char*)"8", (char*)"8",
+        (char*)"8", (char*)"8", (char*)"8",
+        (char*)"3", (char*)"3", (char*)"1",
+        (char*)"1", (char*)"1", (char*)"0", (char*)"128",
+        (char*)"random", (char*)"random", (char*)"center",
+        (char*)"compare", (char*)".",
+        (char*)"3", NULL
+    };
+    if (argc < 20) {
+        argv = default_argv;
+        argc = 20;
+    }
     int input_height = atoi(argv[1]);
     int input_width = atoi(argv[2]);
     int input_depth = atoi(argv[3]);
