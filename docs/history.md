@@ -297,7 +297,7 @@ Nasceu `asic_scripts/tb_wino_asic.v`: ele modela as quatro RAMs externas com o
 protocolo `ap_memory`, carrega o estímulo por `$readmemh`, pulsa `ap_start`,
 espera `ap_done`, conta ciclos e acessos, e escreve um SHM para o Genus.
 
-Três descobertas dolorosas, todas documentadas em `docs/rtl_simulation.md`:
+Três descobertas dolorosas, todas documentadas em `docs/simulation.md`:
 
 1. **Latência da RAM.** O HLS escalona cada porta com uma latência própria. O
    modelo `AESL_automem_*` do cosim mostrou: entrada e peso com **3 ciclos**,
@@ -404,8 +404,8 @@ topo), `src/wino_mem_if.h` (novo; interface ASIC), `src/wino_hw_config.h`
 
 **Documentação** (`docs/`):
 `architecture.md`, `address_generation.md`, `configuration_exploration.md`,
-`micro_progress.md`, `b1_pack_unpack_detail.md`, `asic_flow.md`,
-`rtl_simulation.md`, `agent_brief_16macs.md`, e este relato.
+`micro_progress.md`, `b1_pack_unpack_detail.md`, `synthesis.md`,
+`simulation.md`, `agent_brief_16macs.md`, e este relato.
 
 **Resultados**: `reports/genus/dom4/` e `reports/genus/dom6/` (relatórios texto;
 os `.v`/`.db`/`.sdf` grandes ficam fora do versionamento).

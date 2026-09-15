@@ -1,0 +1,37 @@
+# Documentação do WinoCNN (baseline ASIC)
+
+Índice. O foco é a comparação de PPA com o acelerador de referência (FastConv)
+sob a mesma metodologia ASIC.
+
+## Fluxo ASIC
+
+| documento | conteúdo |
+|---|---|
+| [`synthesis.md`](synthesis.md) | escolher o domínio, interface de memória ASIC (`-DWINO_ASIC`), HLS → Genus, black-box das RAMs, constraints, resultados (dom4/dom6) |
+| [`simulation.md`](simulation.md) | C-sim (funcional), estímulo, testbench RTL, SHM, potência com atividade real, validação, resultados |
+
+## Arquitetura e micro-arquitetura
+
+| documento | conteúdo |
+|---|---|
+| [`architecture.md`](architecture.md) | hierarquia de módulos a partir de `wino_systolic_top` |
+| [`address_generation.md`](address_generation.md) | geração de endereços de entrada/peso/saída; hardware vs software |
+| [`configuration_exploration.md`](configuration_exploration.md) | exploração das configurações suportadas; menor config funcional; domínio 4 vs 6 |
+| [`micro_progress.md`](micro_progress.md) | jornada do WinoCNN-micro (Q, N, H, B; bloqueio de M=1) |
+| [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md) | detalhe do fix de `BATCH_SIZE=1` (layout da palavra, overflow, macros) |
+
+## Referência
+
+| documento | conteúdo |
+|---|---|
+| [`history.md`](history.md) | relato de todas as mudanças desde o commit original preservado |
+| [`agent_brief_16macs.md`](agent_brief_16macs.md) | brief do alvo de 16 MACs |
+
+## Convenções
+
+- **Domínio** `<N>` = `WINO_DOMAIN_SIZE` (4 = F(2×2,3×3), 6 = F(4×4,3×3)).
+  Artefatos são separados por domínio: `reports/genus/dom<N>/` (síntese),
+  `sim_asic/dom<N>/` (simulação), `testbench/stim/dom<N>/` (estímulo).
+- Config micro validada: `M=2, N=1, H2=2, W2=1, Q=1, B=1` → 1 PE.
+- Ferramentas: Vivado HLS 2019.2, Genus 21.12, Xcelium 23.03 (host `paxos`),
+  TSMC 28 nm BWP30P140, 2 ns.
