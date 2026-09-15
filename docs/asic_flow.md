@@ -6,7 +6,8 @@ Genus, com as **memórias externas black-box** (para comparar lógica com lógic
 
 Estado: **fluxo completo executado no paxos**. HLS ASIC gera o RTL e o Genus
 21.1 fecha a síntese com as memórias black-box, produzindo
-`reports/genus/*.rpt` (área, gates, timing, potência, clock gating). Os números
+`reports/genus/dom<N>/*.rpt` (área, gates, timing, potência, clock gating), onde
+`<N>` é o domínio de Winograd (4 = F(2×2,3×3), 6 = F(4×4,3×3)). Os números
 da configuração micro (1 PE) estão na seção 5.
 
 ---
@@ -95,8 +96,8 @@ module load genus      && bash asic_scripts/run_asic_flow.sh genus
 # ou, em uma sessão com ambos: bash asic_scripts/run_asic_flow.sh all
 ```
 
-Saída: `reports/genus/wino_area.rpt`, `wino_timing_*.rpt`, `wino_power_*.rpt`,
-`wino_qor.rpt`.
+Saída: `reports/genus/dom<N>/wino_systolic_top_*.rpt` (área, timing, potência,
+gates, qor), com `<N>` = domínio de Winograd.
 
 ## 5. Black-box das memórias e constraints
 
@@ -153,12 +154,13 @@ Caminho crítico real: multiplicador `wino_systolic_topeOg_MulnS_0` em
 dominada por `wino_input_compute` (~48.7k µm², 75 %), majoritariamente
 AddrGen/controle e registradores de pipeline — reflexo do estilo HLS.
 
-Relatórios completos em `reports/genus/*.rpt`. Os artefatos grandes
-(`gate_level/`: netlist `.v`, `.db`, `.sdf`) não são versionados.
+Relatórios completos em `reports/genus/dom<N>/*.rpt`. Os artefatos grandes
+(`dom<N>/gate_level/`: netlist `.v`, `.db`, `.sdf`) não são versionados.
 
 > Nota: os 27 mW acima usam `lp_default_probability 0.5` e **sem estímulo**.
 > Com o SHM da simulação RTL a potência real é **8.46 mW** em tt0p9v25c — ver
-> `docs/rtl_simulation.md` e `reports/genus/wino_systolic_top_power_shm_tt.rpt`.
+> `docs/rtl_simulation.md` e
+> `reports/genus/dom4/wino_systolic_top_power_shm_tt.rpt`.
 
 ## 7. O que falta
 

@@ -13,8 +13,14 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 RTL="$ROOT/HLS_asic/solution_asic/impl/verilog"
-SIM="$ROOT/sim_asic"
-STIM="$ROOT/testbench/stim"
+
+# Per-domain working directories (stimulus, sim, SHM) keyed by the Winograd
+# domain read from the configuration header.
+WINO_DOM=$(grep -oP '#define\s+WINO_DOMAIN_SIZE\s+\K[0-9]+' "$ROOT/src/wino_hw_config.h")
+TAG="dom${WINO_DOM}"
+SIM="$ROOT/sim_asic/$TAG"
+STIM="$ROOT/testbench/stim/$TAG"
+echo "== Winograd domain $WINO_DOM (tag $TAG) =="
 
 if [ ! -d "$RTL" ]; then
     echo "HLS RTL not found at $RTL -- run asic_scripts/script_asic.tcl first" >&2

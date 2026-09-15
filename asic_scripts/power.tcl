@@ -12,9 +12,22 @@
 set POWER_ROOT [file normalize [file dirname [info script]]]
 set GIT_ROOT   [file normalize [file join $POWER_ROOT ..]]
 set CONSTRAINTS_PATH $POWER_ROOT
-set DB_FILE [file join $GIT_ROOT reports genus gate_level wino_systolic_top_logic_mapped.db]
-set SHM     [file join $GIT_ROOT sim_asic dut.shm]
+
+# Same domain tag as genus_core.tcl: DB and SHM are per-domain.
+proc wino_domain {root} {
+    set f [open [file join $root src wino_hw_config.h]]
+    set s [read $f]
+    close $f
+    if {[regexp {WINO_DOMAIN_SIZE\s+([0-9]+)} $s -> d]} { return $d }
+    return 0
+}
+set WINO_DOM [wino_domain $GIT_ROOT]
+set TAG      "dom${WINO_DOM}"
+set DB_FILE [file join $GIT_ROOT reports genus $TAG gate_level wino_systolic_top_logic_mapped.db]
+set SHM     [file join $GIT_ROOT sim_asic $TAG dut.shm]
+set OUT_FILE [file join $GIT_ROOT reports genus $TAG wino_systolic_top_power_shm_tt.rpt]
 set START_TIME 0ns
+puts "INFO: Winograd domain $WINO_DOM -> power report $OUT_FILE"
 
 set LIB_PATH /pdk/tsmc/PDK28/PDK_TSMC28_bv/tcbn28hpcplusbwp30p140_190a/TSMCHOME/digital/Front_End
 set TECH_PATH /pdk/tsmc/PDK28/PDK_TSMC28_bv/tcbn28hpcplusbwp30p140_190a/TSMCHOME/digital/Back_End
@@ -42,5 +55,6 @@ set_analysis_view -setup analysis_view_0p90v_25c_captyp_nominal \
 read_db $DB_FILE
 set_db interconnect_mode ple
 read_stimulus $SHM -dut_instance tb.dut -start $START_TIME
-report_power -header -unit mW > [file join $POWER_ROOT power_evaluation.txt]
+file mkdir [file dirname $OUT_FILE]
+report_power -header -unit mW > $OUT_FILE
 exit

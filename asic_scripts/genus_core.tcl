@@ -25,8 +25,20 @@
 set CONFIG_ROOT [file normalize [file dirname [info script]]]
 set GIT_ROOT    [file normalize [file join $CONFIG_ROOT ..]]
 set HLS_RTL     [file join $GIT_ROOT HLS_asic solution_asic impl verilog]
-set OUT_FILES   [file join $GIT_ROOT reports genus]
 set TOP_MODULE  wino_systolic_top
+
+# Report directory is keyed by the Winograd domain (dom4 / dom6) read from the
+# configuration header, so different domains never overwrite each other.
+proc wino_domain {root} {
+    set f [open [file join $root src wino_hw_config.h]]
+    set s [read $f]
+    close $f
+    if {[regexp {WINO_DOMAIN_SIZE\s+([0-9]+)} $s -> d]} { return $d }
+    return 0
+}
+set WINO_DOM [wino_domain $GIT_ROOT]
+set OUT_FILES [file join $GIT_ROOT reports genus "dom${WINO_DOM}"]
+puts "INFO: Winograd domain $WINO_DOM -> reports in $OUT_FILES"
 
 # --- 1. Technology (TSMC 28 nm) --------------------------------------------
 read_mmmc [file join $CONFIG_ROOT mmmc_tsmc_28_bv.tcl]

@@ -18,6 +18,7 @@ misc_buffer_content.txt
 misc_obuffer_content.txt
 .Xil/
 # Large Genus outputs (netlist/db/sdf) — keep only the text reports.
+reports/genus/dom*/gate_level/
 reports/genus/gate_level/
 # Generated ASIC-flow artifacts.
 HLS_asic/
