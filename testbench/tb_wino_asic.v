@@ -4,7 +4,7 @@
 //
 // Models the four external synchronous RAMs (ap_memory ports of
 // wino_systolic_top), preloads them from $readmemh files produced by
-// hw_scripts/bin2hex.py, runs one convolution, counts cycles and memory
+// asic_scripts/bin2hex.py, runs one convolution, counts cycles and memory
 // transactions, dumps the output DDR, and (under +define+XRUN) writes an SHM
 // for Genus power analysis.
 //
