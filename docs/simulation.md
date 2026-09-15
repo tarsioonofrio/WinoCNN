@@ -73,6 +73,36 @@ Os `.hex` versionados ficam em `testbench/stim/dom<N>/` (teste
 `random random center`, conv 8×8×8, kernel 3×3). Tamanhos: `input.hex` e
 `weight.hex` = 64 × 128 bits; `param.hex` = 128 × 32 bits.
 
+### 3.1 Dataset externo (lib `fast-convolution-rtl`)
+
+O dataset pode vir da lib de referência em `../fast-convolution-rtl`. O `sim`
+(2-D) dela passou a exportar, sob `<sim>/winocnn/`:
+
+| arquivo | conteúdo |
+|---|---|
+| `feature.bin` | int8, `Cin*H*W`, layout `c*H*W + h*W + w` |
+| `weight.bin` | int8, `Cout*Cin*kh*kw`, layout `(od*Cin+id)*kh*kw + ks` |
+| `params.json` | descritor (dims, stride, pad, scale) |
+| `README.md` | layout e como alimentar o WinoCNN |
+
+Esses layouts são os do `software/buffer.cpp` do WinoCNN, então o
+`single_main` carrega direto via o modo `file:`:
+
+```bash
+# 1) empacotar + validar contra o golden do WinoCNN
+./single_csim.out <H> <W> <Cin> <Oh> <Ow> <Cout> 3 3 1 0 0 0 128 \
+    file:<sim>/winocnn/feature.bin random file:<sim>/winocnn/weight.bin compare . 3
+# 2) gerar o estímulo RTL (empacota o DDR e converte)
+python3 asic_scripts/bin2hex.py .
+```
+
+Ressalvas:
+- o `single_main` usa `scale_oback_int` fixo; pesos/entradas de magnitude alta
+  saturam (a lib gera `sim int -r` com pesos em `0..Cout*Cin*9`, que estouram
+  int8). Use magnitudes pequenas ou o fluxo completo com fatores de escala.
+- **depth 3** (RGB) ainda esbarra na limitação pré-existente de `depth` não
+  múltiplo de 8; use depth múltiplo de 8 por enquanto.
+
 ---
 
 ## 4. Testbench RTL (`asic_scripts/tb_wino_asic.v`)
