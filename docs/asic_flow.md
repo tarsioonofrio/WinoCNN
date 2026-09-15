@@ -4,9 +4,10 @@ Objetivo: preparar o WinoCNN para a **comparação de PPA com o acelerador de
 referência (FastConv)** usando a mesma metodologia ASIC — núcleo sintetizado no
 Genus, com as **memórias externas black-box** (para comparar lógica com lógica).
 
-Estado: **preparação concluída e verificada em C-sim**. A síntese HLS/Genus em si
-não foi executada neste ambiente (não há `vivado_hls`/`vitis_hls`/`genus`
-instalados); os scripts estão prontos para rodar onde as ferramentas existirem.
+Estado: **fluxo completo executado no paxos**. HLS ASIC gera o RTL e o Genus
+21.1 fecha a síntese com as memórias black-box, produzindo
+`reports/genus/*.rpt` (área, gates, timing, potência, clock gating). Os números
+da configuração micro (1 PE) estão na seção 5.
 
 ---
 
@@ -41,12 +42,15 @@ black-boxar as RAMs e mapeá-las às macros do PDK no Genus.
 | port | tipo | profundidade | conteúdo |
 |---|---|---|---|
 | `input_DDR0`, `input_DDR1` | `ap_uint<128>` | 524288 | feature map de entrada |
-| `weight_DDR0..3` | `ap_uint<128>` | 1179648 | pesos + bias |
+| `weight_DDR0` | `ap_uint<128>` | 1179648 | pesos + bias |
 | `output_DDR0`, `output_DDR1` | `ap_uint<ODDR_WIDTH*BATCH_SIZE*OUT_PORT_BATCH_NUM>` | 524288 | feature map de saída |
 | `mem_params` | `ap_int<32>` | 65535 | descritor de convolução |
 
-No fluxo ASIC todas viram RAMs síncronas (`ap_memory`). O `s_axilite register
-port=return` é removido (não existe em ASIC).
+As portas concretas dependem da configuração: no micro (`WINO_WIDTH=1`) o macro
+`WEIGHT_PORTS_DECLARE` resolve para uma **única** porta `weight_DDR0` (as
+versões com 2/4 portas ficam ativas em configurações maiores). No fluxo ASIC
+todas viram RAMs síncronas (`ap_memory`). O `s_axilite register port=return` é
+removido (não existe em ASIC).
 
 ## 4. Como rodar
 
@@ -94,26 +98,84 @@ module load genus      && bash hw_scripts/run_asic_flow.sh genus
 Saída: `reports/genus/wino_area.rpt`, `wino_timing_*.rpt`, `wino_power_*.rpt`,
 `wino_qor.rpt`.
 
-## 5. Hipóteses e o que falta
+## 5. Black-box das memórias e constraints
 
-- **Ferramentas/PDK só no paxos**: este ambiente de autoria não tem
-  `vivado_hls`/`vitis_hls`/`genus` nem `/pdk`. O acesso SSH não-interativo ao
-  paxos foi negado (`Permission denied (publickey)`), então a síntese precisa
-  ser disparada lá por quem tem credencial.
-- **Macros de memória internas**: as RAMs inferidas pelo HLS
-  (`input_buffer`, `out_buffer`, `weight_buff`) viram registradores por padrão.
-  Para comparar lógica com lógica, black-boxá-las e mapear às macros SRAM do
-  PDK (linha comentada em `genus_core.tcl`). `wino_sram_bb.v` é o stub.
+O HLS infere as RAMs internas como módulos Verilog próprios. O `genus_core.tcl`
+**não lê** os arquivos que declaram memória (`ram_style`), de modo que essas
+instâncias ficam como *black boxes* (com `hdl_error_on_blackbox false`) e não
+são sintetizadas como bancos de flip-flops. Na config micro são 5 módulos:
+
+| módulo HLS | conteúdo | instâncias | tamanho |
+|---|---|---|---|
+| `wino_systolic_topbwn` | output buffers (ping-pong) | 64 | 1024 × 9 |
+| `wino_systolic_topcyx` | bias buffers | 16 | 1024 × 16 |
+| `wino_input_computqcK` | input buffer | — | 4096 × 16 |
+| `weight_feed_one_pg8j` | weight buffer | — | 1024 × 44 |
+| `load_params_parambkb` | RAM de parâmetros | — | 128 × 32 |
+
+Isso satisfaz o requisito "memórias não sintetizadas": apenas lógica (AddrGen,
+controle, datapath, pipeline) entra na área. Os relatórios de potência confirmam
+`memory = 0` e `bbox = 0`.
+
+`constraints.sdc` foi adaptado ao topo HLS:
+
+- clock `ap_clk` a **2 ns** e `ap_rst` como `false_path` (o topo HLS usa
+  `ap_clk`/`ap_rst`, não `clk`/`reset`);
+- `set_input_delay`/`set_output_delay` aplicados **somente às portas de memória**;
+  as portas de handshake `ap_start`/`ap_done`/`ap_idle`/`ap_ready` ficam de fora.
+  Caso contrário cria-se um caminho espúrio `ap_start → ap_idle` (datapath de
+  16 ps) que mascara o caminho crítico real.
+
+## 6. Resultado da síntese (micro, 1 PE)
+
+Config: `WINO_DOMAIN_SIZE=4`, `WINO_HEIGHT=2`, `WINO_WIDTH=1`, `WINO_H2=2`,
+`WINO_W2=1`, `Q=1`, `BATCH_SIZE=1` → 1 PE.
+
+Ferramentas: Vivado HLS 2019.2 (RTL, 46 `.v`) → Genus 21.12 no paxos,
+TSMC 28 nm BWP30P140, corner lento `ssg0p81v125c`, 2 ns.
+
+| métrica | valor |
+|---|---|
+| cell area | 64 812.9 µm² |
+| net area | 22 219.1 µm² |
+| total area | 87 032.0 µm² |
+| sequential instances | 19 250 |
+| flip-flops | 19 070 (88.8 % com clock gating) |
+| combinational instances | 31 138 |
+| leaf instances | 50 388 |
+| slack (setup, 2 ns) | **+39 ps** (MET) |
+| Fmax estimado | ≈ 510 MHz |
+| potência (slow / typ / fast) | 27.28 / 27.47 / 33.30 mW |
+| runtime Genus | ≈ 879 s |
+
+Caminho crítico real: multiplicador `wino_systolic_topeOg_MulnS_0` em
+`input_feed_undercons` (datapath 1939 ps), não o datapath do PE. A área é
+dominada por `wino_input_compute` (~48.7k µm², 75 %), majoritariamente
+AddrGen/controle e registradores de pipeline — reflexo do estilo HLS.
+
+Relatórios completos em `reports/genus/*.rpt`. Os artefatos grandes
+(`gate_level/`: netlist `.v`, `.db`, `.sdf`) não são versionados.
+
+> Nota: potência com `lp_default_probability 0.5` e **sem estímulo** (não há
+> testbench RTL/SHM ainda); serve como primeira referência, não como número
+> final.
+
+## 7. O que falta
+
 - **Instrumentação de tráfego**: contadores de leitura/escrita por porta ainda
-  não foram adicionados.
-- **Síntese real**: não executada (sem ferramentas no ambiente de autoria).
-- **Paridade com o FastConv**: usar a mesma lib, mesmo clock (2 ns) e mesmo
-  critério de black-box — o script já foi montado assim.
+  não foram adicionados (só simulação, não sintetizados).
+- **Power com estímulo**: gerar testbench RTL + SHM (Xcelium) para potência
+  realista; ou aplicar a mesma aproximação ao FastConv.
+- **Macros SRAM do PDK**: hoje as memórias são black-box (área excluída). Para
+  uma variante "com memória", mapear às macros do PDK.
+- **Paridade com o FastConv**: aplicar exatamente a mesma metodologia (mesma
+  lib, 2 ns, mesmo critério de black-box) e montar a tabela de PPA.
 
-## 6. Definição de pronto para a comparação
+## 8. Definição de pronto para a comparação
 
-- [ ] HLS ASIC roda e exporta RTL sem erros.
-- [ ] Genus sintetiza o core com as memórias black-box.
-- [ ] Relatórios de área/FF/Fmax/potência gerados.
+- [x] HLS ASIC roda e exporta RTL sem erros.
+- [x] Genus sintetiza o core com as memórias black-box.
+- [x] Relatórios de área/FF/Fmax/potência gerados.
+- [ ] Instrumentação de tráfego (reads/writes/cycles).
 - [ ] Mesma metodologia aplicada ao FastConv (mesma lib, mesmo clock, mesmo
       critério de black-box) para uma comparação justa.
