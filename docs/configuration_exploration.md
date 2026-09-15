@@ -13,6 +13,7 @@ Legenda das colunas: **M** = `WINO_HEIGHT`, **N** = `WINO_WIDTH`, **Q** = `INDEP
 |  2 |  2 |  2 |  2 | F(2×2,3×3) | ✅      | ❌   | —      | combinação também quebra |
 |  2 |  1 |  1 |  2 | F(2×2,3×3) | ✅      | ✅   | —      | baseline funcional atual; 1 PE, Q=1 |
 |  2 |  1 |  1 |  1 | F(2×2,3×3) | ✅      | ✅   | —      | B=1 após generalizar pack/unpack de saída; 1 PE, 32 mult escalares |
+|  2 |  1 |  1 |  1 | F(4×4,3×3) | ✅      | ✅   | —      | **domínio 6 no modo micro**; 4/4 csim + ASan limpo (sem mudança de código) |
 |  1 |  1 |  1 | 2 | F(2×2,3×3) | ✅      | ❌   | —      | `winoPEB_*` ainda assume duas linhas de peso/saída; ASan em `weight_tile[1]` |
 |  1 |  1 |  1 | 1 | F(2×2,3×3) | ✅      | ❌   | —      | não testada após o bloqueio estrutural de M=1 |
 
@@ -99,3 +100,63 @@ WINO_DOMAIN_SIZE² × (INDEPTH_MINITILE_SIZE/2) × BATCH_SIZE × 2
 ## Validação funcional (nota)
 
 O golden (`wino_gold.cpp`) usa `long int` (64-bit) nos acumuladores; o hardware usa larguras fixas (`ap_int<UV_WIDTH>` etc.). Convergem para dados dentro da faixa dinâmica projetada (ex.: entrada `one`, peso `center`/`kernel_order`/`zero` → `Not different!`), mas divergem para dados aleatórios de maior magnitude (overflow/saturação das larguras fixas). A validação funcional desta exploração usou entradas de baixa magnitude para isolar correção do datapath do efeito de overflow. O fluxo completo do paper (`main.cpp` + `exec_plot` + `compute_scale_factors`) calcula fatores de escala que mantêm os dados dentro da faixa; o `single_main` standalone usa `scale_oback_int` fixo (não calculado), por isso não é um teste funcional válido para dados aleatórios.
+
+---
+
+## F(4×4,3×3) no modo micro (domínio 6)
+
+Confirmado: `WINO_DOMAIN_SIZE=6` com `WINO_HEIGHT=2, WINO_WIDTH=1, WINO_H2=2,
+WINO_W2=1, INDEPTH_MINITILE_SIZE_BITWIDTH=0 (Q=1), BATCH_SIZE=1` **compila e
+passa 4/4** no C-sim (ASan limpo), sem nenhuma mudança de código — é só trocar
+o `wino_hw_config.h`. Limitação igual à do micro domínio 4: funcional até 8×8
+(o *input-buffer cycling* acima disso é um gap separado).
+
+Trocar o domínio é feito por `src/wino_hw_config.h` + `python3 codegen/gen_systolic.py`.
+
+## F(3×3,3×3) (domínio 5) — base derivada, ainda não implementado
+
+F(3×3,3×3) exige um **domínio novo (5×5)**: hoje o código só tem os caminhos
+`#if WINO_DOMAIN_SIZE == 4` e `#else` (domínio 6). As matrizes foram derivadas
+pela mesma construção Toom-Cook/Winograd usada nos domínios existentes
+(pontos `[0, 1, -1, 2, -2]`; F(3,3) é o F(4,3) **sem o 6º ponto**):
+
+```
+B^T (5×5) = [ 4,  0, -5,  0,  1]
+            [ 0, -4, -4,  1,  1]
+            [ 0,  4, -4, -1,  1]
+            [ 0, -2, -1,  2,  1]
+            [ 0,  2, -1, -2,  1]
+
+G   (5×3) = [ 6,  0,  0]
+            [-4, -4, -4]
+            [-4,  4, -4]
+            [ 1,  2,  4]
+            [ 1, -2,  4]        (24 × G de Lavin)
+
+A^T (3×5) = [ 1,  1,  1,  1,  1]
+            [ 0,  1, -1,  2, -2]
+            [ 0,  1,  1,  4,  4]
+```
+
+Conferem com os domínios 4 e 6 (as 5 primeiras linhas de `B^T`/`G` do domínio 6
+são idênticas). Mudanças necessárias (~35 pontos):
+
+1. `src/wino_macro.h`: `WINO_OUT_SIZE=3`, `WINO_OUT_SIZE_CELL=5`,
+   `IN_TRANSBIT=4`, `OUT_TRANSBIT=4`, `G_TRANSBIT=4`, `G_TRANSFACTOR=24`,
+   `W_WIDTH` (≈12).
+2. `src/wino_transform.cpp`: `DB5x5_1`, `BTB5x5_1`, `GgG3to5`, `gGT3to5` e os
+   ramos de `UVA_row`/`ATA_col` para 5 pontos.
+3. `src/wino_buffer.cpp`, `src/wino_cell.cpp`: todos os `#if WINO_DOMAIN_SIZE==6`
+   passam a tratar 5 e 6 (guardando o 6º ponto).
+4. `software/buffer.cpp`: matriz `G` do peso.
+5. `src_gold/wino_cell_gold.hpp` + `wino_gold.cpp`: `*_5to3` e `*_25`
+   (golden independente — indispensável para validar).
+6. `codegen/gen_systolic.py`: já usa `WINO_OUT_SIZE_CELL = WINO_DOMAIN_SIZE`
+   (5), sem mudança.
+
+O ponto não-trivial é o **UVA/ATA do hardware**: no domínio 4 ele calcula
+`WINO_OUT_SIZE_CELL` saídas e no domínio 6 calcula `WINO_OUT_SIZE` (linhas 4/5
+comentadas), então é preciso decidir/validar o número de saídas para o domínio 5
+(o C-sim é o oráculo). É uma mudança grande e arriscada; vale fazer como tarefa
+dedicada, com o golden servindo de referência.
+
