@@ -53,5 +53,7 @@ config_export -format ip_catalog -rtl verilog -vivado_optimization_level 2 -viva
 set_clock_uncertainty 12.5%
 csynth_design
 
-# Export synthesizable RTL (Verilog) for Genus.
-export_design -rtl verilog -format ip_catalog
+# Export synthesizable RTL (Verilog) for Genus.  `csynth_design` already
+# writes HLS_asic/solution_asic/impl/verilog/*.v; the ip_catalog packaging is
+# not needed (and fails on HLS 2019.2 with a core_revision bug).
+export_design -rtl verilog

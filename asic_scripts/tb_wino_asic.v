@@ -227,7 +227,7 @@ module tb;
 
     @(posedge ap_done);
     #20 counting = 0;
-    #200;
+    #2000;
 
     $display("WINO_SIM_DONE cycles=%0d input_reads=%0d weight_reads=%0d param_reads=%0d output_writes=%0d",
              cycle_count, input_reads, weight_reads, param_reads, output_writes);

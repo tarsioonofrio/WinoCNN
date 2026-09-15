@@ -162,6 +162,30 @@ Relatórios completos em `reports/genus/dom<N>/*.rpt`. Os artefatos grandes
 > `docs/rtl_simulation.md` e
 > `reports/genus/dom4/wino_systolic_top_power_shm_tt.rpt`.
 
+### 6.1 F(4×4,3×3) no modo micro (domínio 6)
+
+Mesma metodologia, trocando só `WINO_DOMAIN_SIZE=6` (M=2/N=1/Q=1/B=1, 1 PE).
+O fluxo é por domínio: `reports/genus/dom6/`, `sim_asic/dom6/`,
+`testbench/stim/dom6/` — os resultados do domínio 4 são preservados.
+
+| métrica | dom4 (F(2×2,3×3)) | dom6 (F(4×4,3×3)) |
+|---|---|---|
+| cell area | 64 812.9 µm² | 147 680.1 µm² |
+| flip-flops | 19 070 | 42 095 |
+| combinational instances | 31 138 | 63 777 |
+| leaf instances | 50 388 | 106 151 |
+| slack (setup, 2 ns) | +39 ps | **+1 ps** (MET) |
+| Fmax estimado | ≈ 510 MHz | ≈ 500 MHz |
+| potência sem estímulo (slow/typ/fast) | 27.3 / 27.5 / 33.3 mW | 70.2 / 72.6 / 87.6 mW |
+| potência com SHM (tt) | 8.46 mW | 28.36 mW |
+| ciclos (conv 8×8×8) | 34 122 | 75 419 |
+| input/weight/param reads | 88 / 339 / 129 | 88 / 516 / 129 |
+| output writes | 128 | 128 |
+
+O RTL do domínio 6 foi validado contra o modelo C do cosim (união dos bancos
+ping-pong = 128/128 palavras). O `cell area` cresce ~2.3× (mais multiplicadores
+e lógica de transformada 6×6); o slack fica no limite de 2 ns.
+
 ## 7. O que falta
 
 - **Instrumentação de tráfego**: os contadores já existem no testbench RTL
