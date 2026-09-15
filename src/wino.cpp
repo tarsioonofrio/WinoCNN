@@ -269,6 +269,7 @@ void wino_flatten_kernel(
         // hls::stream< ap_uint<16*BATCH_SIZE*36> > &input_tile_stream1, 
         // hls::stream< ap_uint<16*BATCH_SIZE*36> > &input_tile_stream2,
         conv_desc.inwidth,
+        conv_desc.inheight,
         // conv_desc.pad_size,
         conv_desc.weightbuffer_load_outdepth_number,
         conv_desc.wino_output_tile_size,

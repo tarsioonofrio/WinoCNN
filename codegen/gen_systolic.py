@@ -151,6 +151,7 @@ def generate_wino_systolic(config:Config_t):
         // hls::stream< ap_uint<16*BATCH_SIZE*36> > &input_tile_stream1, \n\
         // hls::stream< ap_uint<16*BATCH_SIZE*36> > &input_tile_stream2,\n\
         conv_desc.inwidth,\n\
+        conv_desc.inheight,\n\
         // conv_desc.pad_size,\n\
         conv_desc.weightbuffer_load_outdepth_number,\n\
         conv_desc.wino_output_tile_size,\n\

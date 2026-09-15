@@ -16,6 +16,7 @@ void input_feed_underconstruction(
 	ap_uint<16> input_buffer[INBUFFER_HEIGHT][INBUFFER_WIDTH][INPUT_BUFFER_DEPTH],
 	hls::stream< ap_uint<8*BATCH_SIZE*WINO_DOMAIN_SIZE_SQUARE> > input_tile_stream[WINO_WIDTH], 
 	ap_uint<16> inwidth,
+	ap_uint<16> inheight,
 	// ap_uint<16> pad_size,
 	ap_uint<16> weightbuffer_load_outdepth_number,
 	ap_uint<16> wino_output_tile_size,
@@ -118,7 +119,7 @@ void input_feed_underconstruction(
 			for(int i=0;i<WINO_DOMAIN_SIZE;i++)
 			{
 			#pragma HLS unroll
-				row_legal_flag[i] = ( input_row_idx[i] >=0 && input_row_idx[i] < inwidth);
+				row_legal_flag[i] = ( input_row_idx[i] >=0 && input_row_idx[i] < inheight);
 			}
 
 

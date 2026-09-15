@@ -393,11 +393,19 @@ void load_input_row_from_ddr(
 
 		if(row_address_bitnumber_flag)
 		{
+#if INDEPTH_MINITILE_SIZE_BITWIDTH == 0
+			buffer_addr=(row_pingpong_bit1,buffer_address_mid_rowbit1_offset);
+#else
 			buffer_addr=(row_pingpong_bit1,buffer_address_mid_rowbit1_offset,buffer_address_mini_tile);
+#endif
 		}
 		else
 		{
+#if INDEPTH_MINITILE_SIZE_BITWIDTH == 0
+			buffer_addr=(row_pingpong_bit2,buffer_address_mid_rowbit2_offset);
+#else
 			buffer_addr=(row_pingpong_bit2,buffer_address_mid_rowbit2_offset,buffer_address_mini_tile);
+#endif
 		}
 
 
@@ -616,11 +624,19 @@ void load_input_row_from_ddr(
 
 		if(row_address_bitnumber_flag)
 		{
+#if INDEPTH_MINITILE_SIZE_BITWIDTH == 0
+			buffer_addr=(row_pingpong_bit1,buffer_address_mid_rowbit1_offset);
+#else
 			buffer_addr=(row_pingpong_bit1,buffer_address_mid_rowbit1_offset,buffer_address_mini_tile);
+#endif
 		}
 		else
 		{
+#if INDEPTH_MINITILE_SIZE_BITWIDTH == 0
+			buffer_addr=(row_pingpong_bit2,buffer_address_mid_rowbit2_offset);
+#else
 			buffer_addr=(row_pingpong_bit2,buffer_address_mid_rowbit2_offset,buffer_address_mini_tile);
+#endif
 		}
 
 		#if INBUFFER_HEIGHT == 8
