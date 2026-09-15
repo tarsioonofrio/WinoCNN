@@ -156,21 +156,14 @@ AddrGen/controle e registradores de pipeline — reflexo do estilo HLS.
 Relatórios completos em `reports/genus/*.rpt`. Os artefatos grandes
 (`gate_level/`: netlist `.v`, `.db`, `.sdf`) não são versionados.
 
-> Nota: potência com `lp_default_probability 0.5` e **sem estímulo** (não há
-> testbench RTL/SHM ainda); serve como primeira referência, não como número
-> final.
+> Nota: os 27 mW acima usam `lp_default_probability 0.5` e **sem estímulo**.
+> Com o SHM da simulação RTL a potência real é **8.46 mW** em tt0p9v25c — ver
+> `docs/rtl_simulation.md` e `reports/genus/wino_systolic_top_power_shm_tt.rpt`.
 
 ## 7. O que falta
 
-- **RTL funcional do micro**: o C/RTL co-simulation do HLS **falha** e o
-  testbench RTL mostra escrita de saída incompleta (102 vs 128 palavras). A
-  infraestrutura de simulação RTL + SHM está pronta e documentada em
-  `docs/rtl_simulation.md`, mas o RTL do micro precisa ser corrigido antes de
-  qualquer PPA. Veja os próximos passos naquele documento.
 - **Instrumentação de tráfego**: os contadores já existem no testbench RTL
   (reads/writes/ciclos); falta levá-los para o fluxo oficial.
-- **Power com estímulo**: gerar testbench RTL + SHM (Xcelium) para potência
-  realista; ou aplicar a mesma aproximação ao FastConv.
 - **Macros SRAM do PDK**: hoje as memórias são black-box (área excluída). Para
   uma variante "com memória", mapear às macros do PDK.
 - **Paridade com o FastConv**: aplicar exatamente a mesma metodologia (mesma
@@ -181,6 +174,7 @@ Relatórios completos em `reports/genus/*.rpt`. Os artefatos grandes
 - [x] HLS ASIC roda e exporta RTL sem erros.
 - [x] Genus sintetiza o core com as memórias black-box.
 - [x] Relatórios de área/FF/Fmax/potência gerados.
+- [x] Testbench RTL + SHM; potência com atividade real (8.46 mW tt).
 - [ ] Instrumentação de tráfego (reads/writes/cycles).
 - [ ] Mesma metodologia aplicada ao FastConv (mesma lib, mesmo clock, mesmo
       critério de black-box) para uma comparação justa.

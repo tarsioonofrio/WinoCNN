@@ -101,6 +101,13 @@ module tb;
     if (o1_ce && o1_we) mem_out1[o1_addr] <= o1_d;
   end
 
+  integer ow;
+  initial ow = $fopen("out_writes.txt", "w");
+  always @(posedge ap_clk) begin
+    if (o0_ce && o0_we) $fwrite(ow, "0 %0d %08x\n", o0_addr, o0_d);
+    if (o1_ce && o1_we) $fwrite(ow, "1 %0d %08x\n", o1_addr, o1_d);
+  end
+
   // Memory traffic counters.
   always @(posedge ap_clk) begin
     input_reads   <= input_reads   + (in0_ce ? 1 : 0) + (in1_ce ? 1 : 0);
@@ -220,7 +227,7 @@ module tb;
 
     @(posedge ap_done);
     #20 counting = 0;
-    #20;
+    #200;
 
     $display("WINO_SIM_DONE cycles=%0d input_reads=%0d weight_reads=%0d param_reads=%0d output_writes=%0d",
              cycle_count, input_reads, weight_reads, param_reads, output_writes);

@@ -44,31 +44,46 @@ modelo `AESL_automem_*` do cosim):
 | input reads | 88 |
 | weight reads | 339 |
 | param reads | 129 |
-| output writes | 102 |
+| output writes | 128 |
 | max endereço de entrada/peso | 63 / 63 (sem out-of-range) |
-| max endereço de saída | 114 |
+| max endereço de saída | 127 |
 | SHM | `sim_asic/dut.shm` (~0.9 MB) |
 
-## 4. Achado: o RTL do micro não é funcionalmente equivalente ao C
+## 4. Validação funcional e potência
 
-O C/RTL co-simulation do HLS **falha** (`C TB post check ... return value '3'`).
-Além disso, o testbench RTL mostra que o hardware escreve **102** palavras de
-saída (até o endereço 114), enquanto o modelo C produz **128** palavras (8×8×8,
-4 canais por palavra de 32 bits). Em termos de valores não nulos, o RTL escreve
-46 palavras contra 96 do modelo C.
+### 4.1 O RTL é funcionalmente correto
 
-Ou seja: a configuração micro (1 PE, Q=1, B=1) passa o **C-sim**, mas o **RTL
-gerado pelo HLS não reproduz** o resultado — há escrita de saída incompleta.
+O testbench RTL reproduz o modelo C **exatamente** (128/128 palavras de saída,
+comparando a união dos bancos ping-pong `output_DDR0`+`output_DDR1` com o
+`autotvout_output_DDR0` do cosim). Duas ressalvas de infraestrutura, já
+resolvidas no testbench:
 
-> Isso não invalida o C-sim: são níveis diferentes. Mas **impede** usar a
-> config micro para PPA enquanto o RTL não for corrigido, pois a atividade
-> simulada (e portanto a potência/tráfego) não corresponde ao algoritmo.
+- **`*_ram.dat`**: as RAMs internas fazem `$readmemh("./*_ram.dat")`; sem esses
+  arquivos no CWD do sim o RTL parte de memória não inicializada e a saída fica
+  errada. O runner agora os copia.
+- **Espera pós-`ap_done`**: o write-back para a DDR **continua depois** de
+  `ap_done`; parar cedo perde as últimas palavras. O testbench espera 200 ns
+  após `ap_done` antes de encerrar (foi isso que gerou a falsa impressão de
+  "escrita incompleta": 102 vs 128 palavras).
 
-### Próximos passos sugeridos
+O C/RTL co-simulation do HLS **falha**, mas por um artefato conhecido: o
+testbench C aponta `output_DDR0` e `output_DDR1` para o **mesmo buffer**,
+enquanto o cosim os modela como memórias separadas. O testbench RTL usa
+memórias separadas e valida o resultado.
 
-1. Depurar o RTL do micro contra o C: comparar o conteúdo dos `output_buffer`
-   internos e o caminho de write-back (`write_output_row`), focando em
-   `winoPEB_CORN` / pack-unpack B=1 (área já mexida no histórico micro).
-2. Alternativa: validar a config **original** (M=4/N=2/Q=4/B=2) no cosim; se
-   ela passar, usá-la como baseline RTL e derivar o micro a partir dela.
-3. Só então rodar `read_stimulus` do SHM no Genus para potência.
+### 4.2 Potência com atividade real (SHM)
+
+`hw_scripts/power.tcl` lê o DB mapeado e anota a atividade do `sim_asic/dut.shm`
+(anotação 100% em flops e portas primárias). Resultado (tt0p9v25c):
+
+| categoria | mW |
+|---|---:|
+| register | 7.881 |
+| logic | 0.184 |
+| clock | 0.392 |
+| memory / bbox | 0.000 |
+| **total** | **8.457** |
+
+Comparação: com `lp_default_probability 0.5` (sem estímulo) o relatório de
+síntese dava 27.5 mW em tt — o número com SHM é o realista. Relatório em
+`reports/genus/wino_systolic_top_power_shm_tt.rpt`.
