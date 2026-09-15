@@ -18,7 +18,7 @@ O datapath não muda. A única diferença é a **interface de memória externa**
 | fluxo | interface | macro | uso |
 |---|---|---|---|
 | FPGA / Zynq (padrão) | `m_axi` (AXI master, burst, offset slave) | `WINO_MEM_IF_AXI` | `run_hls.sh` / `hw_scripts/script.tcl` |
-| **ASIC** (`-DWINO_ASIC`) | `ap_memory` (RAM síncrona simples) | `WINO_MEM_IF_AXI` / `WINO_MEM_IF_PORT` | `hw_scripts/script_asic.tcl` |
+| **ASIC** (`-DWINO_ASIC`) | `ap_memory` (RAM síncrona simples) | `WINO_MEM_IF_AXI` / `WINO_MEM_IF_PORT` | `asic_scripts/script_asic.tcl` |
 
 Com `ap_memory` o RTL exportado tem portas simples **address / data / ce / we**
 (leitura síncrona, latência fixa), sem protocolo AXI — que é o que permite
@@ -31,9 +31,9 @@ black-boxar as RAMs e mapeá-las às macros do PDK no Genus.
 | `src/wino_mem_if.h` | abstração da interface (`WINO_MEM_IF_AXI`, `WINO_MEM_IF_PORT`); `WINO_ASIC` escolhe AXI vs `ap_memory` |
 | `src/wino.cpp` | top `wino_systolic_top`: pragmas dos ports via `WINO_MEM_IF_AXI` |
 | `src/wino_buffer.cpp`, `src/wino_IO.cpp` | ports internos via `WINO_MEM_IF_PORT` |
-| `hw_scripts/script_asic.tcl` | HLS com `-DWINO_ASIC`; exporta RTL Verilog |
-| `hw_scripts/wino_sram_bb.v` | black-box da SRAM síncrona de 1 porta |
-| `hw_scripts/genus_core.tcl` | esqueleto de síntese no Genus (área/FF/Fmax/potência) |
+| `asic_scripts/script_asic.tcl` | HLS com `-DWINO_ASIC`; exporta RTL Verilog |
+| `asic_scripts/wino_sram_bb.v` | black-box da SRAM síncrona de 1 porta |
+| `asic_scripts/genus_core.tcl` | esqueleto de síntese no Genus (área/FF/Fmax/potência) |
 
 ## 3. Portas de memória do topo
 
@@ -71,7 +71,7 @@ Ambos os modos compilam e passam os testes do protocolo.
 ### 4.2 HLS → RTL (onde houver Vivado HLS)
 
 ```
-vivado_hls -f hw_scripts/script_asic.tcl
+vivado_hls -f asic_scripts/script_asic.tcl
 # gera HLS_asic/solution_asic/impl/verilog/*.v
 ```
 
@@ -81,18 +81,18 @@ O host com Genus é o **paxos** (`paxos.inf.pucrs.br`, porta 8888), onde o
 FastConv foi sintetizado. O WinoCNN reusa **exatamente** o mesmo cenário:
 
 - PDK **TSMC 28 nm** `tcbn28hpcplusbwp30p140` (BWP30P140), via MMMC
-  (`hw_scripts/mmmc_tsmc_28_bv.tcl`, copiado do template do FastConv);
+  (`asic_scripts/mmmc_tsmc_28_bv.tcl`, copiado do template do FastConv);
 - 3 corners: `ssg0p81v125c` (setup) / `tt0p9v25c` / `ffg0p99vm40c` (hold);
 - clock **500 MHz (2 ns)** e as mesmas restrições de driving cell / load
-  (`hw_scripts/constraints.sdc`);
+  (`asic_scripts/constraints.sdc`);
 - `syn_generic` → `syn_map` → `syn_opt` + relatórios de área/timing/potência.
 
 No paxos:
 
 ```
-module load vivado_hls && bash hw_scripts/run_asic_flow.sh hls
-module load genus      && bash hw_scripts/run_asic_flow.sh genus
-# ou, em uma sessão com ambos: bash hw_scripts/run_asic_flow.sh all
+module load vivado_hls && bash asic_scripts/run_asic_flow.sh hls
+module load genus      && bash asic_scripts/run_asic_flow.sh genus
+# ou, em uma sessão com ambos: bash asic_scripts/run_asic_flow.sh all
 ```
 
 Saída: `reports/genus/wino_area.rpt`, `wino_timing_*.rpt`, `wino_power_*.rpt`,

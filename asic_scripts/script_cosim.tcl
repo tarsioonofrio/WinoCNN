@@ -6,7 +6,7 @@
 ## script_asic.tcl.  This validates the HLS RTL functionally, independently of
 ## the Verilog testbench used for power/traffic.
 ##
-##   vivado_hls -f hw_scripts/script_cosim.tcl
+##   vivado_hls -f asic_scripts/script_cosim.tcl
 ############################################################
 open_project HLS_asic
 set_top wino_systolic_top

@@ -3,10 +3,10 @@
 #
 # Mirrors the FastConv power body: recreate a single-corner (tt) MMMC, read the
 # mapped DB, annotate activity from the Xcelium SHM (sim_asic/dut.shm, produced
-# by hw_scripts/run_sim_asic.sh), and report power.
+# by asic_scripts/run_sim_asic.sh), and report power.
 #
 #   module load cadence/genus/211
-#   genus -f hw_scripts/power.tcl
+#   genus -f asic_scripts/power.tcl
 # ---------------------------------------------------------------------------
 
 set POWER_ROOT [file normalize [file dirname [info script]]]

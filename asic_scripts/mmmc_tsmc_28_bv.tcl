@@ -1,6 +1,6 @@
 # The caller defines CONFIG_ROOT for the directory holding this file.
 # In the FastConv layout the constraints live in <config>/scripts; here both
-# the MMMC and constraints.sdc live directly in hw_scripts/.
+# the MMMC and constraints.sdc live directly in asic_scripts/.
 set CONSTRAINTS_PATH $CONFIG_ROOT
 
 #################################################################################

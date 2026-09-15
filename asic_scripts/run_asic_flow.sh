@@ -6,10 +6,10 @@
 # (e.g. paxos.inf.pucrs.br).  On that host:
 #
 #   module load vivado_hls    # or: source /etc/profile.d/modules.sh; module use ...
-#   bash hw_scripts/run_asic_flow.sh hls
+#   bash asic_scripts/run_asic_flow.sh hls
 #
 #   module load genus
-#   bash hw_scripts/run_asic_flow.sh genus
+#   bash asic_scripts/run_asic_flow.sh genus
 #
 # Steps:
 #   hls   : Vivado HLS -> Verilog RTL (HLS_asic/solution_asic/impl/verilog)
@@ -24,13 +24,13 @@ STEP="${1:-all}"
 run_hls() {
     echo "== Vivado HLS (ASIC) =="
     cd "$ROOT"
-    vivado_hls -f hw_scripts/script_asic.tcl
+    vivado_hls -f asic_scripts/script_asic.tcl
 }
 
 run_genus() {
     echo "== Genus (TSMC 28 nm, 2 ns) =="
     cd "$ROOT"
-    genus -f hw_scripts/genus_core.tcl
+    genus -f asic_scripts/genus_core.tcl
 }
 
 case "$STEP" in

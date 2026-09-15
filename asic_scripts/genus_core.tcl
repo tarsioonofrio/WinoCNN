@@ -9,10 +9,10 @@
 #   - syn_generic / syn_map / syn_opt + area/timing/power reports
 #
 # Prerequisites (run on paxos, where Genus and the PDK live):
-#   1. Vivado HLS:  vivado_hls -f hw_scripts/script_asic.tcl
+#   1. Vivado HLS:  vivado_hls -f asic_scripts/script_asic.tcl
 #      (exports simple synchronous RAM ports via -DWINO_ASIC)
 #   2. module load cadence/genus/211
-#   3. genus -f hw_scripts/genus_core.tcl
+#   3. genus -f asic_scripts/genus_core.tcl
 #
 # Memories: the HLS-inferred RAMs (input/weight/bias/output buffers and the
 # parameter RAM) are deliberately black-boxed, so they are NOT synthesized as
@@ -50,7 +50,7 @@ set_db lp_insert_clock_gating true
 
 # --- 4. RTL (from Vivado HLS) ----------------------------------------------
 if {![file isdirectory $HLS_RTL]} {
-    error "HLS RTL not found at $HLS_RTL — run hw_scripts/script_asic.tcl first"
+    error "HLS RTL not found at $HLS_RTL — run asic_scripts/script_asic.tcl first"
 }
 
 # Black-box the HLS-inferred RAMs: any generated file that declares a

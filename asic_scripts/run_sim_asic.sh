@@ -7,7 +7,7 @@
 # analysis.  Must run on a host with Cadence Xcelium (paxos).
 #
 #   module load cadence/xcelium/2303
-#   bash hw_scripts/run_sim_asic.sh
+#   bash asic_scripts/run_sim_asic.sh
 # ---------------------------------------------------------------------------
 set -euo pipefail
 
@@ -17,7 +17,7 @@ SIM="$ROOT/sim_asic"
 STIM="$ROOT/testbench/stim"
 
 if [ ! -d "$RTL" ]; then
-    echo "HLS RTL not found at $RTL -- run hw_scripts/script_asic.tcl first" >&2
+    echo "HLS RTL not found at $RTL -- run asic_scripts/script_asic.tcl first" >&2
     exit 2
 fi
 

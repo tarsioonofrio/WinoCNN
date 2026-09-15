@@ -9,9 +9,9 @@ potência no Genus.
 | arquivo | papel |
 |---|---|
 | `testbench/tb_wino_asic.v` | testbench RTL: modela as RAMs externas (input/weight/output/params), carrega o estímulo, conta ciclos/leituras/escritas e gera SHM+VCD |
-| `hw_scripts/bin2hex.py` | converte `input.bin`/`weight.bin`/`param.bin` (dumps do C-sim) em `*.hex` para `$readmemh` |
-| `hw_scripts/run_sim_asic.sh` | runner Xcelium (`xrun`) que monta `sim_asic/` e gera `dut.shm` |
-| `hw_scripts/script_cosim.tcl` | C/RTL co-simulation do HLS (`cosim_design`) |
+| `asic_scripts/bin2hex.py` | converte `input.bin`/`weight.bin`/`param.bin` (dumps do C-sim) em `*.hex` para `$readmemh` |
+| `asic_scripts/run_sim_asic.sh` | runner Xcelium (`xrun`) que monta `sim_asic/` e gera `dut.shm` |
+| `asic_scripts/script_cosim.tcl` | C/RTL co-simulation do HLS (`cosim_design`) |
 | `testbench/stim/*.hex` | estímulo determinístico (teste `random random center`, 8×8×8 conv 3×3) |
 
 ## 2. Como rodar
@@ -19,7 +19,7 @@ potência no Genus.
 ```
 # no paxos
 module load cadence/xcelium/2303
-bash hw_scripts/run_sim_asic.sh      # -> sim_asic/dut.shm, output_rtl*.hex
+bash asic_scripts/run_sim_asic.sh      # -> sim_asic/dut.shm, output_rtl*.hex
 ```
 
 O runner copia também os `*_ram.dat` gerados pelo HLS: as RAMs internas
@@ -73,7 +73,7 @@ memórias separadas e valida o resultado.
 
 ### 4.2 Potência com atividade real (SHM)
 
-`hw_scripts/power.tcl` lê o DB mapeado e anota a atividade do `sim_asic/dut.shm`
+`asic_scripts/power.tcl` lê o DB mapeado e anota a atividade do `sim_asic/dut.shm`
 (anotação 100% em flops e portas primárias). Resultado (tt0p9v25c):
 
 | categoria | mW |
