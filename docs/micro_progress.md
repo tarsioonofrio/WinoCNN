@@ -31,15 +31,32 @@ Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do c
 3. **`ap_uint<0>` degenerado**: `loop_indepth_minitile_idx` (`wino_buffer.cpp`) e `buffer_address_mini_tile` (`wino_IO.cpp`) têm largura `INDEPTH_MINITILE_SIZE_BITWIDTH = 0` para Q=1; em C-sim incrementam **sem limite** (1,2,3,…), então `==INDEPTH_MINITILE_SIZE-1` (==0) nunca é verdade e **a coluna nunca avança**. Corrigido com `INDEPTH_MINITILE_IDX_BITWIDTH = max(1, INDEPTH_MINITILE_SIZE_BITWIDTH)` + incremento com reset condicional.
 4. **Concatenação `common`** no `input_feed` usava a largura do índice; ajustada para Q=1 (sem o bit do minitile).
 
-## Pendência Q=1
+## Q=1 para h/w > 8 (resolvido)
 
-Funcional apenas quando **h ≤ 8 e w ≤ 8** (um conjunto de linhas/banco do input buffer). Falha para `h > 8` **ou** `w > 8` (ciclismo do input buffer). Isolado: 8×8 ✅; 16×8 ❌; 8×16 ❌; 10×10+ ❌. Q=4 funciona em todos.
+Era funcional apenas quando **h ≤ 8 e w ≤ 8**. Duas causas foram encontradas e
+corrigidas (commit `1a43e69`):
 
-Hipótese: o endereçamento do input buffer (`load_input_row_from_ddr`) assume `INDEPTH_MINITILE_SIZE>=2`. Com Q=1 o `buffer_address_mini_tile` é sempre 0, então `buffer_address_mini_tile == INDEPTH_MINITILE_SIZE-1` (==0) é sempre verdadeira e `buffer_address_mid_offset += inwidth_ceildiv_inbufferwidth` dispara a cada ciclo — quebrando o endereçamento quando há ciclismo de banco/linha. Somado a isso, a fórmula de `buffer_address_mid_increment_step` para Q=1 (`7·ceildiv+1`) merece verificação.
+1. **Endereço de escrita** (`src/wino_IO.cpp`): para Q=1
+   (`INDEPTH_MINITILE_SIZE_BITWIDTH == 0`) a concatenação do endereço ainda
+   incluía `buffer_address_mini_tile` (1 bit, sempre 0), gerando 13 bits e
+   truncando/deslocando o endereço. O campo mini-tile agora é omitido quando a
+   largura é 0.
+2. **Legalidade de linha** (`src/wino_buffer.cpp`): `row_legal_flag` comparava o
+   índice de **linha** com `inwidth` (`input_row_idx[i] < inwidth`). Para h > w
+   isso marcava linhas válidas como ilegais e zerava a entrada.
+   `input_feed_underconstruction` passou a receber `inheight` e usa esse limite
+   (chamadores atualizados em `src/wino.cpp` e `codegen/gen_systolic.py`).
+
+Verificado em C-sim (ASan limpo), dom4 e dom6 micro: 8×8, 16×8, 8×16, 16×16,
+32×32, 32×16, 16×32, 24×24, **64×64** — com depth múltiplo de 8.
+
+**Limitação restante (pré-existente):** depth que **não** é múltiplo de 8 (ex.:
+3) falha — mas isso também falha na config original dos autores
+(M4/N2/Q4/B2), então não é do micro.
 
 ## Próximos passos
 
-1. Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).
+1. ~~Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).~~ ✅ feito (commit `1a43e69`); resta só depth ≠ múltiplo de 8, que é limitação pré-existente do fonte original.
 2. ~~Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`)~~ ✅ feito.
 3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — **bloqueio estrutural** (ver abaixo).
 4. ~~Reduzir B=1 (`BATCH_SIZE=1`)~~ ✅ feito; detalhes completos em

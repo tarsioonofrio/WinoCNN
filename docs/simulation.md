@@ -54,8 +54,8 @@ O modo ASIC (`-DWINO_ASIC`) troca só os pragmas de memória; o C-sim ignora.
 
 > **Nota de escopo.** O C-sim de `single_main` usa `scale_oback_int` fixo (não
 > calculado); ele valida o datapath, não é um teste de acurácia para dados
-> aleatórios de grande magnitude. O micro é funcional para `h ≤ 8` e `w ≤ 8`
-> (ciclismo do input buffer acima disso — gap conhecido).
+> aleatórios de grande magnitude. O micro é funcional para `h/w` até 64×64
+> (com **depth múltiplo de 8**; ver `micro_progress.md`).
 
 ---
 
