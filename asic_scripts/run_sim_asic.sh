@@ -2,7 +2,7 @@
 # ---------------------------------------------------------------------------
 # WinoCNN ASIC-flow RTL simulation (Xcelium).
 #
-# Runs the HLS-generated RTL with testbench/tb_wino_asic.v, preloaded with the
+# Runs the HLS-generated RTL with asic_scripts/tb_wino_asic.v, preloaded with the
 # stimulus in testbench/stim/, and writes an SHM (dut.shm) used by Genus power
 # analysis.  Must run on a host with Cadence Xcelium (paxos).
 #
@@ -22,7 +22,7 @@ if [ ! -d "$RTL" ]; then
 fi
 
 mkdir -p "$SIM"
-cp -f "$ROOT/testbench/tb_wino_asic.v" "$SIM/"
+cp -f "$ROOT/asic_scripts/tb_wino_asic.v" "$SIM/"
 cp -f "$STIM/input.hex" "$STIM/weight.hex" "$STIM/param.hex" "$SIM/"
 # The HLS-inferred internal RAMs ($readmemh "./*_ram.dat") need their .dat
 # initialization files in the simulation working directory.

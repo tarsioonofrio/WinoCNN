@@ -8,7 +8,7 @@ potência no Genus.
 
 | arquivo | papel |
 |---|---|
-| `testbench/tb_wino_asic.v` | testbench RTL: modela as RAMs externas (input/weight/output/params), carrega o estímulo, conta ciclos/leituras/escritas e gera SHM+VCD |
+| `asic_scripts/tb_wino_asic.v` | testbench RTL: modela as RAMs externas (input/weight/output/params), carrega o estímulo, conta ciclos/leituras/escritas e gera SHM+VCD |
 | `asic_scripts/bin2hex.py` | converte `input.bin`/`weight.bin`/`param.bin` (dumps do C-sim) em `*.hex` para `$readmemh` |
 | `asic_scripts/run_sim_asic.sh` | runner Xcelium (`xrun`) que monta `sim_asic/` e gera `dut.shm` |
 | `asic_scripts/script_cosim.tcl` | C/RTL co-simulation do HLS (`cosim_design`) |
