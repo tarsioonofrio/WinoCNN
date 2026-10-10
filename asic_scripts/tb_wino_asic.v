@@ -58,10 +58,14 @@ module tb;
   integer i;
   integer cycle_count;
   integer input_reads, weight_reads, param_reads, output_writes;
+  integer input0_reads, input1_reads, weight0_reads, params_sram_reads;
+  integer output0_reads, output1_reads;
   integer max_in_addr, max_w_addr, in_oob, w_oob;
   integer max_out_addr;
   reg     counting;
+  reg     report_sram_accesses;
   integer fd;
+  integer sram_counter_file;
 
   // External RAM read model.  Vivado HLS schedules the ap_memory read of this
   // design with a 3-cycle latency (the generated cosim model AESL_automem_*
@@ -113,10 +117,12 @@ module tb;
   integer ow;
   initial ow = $fopen("out_writes.txt", "w");
   always @(posedge ap_clk) begin
-    if ((o0_ce === 1'b1) && (o0_we === 1'b1))
+    if ((o0_ce === 1'b1) && (o0_we === 1'b1)) begin
       $fwrite(ow, "0 %0d %08x\n", o0_addr, o0_d);
-    if ((o1_ce === 1'b1) && (o1_we === 1'b1))
+    end
+    if ((o1_ce === 1'b1) && (o1_we === 1'b1)) begin
       $fwrite(ow, "1 %0d %08x\n", o1_addr, o1_d);
+    end
   end
 
   // Memory traffic counters.
@@ -128,6 +134,10 @@ module tb;
     output_writes <= output_writes
                    + (((o0_ce === 1'b1) && (o0_we === 1'b1)) ? 1 : 0)
                    + (((o1_ce === 1'b1) && (o1_we === 1'b1)) ? 1 : 0);
+    input0_reads    <= input0_reads + ((in0_ce === 1'b1) ? 1 : 0);
+    input1_reads    <= input1_reads + ((in1_ce === 1'b1) ? 1 : 0);
+    weight0_reads   <= weight0_reads + ((w0_ce === 1'b1) ? 1 : 0);
+    params_sram_reads <= params_sram_reads + ((p_ce === 1'b1) ? 1 : 0);
     if (in0_ce) begin
       if (in0_addr > max_in_addr) max_in_addr <= in0_addr;
       if (in0_addr > 63) in_oob <= in_oob + 1;
@@ -212,6 +222,14 @@ module tb;
     weight_reads = 0;
     param_reads = 0;
     output_writes = 0;
+    input0_reads = 0; input1_reads = 0; weight0_reads = 0;
+    params_sram_reads = 0; output0_reads = 0; output1_reads = 0;
+    report_sram_accesses = 0;
+    sram_counter_file = $fopen("sram_access_counts.tsv", "w");
+    if (sram_counter_file == 0) begin
+      $display("ERROR: cannot open sram_access_counts.tsv");
+      $finish;
+    end
     max_in_addr = 0;
     max_w_addr = 0;
     in_oob = 0;
@@ -255,6 +273,17 @@ module tb;
 
     @(posedge ap_done);
     #20 counting = 0;
+    // These top-level RAM interfaces are read-only except output_DDR*, whose
+    // HLS port has no read-data signal and is therefore write-only here.
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=input_DDR0 reads=%0d writes=0\n", input0_reads);
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=input_DDR1 reads=%0d writes=0\n", input1_reads);
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=weight_DDR0 reads=%0d writes=0\n", weight0_reads);
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=mem_params reads=%0d writes=0\n", params_sram_reads);
+    // summarize_sram_counters.py fills output writes from out_writes.txt.
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=output_DDR0 reads=%0d writes=0\n", output0_reads);
+    $fwrite(sram_counter_file, "WINO_EXTERNAL_SRAM module=external name=output_DDR1 reads=%0d writes=0\n", output1_reads);
+    report_sram_accesses = 1;
+    #1 report_sram_accesses = 0;
     #2000;
 
     $display("WINO_SIM_DONE cycles=%0d input_reads=%0d weight_reads=%0d param_reads=%0d output_writes=%0d",
@@ -272,6 +301,7 @@ module tb;
       $fwrite(fd, "%08x\n", mem_out1[i]);
     $fclose(fd);
 
+    $fclose(sram_counter_file);
     $finish;
   end
 

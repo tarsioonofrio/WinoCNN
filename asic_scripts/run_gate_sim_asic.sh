@@ -29,8 +29,8 @@ done
 [[ -d "$RTL" ]] || { echo "HLS RTL directory missing: $RTL (run HLS first)" >&2; exit 2; }
 
 # Genus deliberately leaves HLS-inferred buffer RAM modules unresolved. For
-# functional gate-level simulation, compile only their behavioral HLS models;
-# the external DDR-like ports are still modeled by tb_wino_asic.v.
+# functional gate-level simulation, compile staged behavioral HLS models with
+# simulation-only transaction counters; external memories are in the testbench.
 mapfile -t RAM_RTLS < <(grep -l 'ram_style' "$RTL"/*.v 2>/dev/null || true)
 [[ ${#RAM_RTLS[@]} -gt 0 ]] || { echo "No HLS behavioral RAM models found under $RTL" >&2; exit 2; }
 
@@ -40,22 +40,8 @@ mapfile -t RAM_RTLS < <(grep -l 'ram_style' "$RTL"/*.v 2>/dev/null || true)
 # never modify the generated HLS RTL. These are simulation assumptions, not
 # characterized SRAM timing values or synthesized logic.
 RAM_MODEL_DIR="$SIM/ram_models"
-mkdir -p "$RAM_MODEL_DIR"
-rm -f "$RAM_MODEL_DIR"/*.v
-ram_q_count=0
-for src in "${RAM_RTLS[@]}"; do
-    dst="$RAM_MODEL_DIR/$(basename "$src")"
-    cp -f "$src" "$dst"
-    perl -0pi -e \
-        's/(\bq\d+\s*<=\s*)([^;\n]+)(;)/$1#('"$INTERNAL_RAM_TCO_NS"') $2$3/g' \
-        "$dst"
-    changed=$( (grep -oE '\bq[0-9]+[[:space:]]*<=[[:space:]]*#\(' "$dst" || true) | wc -l )
-    ram_q_count=$((ram_q_count + changed))
-done
-[[ "$ram_q_count" -eq 6 ]] || {
-    echo "Expected to add tCO to 6 HLS RAM read outputs, changed $ram_q_count; inspect $RAM_MODEL_DIR" >&2
-    exit 2
-}
+python3 "$ROOT/asic_scripts/instrument_sram_models.py" \
+    "$RTL" "$RAM_MODEL_DIR" --read-tco-ns "$INTERNAL_RAM_TCO_NS"
 
 mkdir -p "$SIM"
 rm -f "$GOLDEN_CHECK"
@@ -80,7 +66,7 @@ EOF
 cd "$SIM"
 rm -rf dut.shm xcelium.d
 rm -f out_writes.txt output_rtl.hex output_rtl1.hex rtl_golden_check.json \
-    sdf_log.log xrun.log
+    sdf_log.log xrun.log sram_access_counts.tsv sram_access_counts.json
 xrun -f args.txt -sdf_cmd_file sdf_cmd.cmd -maxdelays \
     -define XRUN -define GATE_SIM \
     "$CELL_MODELS" "$RAM_MODEL_DIR"/*.v "$NETLIST" tb_wino_asic.v -run -exit 2>&1 | tee xrun.log
@@ -106,5 +92,7 @@ fi
 [[ -d dut.shm ]] || { echo "Gate-level SHM missing; power flow is blocked." >&2; exit 6; }
 python3 "$ROOT/asic_scripts/compare_rtl_output.py" \
     output_golden.bin out_writes.txt --json rtl_golden_check.json
+python3 "$ROOT/asic_scripts/summarize_sram_counters.py" \
+    sram_access_counts.tsv --output-trace out_writes.txt --json sram_access_counts.json
 # The checker already writes directly to $GOLDEN_CHECK (same as SIM cwd).
 echo "Gate-level output matches the C-model golden; SDF activity is ready for power analysis."

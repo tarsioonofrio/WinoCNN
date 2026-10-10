@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "golden_image": "output_golden.bin",
+  "rtl_write_trace": "out_writes.txt",
+  "golden_sha256": "12084a3373ff6a0f9eb9c3a87f97f78a65c634e159f7403862a4d81ff3500b08",
+  "rtl_write_trace_sha256": "f570ab2894bc8fe78081336eb5b9baaa86e6b1d1f10926a23117cbf6f7f49b4f",
+  "expected_writes": 3840,
+  "checked_writes": 3840,
+  "unique_bank_addresses": 3840,
+  "mismatch_count": 0,
+  "mismatches": []
+}

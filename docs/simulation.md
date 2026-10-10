@@ -133,6 +133,26 @@ Contadores de simulação (não sintetizados): ciclos, reads de entrada/peso/par
 writes de saída, endereços máximos e out-of-range. O testbench registra cada
 write como `banco endereço dado` em `out_writes.txt`.
 
+Também são contabilizados **reads e writes por SRAM** em
+`sram_access_counts.json`: as seis interfaces externas (`input_DDR0/1`,
+`weight_DDR0`, `mem_params`, `output_DDR0/1`) aparecem individualmente; cada
+instância das RAMs inferidas pelo HLS aparece pelo caminho hierárquico, além de
+um agregado por classe de RAM. A porta externa `output_DDR*` não tem sinal de
+read-data no RTL WinoCNN, portanto seus reads são reportados como zero e suas
+escritas são contadas a partir de `out_writes.txt`, o mesmo trace transacional
+que é validado contra o golden. Nas RAMs internas contam-se as operações
+por porta: `ce && !we` como read quando existe porta de saída `q`, e `ce && we`
+como write. Nos modelos read-only, `ce` é read; nas RAMs só de escrita não se
+inventam reads. A contagem é de transações de porta (duas operações podem
+ocorrer no mesmo ciclo em uma dual-port), não de endereços únicos.
+
+Os modelos HLS usados em simulação são **cópias temporárias** instrumentadas
+por `instrument_sram_models.py`; o RTL gerado original e o netlist permanecem
+intocados. Os contadores e o relatório JSON existem somente para simulação e
+não acrescentam lógica, área ou potência sintetizada. Os JSONs ficam em
+`sim_asic/dom<N>/sram_access_counts.json` (RTL) e
+`sim_asic/dom<N>/gate/sram_access_counts.json` (gate/SDF).
+
 ---
 
 ## 5. Como rodar (host paxos)
@@ -213,6 +233,12 @@ o modelo das memórias externas no testbench aplica 200 ps. Isso não modifica o
 RTL HLS, não entra na síntese e **não representa caracterização de SRAM/DDR**.
 Esses valores são hipóteses de simulação e limitam a interpretação temporal e
 de potência até serem substituídos por modelos de memória apropriados.
+
+Na mesma execução, o runner registra acessos por porta externa e por instância
+RAM HLS, incluindo classe, caminho hierárquico, leituras e escritas em
+`sim_asic/dom<N>/gate/sram_access_counts.json`. O JSON é separado da contagem
+de tráfego externo e pode mostrar contagens diferentes entre RTL HLS e a
+netlist gate-level, pois a hierarquia/replicação de RAM pode mudar na síntese.
 
 O fluxo completo agora executa `run_asic_flow.sh all`: HLS → RTL/C-golden →
 Genus → gate-level/SDF/C-golden → potência. As etapas podem ser chamadas
