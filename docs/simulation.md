@@ -208,3 +208,46 @@ dava 27.5 mW (dom4) e 72.6 mW (dom6) em tt — o número com SHM é o realista.
 4. **Nunca confunda** `reports/genus/dom<N>/` (síntese) com `sim_asic/dom<N>/`
    (simulação) — são domínios diferentes de artefato.
 5. **`make clean` apaga `license.txt`** — restaure antes de commitar.
+
+---
+
+## 10. Dados normais e métricas compatíveis com FastConv
+
+`asic_scripts/winocnn_normal_metrics.py` reproduz a geração `cmd_sim_normal` do
+FastConv (`RandomState(seed)`, primeiro `N(0,1)` para a entrada NCHW, depois
+pesos OIHW), calcula uma referência float de convolução válida e executa o
+C-sim WinoCNN. O fluxo grava métricas no formato familiar do FastConv: MAE,
+RMSE, erro absoluto/relativo máximo, R² e erro contra a saída golden
+quantizada. Exemplo:
+
+```bash
+python3 asic_scripts/winocnn_normal_metrics.py --height 32 --width 32 \
+  --cin 3 --cout 12 --seed 3
+```
+
+Os tensores float e a seed seguem o gerador do FastConv. Os operandos **não**
+são iguais aos do pacote FastConv: a quantização FastConv de 8 bits aplica
+`trunc(x*256)`, cujos valores podem exceder signed-8; para esta execução, o
+WinoCNN usa input signed-8 e peso signed-7 (limite imposto por `G_WIDTH=7`), com
+escala/headroom declarados no JSON. Assim, a comparação de qualidade usa a
+convolução float original, não presume equivalência bit a bit entre datasets.
+
+Execução diagnóstica em `32×32`, `Cin=3`, `Cout=12`, seed 3, kernel 3×3,
+stride 1, sem padding/bias/ReLU: o C-sim **falhou** contra o golden inteiro,
+com 863 saídas divergentes de 10.800. Por isso os MAE/R² abaixo são apenas
+diagnósticos e **não são resultados válidos para o paper**:
+
+| origem da saída | MAE | RMSE | R² | mismatches vs golden inteiro |
+|---|---:|---:|---:|---:|
+| C-sim hardware | 87.060 | 102.536 | -425.361 | 863 / 10.800 |
+| modelo inteiro WinoCNN | 87.630 | 103.291 | -431.662 | — |
+
+O R² fortemente negativo e a divergência hardware/modelo mostram que ainda há
+um problema de correção/escalas para este workload aleatório; esses números
+não devem ser comparados como acurácia do acelerador. A fórmula é a mesma do
+FastConv (`1 − SSE/SST`), global sobre as saídas pareadas; R² é ilimitado
+inferiormente, então não deve ser truncado para zero. O JSON guarda dimensões,
+seed, escalas, métricas e status da validação. O script também exporta os
+operandos int8 realmente fornecidos ao WinoCNN e códigos de saída para permitir
+reprodução e depuração. Só depois de corrigir o mismatch e obter `Not different!`
+as métricas devem ser usadas para comparação acadêmica.

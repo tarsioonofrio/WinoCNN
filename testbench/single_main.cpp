@@ -340,7 +340,7 @@ if(dump_method!="dump_param" )
     fwrite(fmap_dict["in"].buffers_hw[0], 16,CEIL_DIV(input_depth,8)*input_height*ALIGN(input_height,8),fptr);
     fclose(fptr);
 
-    if(dump_method == "compare" || dump_method=="dump_txt")
+    if(dump_method == "compare" || dump_method=="dump_txt" || dump_method=="dump_metrics")
     {
         wino_systolic_top(
             (ap_uint<128> *) inputddr,
@@ -397,7 +397,7 @@ if(dump_method!="dump_param" )
         del_weight_buffer_pointer(linfo_vect);
         return 0;
     }
-    else if( dump_method=="dump_txt" || dump_method == "dump_gen" )
+    else if( dump_method=="dump_txt" || dump_method=="dump_metrics" || dump_method == "dump_gen" )
     {
         // char* out_hw1 = new char[ fmap_dict["out"].buffer_size_int];
         // char* out_hw2 = new char[ fmap_dict["out"].buffer_size_int];
@@ -419,12 +419,34 @@ if(dump_method!="dump_param" )
         sprintf(filename, "%s/hw_%d_%d_%d_%d.txt",folder.c_str(),input_height,input_depth,kernel_size_h,kernel_size_w);
 
     
-        print_hw_buffers<char>(
-            fmap_dict["out"].buffers_hw[0],
-            filename,
-            linfo_vect[0].outdim[1],
-            linfo_vect[0].outdim[2],
-            linfo_vect[0].outdim[0]);
+        if(dump_method=="dump_txt")
+            print_hw_buffers<char>(
+                fmap_dict["out"].buffers_hw[0],
+                filename,
+                linfo_vect[0].outdim[1],
+                linfo_vect[0].outdim[2],
+                linfo_vect[0].outdim[0]);
+
+        if(dump_method=="dump_metrics")
+        {
+            int output_size=linfo_vect[0].outdim[0]*linfo_vect[0].outdim[1]*linfo_vect[0].outdim[2];
+            sprintf(filename, "%s/model_codes.csv", folder.c_str());
+            FILE* model_codes=fopen(filename,"w");
+            for(int i=0;i<output_size;i++) fprintf(model_codes,"%d\n",(int)fmap_dict["out"].buffers_int[0][i]);
+            fclose(model_codes);
+            char* out_hw1=new char[output_size];
+            char* out_hw2=new char[output_size];
+            featuremap_hw_to_int_pointers(
+                fmap_dict["out"].buffers_hw[0], out_hw1, out_hw2,
+                linfo_vect[0].outdim[1], linfo_vect[0].outdim[2],
+                linfo_vect[0].outdim[0], 0, linfo_vect[0].outdim[0]);
+            sprintf(filename, "%s/hw_codes.csv", folder.c_str());
+            FILE* codes=fopen(filename,"w");
+            for(int i=0;i<output_size;i++) fprintf(codes,"%d\n",(int)out_hw1[i]);
+            fclose(codes);
+            delete [] out_hw1;
+            delete [] out_hw2;
+        }
 
 
         featuremap_int_to_hw_pointers(
@@ -441,12 +463,13 @@ if(dump_method!="dump_param" )
         sprintf(filename, "%s/model_%d_%d_%d_%d.txt",folder.c_str(),input_height,input_depth,kernel_size_h,kernel_size_w);
 
     
-        print_hw_buffers<char>(
-            fmap_dict["out"].buffers_hw[0],
-            filename,
-            linfo_vect[0].outdim[1],
-            linfo_vect[0].outdim[2],
-            linfo_vect[0].outdim[0]);
+        if(dump_method=="dump_txt")
+            print_hw_buffers<char>(
+                fmap_dict["out"].buffers_hw[0],
+                filename,
+                linfo_vect[0].outdim[1],
+                linfo_vect[0].outdim[2],
+                linfo_vect[0].outdim[0]);
 
 
 

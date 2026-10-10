@@ -1,0 +1,108 @@
+{
+  "project": "WinoCNN",
+  "comparison_reference": "direct float cross-correlation, valid padding, no bias/ReLU",
+  "generation": {
+    "generator": "FastConv simulation.py cmd_sim_normal (NumPy RandomState/legacy seed order)",
+    "seed": 3,
+    "distribution": "N(0,1)",
+    "shape_input_chw": [
+      3,
+      32,
+      32
+    ],
+    "shape_weights_oihw": [
+      12,
+      3,
+      3,
+      3
+    ],
+    "fastconv_quant_bits": 8,
+    "fastconv_quant_rule": "trunc(normal * 2**8), retained as provenance; not the WinoCNN operands",
+    "winocnn_input_bits": 8,
+    "winocnn_weight_bits": 7,
+    "winocnn_input_quant_scale": 12.964359601019098,
+    "winocnn_weight_quant_scale": 10.298321096720311,
+    "winocnn_input_rounding": "nearest-even (numpy.rint), clipped to [-128,127]",
+    "winocnn_weight_rounding": "nearest-even (numpy.rint), clipped to [-64,63]",
+    "fastconv_input_integer_range": [
+      -812,
+      947
+    ],
+    "fastconv_weight_integer_range": [
+      -625,
+      770
+    ]
+  },
+  "convolution": {
+    "input_height": 32,
+    "input_width": 32,
+    "cin": 3,
+    "output_height": 30,
+    "output_width": 30,
+    "cout": 12,
+    "kernel": [
+      3,
+      3
+    ],
+    "stride": 1,
+    "padding": 0,
+    "bias": false,
+    "relu": false
+  },
+  "winocnn_scaling": {
+    "Scale_wino": 4,
+    "quant_shift_total": 15,
+    "Scale_o": 0.5215119669846073,
+    "Scale_oback": 31.9990234375,
+    "Scale_oback_int": 32767,
+    "output_code_limit_headroom": 0.9,
+    "scale_selection": "min(0.9*127/max_abs(float_output), max representable Scale_oback)"
+  },
+  "integer_csim": {
+    "result": "FAIL",
+    "return_code": 3,
+    "mismatch_count": 863,
+    "check": "hardware C model differs from integer Winograd golden",
+    "diagnostic_tail": "\nconv_desc.merge_kernel_size 3\nmerge row_offset 0\n****load_input_rowtile_from_ddr****\nclear flag 0\nloaded_input_row_number 24\nrequired_loaded_input_row_number 26\n\trow_idx[24 25 26 27]\n\tLoading row_idx 24\n\tLoading row_idx 25\n wino_kernel_merge_row \n---write_output_to_DDR 20---\naddr0 2560\naddr1 2688\n$$$$$$$$$$$$$ wino_input_compute $$$$$$$$$$$$$\nconv_desc.out_rowstep2\nconv_desc.pad_size_h 0\ncurr_required_loaded_input_row_number 26\nOK 3 \nconv_desc.merge_kernel_size 3\nmerge row_offset 0\n****load_input_rowtile_from_ddr****\nclear flag 0\nloaded_input_row_number 26\nrequired_loaded_input_row_number 28\n\trow_idx[28 29 26 27]\n\tLoading row_idx 26\n\tLoading row_idx 27\n wino_kernel_merge_row \n---write_output_to_DDR 22---\naddr0 2816\naddr1 2944\n$$$$$$$$$$$$$ wino_input_compute $$$$$$$$$$$$$\nconv_desc.out_rowstep2\nconv_desc.pad_size_h 0\ncurr_required_loaded_input_row_number 28\nOK 3 \nconv_desc.merge_kernel_size 3\nmerge row_offset 0\n****load_input_rowtile_from_ddr****\nclear flag 0\nloaded_input_row_number 28\nrequired_loaded_input_row_number 30\n\trow_idx[28 29 30 31]\n\tLoading row_idx 28\n\tLoading row_idx 29\n wino_kernel_merge_row \n---write_output_to_DDR 24---\naddr0 3072\naddr1 3200\n$$$$$$$$$$$$$ wino_input_compute $$$$$$$$$$$$$\nconv_desc.out_rowstep2\nconv_desc.pad_size_h 0\ncurr_required_loaded_input_row_number 30\nOK 3 \nconv_desc.merge_kernel_size 3\nmerge row_offset 0\n****load_input_rowtile_from_ddr****\nclear flag 0\nloaded_input_row_number 30\nrequired_loaded_input_row_number 32\n\trow_idx[32 33 30 31]\n\tLoading row_idx 30\n\tLoading row_idx 31\n wino_kernel_merge_row \n---write_output_to_DDR 26---\naddr0 3328\naddr1 3456\n$$$$$$$$$$$$$ wino_input_compute $$$$$$$$$$$$$\nconv_desc.out_rowstep2\nconv_desc.pad_size_h 0\ncurr_required_loaded_input_row_number 32\nOK 3 \nconv_desc.merge_kernel_size 3\nmerge row_offset 0\n****load_input_rowtile_from_ddr****\nclear flag 0\nloaded_input_row_number 32\nrequired_loaded_input_row_number 34\n\trow_idx[32 33 34 35]\n wino_kernel_merge_row \n---write_output_to_DDR 28---\naddr0 3584\naddr1 3712\nfeature map name in\nfeature map name out\nmismatch[0] at c=0 y=0 x=2: golden=-64 hardware=-32\nmismatch[1] at c=0 y=0 x=4: golden=-64 hardware=-32\nmismatch[2] at c=0 y=0 x=5: golden=0 hardware=-32\nmismatch[3] at c=0 y=0 x=8: golden=-64 hardware=-32\nmismatch[4] at c=0 y=0 x=11: golden=-64 hardware=-96\nmismatch[5] at c=0 y=0 x=22: golden=-64 hardware=-32\nmismatch[6] at c=0 y=0 x=23: golden=-64 hardware=-32\nmismatch[7] at c=0 y=0 x=24: golden=-64 hardware=-32\n... 855 additional mismatches\n"
+  },
+  "metrics_vs_float": {
+    "count": 10800,
+    "mae": 87.05968437733584,
+    "rmse": 102.53634935197701,
+    "max_abs": 193.9162127984937,
+    "max_rel": 203430.21323982213,
+    "r2_computed": -425.3611927485681,
+    "quantized_golden_mae_codes": 45.37638888888889,
+    "quantized_golden_rmse_codes": 53.57341535998366,
+    "quantized_golden_max_abs_codes": 101,
+    "quantized_golden_mismatch_count": 10325,
+    "quantized_golden_mismatch_rate": 0.9560185185185185
+  },
+  "metrics_integer_model_vs_float": {
+    "count": 10800,
+    "mae": 87.62968165044511,
+    "rmse": 103.29126687082453,
+    "max_abs": 196.02775658050624,
+    "max_rel": 203430.21323982213,
+    "r2_computed": -431.66241959526855,
+    "quantized_golden_mae_codes": 45.668055555555554,
+    "quantized_golden_rmse_codes": 53.951814063483916,
+    "quantized_golden_max_abs_codes": 102,
+    "quantized_golden_mismatch_count": 10302,
+    "quantized_golden_mismatch_rate": 0.9538888888888889
+  },
+  "r2_definition": "1 - sum((estimate-reference)^2) / sum((reference-mean(reference))^2), pooled over all outputs; negative values are valid and are not clipped",
+  "hardware_vs_integer_model": {
+    "mismatch_count": 863,
+    "mismatch_rate": 0.07990740740740741,
+    "mae_codes": 2.577777777777778,
+    "max_abs_codes": 64
+  },
+  "result_scope_warning": "Diagnostic only: do not use as paper PPA/accuracy evidence because hardware C-sim differs from the integer golden.",
+  "artifacts": {
+    "feature_int8": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/feature_int8.bin",
+    "weight_int8": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/weight_int8.bin",
+    "hardware_output_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/hw_codes.csv",
+    "integer_model_output_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/model_codes.csv"
+  }
+}
