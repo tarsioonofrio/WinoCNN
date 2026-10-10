@@ -1,0 +1,1592 @@
+
+****** Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2019.2 (64-bit)
+  **** SW Build 2700185 on Thu Oct 24 18:45:48 MDT 2019
+  **** IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source /soft64/xilinx/ferramentas/Vivado/2019.2/Vivado/2019.2/scripts/vivado_hls/hls.tcl -notrace
+INFO: [HLS 200-10] Running '/soft64/xilinx/ferramentas/Vivado/2019.2/Vivado/2019.2/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'tarsio.onofrio' on host 'paxos.inf.pucrs.br' (Linux_x86_64 version 4.18.0-553.155.1.el8_10.x86_64) on Sat Oct 10 12:47:46 -03 2026
+INFO: [HLS 200-10] On os "Rocky Linux release 8.10 (Green Obsidian)"
+INFO: [HLS 200-10] In directory '/sim/tarsio/WinoCNN-power-5_4-20261010-oSKE9J'
+Sourcing Tcl script 'asic_scripts/script_asic.tcl'
+INFO: [HLS 200-10] Creating and opening project '/sim/tarsio/WinoCNN-power-5_4-20261010-oSKE9J/HLS_asic'.
+INFO: [HLS 200-10] Adding design file 'src/wino_struct.h' to the project
+INFO: [HLS 200-10] Adding design file 'src/wino_macro.h' to the project
+INFO: [HLS 200-10] Adding design file 'src/wino_hw_config.h' to the project
+INFO: [HLS 200-10] Adding design file 'src/wino_mem_if.h' to the project
+INFO: [HLS 200-10] Adding design file 'src/wino.h' to the project
+INFO: [HLS 200-10] Adding design file 'src/wino.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/buffer.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/buffer.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/matrix_utility.hpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/param.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/param.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'testbench/single_main.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'software/softlayer.hpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'src/wino.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'src_gold/wino_IO_gold.hpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'src_gold/wino_cell_gold.hpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'src_gold/wino_gold.cpp' to the project
+INFO: [HLS 200-10] Adding test bench file 'src_gold/wino_gold.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'src/wino_hw_config.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'src/wino_macro.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'src/wino_mem_if.h' to the project
+INFO: [HLS 200-10] Adding test bench file 'src/wino_struct.h' to the project
+INFO: [HLS 200-10] Creating and opening solution '/sim/tarsio/WinoCNN-power-5_4-20261010-oSKE9J/HLS_asic/solution_asic'.
+INFO: [HLS 200-10] Setting target device to 'xczu9eg-ffvb1156-2-e'
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 2ns.
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: config_export -vivado_optimization_level=2
+INFO: [HLS 200-435] Setting 'config_sdx -target' configuration: set_clock_uncertainty default
+INFO: [SYN 201-201] Setting up clock 'default' with an uncertainty of 0.25ns.
+INFO: [HLS 200-10] Analyzing design file 'src/wino.cpp' ... 
+WARNING: [HLS 214-111] Static scalars and arrays declared inside a dataflow region will be treated like local variables: src/wino_systolic_kernel.cpp:36:43
+WARNING: [HLS 214-111] Static scalars and arrays declared inside a dataflow region will be treated like local variables: src/wino_systolic_kernel.cpp:38:58
+WARNING: [HLS 214-111] Static scalars and arrays declared inside a dataflow region will be treated like local variables: src/wino_systolic_kernel.cpp:41:48
+WARNING: [HLS 214-111] Static scalars and arrays declared inside a dataflow region will be treated like local variables: src/wino_systolic_kernel.cpp:44:48
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:53:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:54:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:56:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:57:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:58:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:59:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:60:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:61:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:62:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:63:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:83:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:84:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:85:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:86:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:87:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:88:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:89:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:91:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:106:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:107:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:108:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:109:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:110:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:111:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:112:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:113:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino_systolic_kernel.cpp:114:9
+WARNING: [HLS 214-114] Since the only kind of statements allowed in a canonical dataflow region are variable declarations and function calls, the compiler may not be able to correctly handle the region: src/wino_systolic_kernel.cpp:68:2
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:271:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:272:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:274:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:275:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:276:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:277:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:278:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:279:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:280:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:281:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:305:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:306:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:307:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:308:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:309:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:310:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:311:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:313:9
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:394:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:395:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:396:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:397:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:398:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:399:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:400:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:401:3
+WARNING: [HLS 214-113] Either use an argument of the function or declare the variable inside the dataflow loop body: src/wino.cpp:402:3
+WARNING: [HLS 214-114] Since the only kind of statements allowed in a canonical dataflow region are variable declarations and function calls, the compiler may not be able to correctly handle the region: src/wino.cpp:286:5
+WARNING: [HLS 200-471] Dataflow form checks found 60 issue(s) in file src/wino.cpp
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:30 ; elapsed = 00:00:43 . Memory (MB): peak = 903.285 ; gain = 463.152 ; free physical = 12314 ; free virtual = 106075
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:30 ; elapsed = 00:00:43 . Memory (MB): peak = 903.285 ; gain = 463.152 ; free physical = 12314 ; free virtual = 106075
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.8.1' (src/wino_IO.cpp:1171) in function 'void write_output_row<0>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.10.1' (src/wino_IO.cpp:1202) in function 'void write_output_row<0>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.12.1' (src/wino_IO.cpp:1232) in function 'void write_output_row<0>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.13.1' (src/wino_IO.cpp:1247) in function 'void write_output_row<0>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.8.1' (src/wino_IO.cpp:1171) in function 'void write_output_row<1>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.10.1' (src/wino_IO.cpp:1202) in function 'void write_output_row<1>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.12.1' (src/wino_IO.cpp:1232) in function 'void write_output_row<1>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.13.1' (src/wino_IO.cpp:1247) in function 'void write_output_row<1>(ap_uint<32>*, ap_uint<9> (*) [1][2][1][4][1024], ap_uint<10>, ap_uint<16>, ap_uint<1>, ConvDesc_t)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-4' (src/wino_buffer.cpp:50) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-6' (src/wino_buffer.cpp:88) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-7.1.7' (src/wino_buffer.cpp:157) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-7.1.17' (src/wino_buffer.cpp:257) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-7.1.18' (src/wino_buffer.cpp:275) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-7.1.19' (src/wino_buffer.cpp:303) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-7.1.20' (src/wino_buffer.cpp:316) in function 'input_feed_underconstruction(ap_uint<16> (*) [8][4096], hls::stream<ap_uint<128> >*, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<16>, ap_uint<32>, ap_uint<16>, ap_uint<16>, ap_uint<10>, ap_uint<16>, ap_uint<1>, ap_int<16>, ap_int<16>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2.1.1' (src/wino_buffer.cpp:407) in function 'input_transform(hls::stream<ap_uint<128> >&, hls::stream<ap_uint<96> >&, int, bool, ap_uint<3>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_buffer.cpp:449) in function 'input_transform(hls::stream<ap_uint<128> >&, hls::stream<ap_uint<96> >&, int, bool, ap_uint<3>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_buffer.cpp:493) in function 'input_transform(hls::stream<ap_uint<128> >&, hls::stream<ap_uint<96> >&, int, bool, ap_uint<3>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_buffer.cpp:510) in function 'input_transform(hls::stream<ap_uint<128> >&, hls::stream<ap_uint<96> >&, int, bool, ap_uint<3>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.8.1.1' (src/wino_buffer.cpp:554) in function 'input_transform(hls::stream<ap_uint<128> >&, hls::stream<ap_uint<96> >&, int, bool, ap_uint<3>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:69) in function 'load_input_tile_2x2(ap_int<6> (*) [1][4][4][1], ap_uint<96> (*) [1])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:71) in function 'load_input_tile_2x2(ap_int<6> (*) [1][4][4][1], ap_uint<96> (*) [1])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1.1.1' (src/wino_cell.cpp:77) in function 'load_input_tile_2x2(ap_int<6> (*) [1][4][4][1], ap_uint<96> (*) [1])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:136) in function 'load_weight_tile_2x2(ap_int<11> (*) [1][4][4], ap_uint<176>*)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:423) in function 'void load_reg_tile4<ap_int<6>, 1, 4, 4, 1>(FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE][FORWARD_REFERENCE], FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE][FORWARD_REFERENCE])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1.1' (src/wino_cell.cpp:429) in function 'void load_reg_tile4<ap_int<6>, 1, 4, 4, 1>(FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE][FORWARD_REFERENCE], FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE][FORWARD_REFERENCE])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_cell.cpp:455) in function 'void load_reg_tile3<ap_int<11>, 1, 4, 4>(FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE], FORWARD_REFERENCE (*) [FORWARD_REFERENCE][FORWARD_REFERENCE])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1.1' (src/wino_cell.cpp:381) in function 'void element_wise_mult_block<0>(ap_int<18> (*) [1][4][4][1], ap_int<6> (*) [4][4][1], ap_int<11> (*) [1][4][4])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.2' (src/wino_cell.cpp:390) in function 'void element_wise_mult_block<0>(ap_int<18> (*) [1][4][4][1], ap_int<6> (*) [4][4][1], ap_int<11> (*) [1][4][4])' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-5.1' (src/wino_cell.cpp:3089) in function 'winoPEB_CORN(hls::stream<ap_uint<96> >*, hls::stream<ap_uint<176> >*, ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<16>, ap_uint<24>, ap_uint<16>, ap_uint<10>, ap_uint<32>, ap_uint<32>, ap_uint<10>, ap_uint<10>, ap_uint<1>, bool, ap_uint<1>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-6.1' (src/wino_cell.cpp:3178) in function 'winoPEB_CORN(hls::stream<ap_uint<96> >*, hls::stream<ap_uint<176> >*, ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<16>, ap_uint<24>, ap_uint<16>, ap_uint<10>, ap_uint<32>, ap_uint<32>, ap_uint<10>, ap_uint<10>, ap_uint<1>, bool, ap_uint<1>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-6.5' (src/wino_cell.cpp:3238) in function 'winoPEB_CORN(hls::stream<ap_uint<96> >*, hls::stream<ap_uint<176> >*, ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<16>, ap_uint<24>, ap_uint<16>, ap_uint<10>, ap_uint<32>, ap_uint<32>, ap_uint<10>, ap_uint<10>, ap_uint<1>, bool, ap_uint<1>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-6.5.5.1.1.1' (src/wino_cell.cpp:3387) in function 'winoPEB_CORN(hls::stream<ap_uint<96> >*, hls::stream<ap_uint<176> >*, ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<16>, ap_uint<24>, ap_uint<16>, ap_uint<10>, ap_uint<32>, ap_uint<32>, ap_uint<10>, ap_uint<10>, ap_uint<1>, bool, ap_uint<1>)' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-4' (src/wino_systolic_kernel.cpp:68) in function 'wino_systolic_kernel(ap_uint<128>*, ap_uint<16> (*) [8][4096], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<9> (*) [1][4][1024], ap_uint<16>, ap_int<16>, ap_int<16>, ap_uint<32>, bool, bool, bool, ConvDesc_t, ap_uint<1>)' completely with a factor of 1.
+INFO: [XFORM 203-603] Inlining function 'element_wise_mult_block<0>' into 'winoPEB_CORN' (src/wino_cell.cpp:3341).
+INFO: [XFORM 203-603] Inlining function 'UVA_row' into 'winoPEB_CORN' (src/wino_cell.cpp:3434).
+INFO: [XFORM 203-603] Inlining function 'UVA_row' into 'winoPEB_CORN' (src/wino_cell.cpp:3433).
+INFO: [XFORM 203-603] Inlining function 'ATA_col' into 'winoPEB_CORN' (src/wino_cell.cpp:3456).
+INFO: [XFORM 203-603] Inlining function 'ATA_col' into 'winoPEB_CORN' (src/wino_cell.cpp:3455).
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:32 ; elapsed = 00:00:46 . Memory (MB): peak = 969.488 ; gain = 529.355 ; free physical = 12251 ; free virtual = 106021
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [XFORM 203-602] Inlining function 'load_reg<ap_uint<10> >' into 'winoPEB_CORN187' (src/wino_cell.cpp:3513) automatically.
+WARNING: [SYNCHK 200-23] src/wino_IO.cpp:1250: variable-indexed range selection may cause suboptimal QoR.
+INFO: [SYNCHK 200-10] 0 error(s), 1 warning(s).
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:35 ; elapsed = 00:00:49 . Memory (MB): peak = 969.488 ; gain = 529.355 ; free physical = 12224 ; free virtual = 105998
+INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-1.1' (src/wino.cpp:701) in function 'wino_systolic_top' automatically.
+INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-1.1.1' (src/wino.cpp:702) in function 'wino_systolic_top' automatically.
+INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-1.1.1.1.1' (src/wino.cpp:704) in function 'wino_systolic_top' automatically.
+INFO: [XFORM 203-502] Unrolling all loops for pipelining in function 'load_weight_tile_2x2' (src/wino_cell.cpp:123).
+INFO: [XFORM 203-502] Unrolling all loops for pipelining in function 'load_input_tile_2x2' (src/wino_cell.cpp:55).
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_buffer.cpp:637) in function 'load_weight_ddr_one_port' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-3.1' (src/wino_buffer.cpp:105) in function 'input_feed_underconstruction' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_IO.cpp:20) in function 'load_bias_value' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_IO.cpp:1053) in function 'write_output_row<1>' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_IO.cpp:1053) in function 'write_output_row<0>' for pipelining.
+INFO: [XFORM 203-502] Unrolling small iteration loop 'Loop-1' (src/wino_cell.cpp:3087) in function 'winoPEB_CORN' automatically.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-2' (src/wino_cell.cpp:3128) in function 'winoPEB_CORN' for pipelining.
+INFO: [XFORM 203-502] Unrolling all loops for pipelining in function 'load_reg_tile3<ap_int<11>, 1, 4, 4>' (src/wino_cell.cpp:438).
+INFO: [XFORM 203-502] Unrolling all loops for pipelining in function 'load_reg_tile4<ap_int<6>, 1, 4, 4, 1>' (src/wino_cell.cpp:409).
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_buffer.cpp:901) in function 'weight_streamer' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_buffer.cpp:388) in function 'input_transform' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_IO.cpp:310) in function 'load_input_row_from_ddr<1>' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-2' (src/wino_IO.cpp:575) in function 'load_input_row_from_ddr<1>' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-1' (src/wino_IO.cpp:310) in function 'load_input_row_from_ddr<0>' for pipelining.
+INFO: [XFORM 203-502] Unrolling all sub-loops inside loop 'Loop-2' (src/wino_IO.cpp:575) in function 'load_input_row_from_ddr<0>' for pipelining.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino.cpp:701) in function 'wino_systolic_top' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino.cpp:702) in function 'wino_systolic_top' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1.1.1' (src/wino.cpp:704) in function 'wino_systolic_top' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:133) in function 'load_weight_tile_2x2' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:139) in function 'load_weight_tile_2x2' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_cell.cpp:142) in function 'load_weight_tile_2x2' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:73) in function 'load_input_tile_2x2' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:75) in function 'load_input_tile_2x2' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_buffer.cpp:647) in function 'load_weight_ddr_one_port' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_buffer.cpp:650) in function 'load_weight_ddr_one_port' completely with a factor of 3.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1.1' (src/wino_buffer.cpp:653) in function 'load_weight_ddr_one_port' completely with a factor of 3.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_buffer.cpp:687) in function 'load_weight_ddr_one_port' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2.1' (src/wino_buffer.cpp:690) in function 'load_weight_ddr_one_port' completely with a factor of 3.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_buffer.cpp:705) in function 'load_weight_ddr_one_port' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3.1' (src/wino_buffer.cpp:708) in function 'load_weight_ddr_one_port' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_buffer.cpp:736) in function 'load_weight_ddr_one_port' completely with a factor of 32.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_buffer.cpp:744) in function 'load_weight_ddr_one_port' completely with a factor of 32.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_buffer.cpp:757) in function 'load_weight_ddr_one_port' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_buffer.cpp:780) in function 'load_weight_ddr_one_port' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2' (src/wino_buffer.cpp:91) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.1' (src/wino_buffer.cpp:119) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.2' (src/wino_buffer.cpp:137) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.3' (src/wino_buffer.cpp:160) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.4' (src/wino_buffer.cpp:182) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.5' (src/wino_buffer.cpp:195) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.5.1' (src/wino_buffer.cpp:198) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.6' (src/wino_buffer.cpp:217) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.6.1' (src/wino_buffer.cpp:220) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.7' (src/wino_buffer.cpp:234) in function 'input_feed_underconstruction' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.7.1' (src/wino_buffer.cpp:237) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.8' (src/wino_buffer.cpp:260) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.8.1' (src/wino_buffer.cpp:263) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.9' (src/wino_buffer.cpp:306) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.10' (src/wino_buffer.cpp:319) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.11' (src/wino_buffer.cpp:333) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-3.1.12' (src/wino_buffer.cpp:343) in function 'input_feed_underconstruction' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:837) in function 'load_input_rowtile_from_ddr' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:844) in function 'load_input_rowtile_from_ddr' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:28) in function 'load_bias_value' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:34) in function 'load_bias_value' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:1088) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_IO.cpp:1089) in function 'write_output_row<1>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:1098) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2.1' (src/wino_IO.cpp:1099) in function 'write_output_row<1>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_IO.cpp:1136) in function 'write_output_row<1>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_IO.cpp:1168) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_IO.cpp:1199) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_IO.cpp:1229) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_IO.cpp:1244) in function 'write_output_row<1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:1088) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_IO.cpp:1089) in function 'write_output_row<0>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:1098) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2.1' (src/wino_IO.cpp:1099) in function 'write_output_row<0>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_IO.cpp:1136) in function 'write_output_row<0>' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_IO.cpp:1168) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_IO.cpp:1199) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_IO.cpp:1229) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_IO.cpp:1244) in function 'write_output_row<0>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:3087) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:3093) in function 'winoPEB_CORN' completely with a factor of 0.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.1' (src/wino_cell.cpp:3195) in function 'winoPEB_CORN' completely with a factor of 0.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.2' (src/wino_cell.cpp:3184) in function 'winoPEB_CORN' completely with a factor of 0.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.3' (src/wino_cell.cpp:3212) in function 'winoPEB_CORN' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4' (src/wino_cell.cpp:372) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4.1' (src/wino_cell.cpp:375) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4.1.1' (src/wino_cell.cpp:378) in function 'winoPEB_CORN' completely with a factor of 0.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.5' (src/wino_cell.cpp:3377) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.5.1' (src/wino_cell.cpp:3380) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.5.1.1' (src/wino_cell.cpp:3383) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.6' (src/wino_cell.cpp:3428) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.6.1' (src/wino_cell.cpp:3431) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.7' (src/wino_cell.cpp:3463) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.7.1' (src/wino_cell.cpp:3466) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.7.1.1' (src/wino_cell.cpp:3469) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.8' (src/wino_cell.cpp:3447) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.8.1' (src/wino_cell.cpp:3451) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.9' (src/wino_cell.cpp:3515) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.10' (src/wino_cell.cpp:3616) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.10.1' (src/wino_cell.cpp:3619) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.10.1.1' (src/wino_cell.cpp:3622) in function 'winoPEB_CORN' completely with a factor of 1.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.11' (src/wino_cell.cpp:3713) in function 'winoPEB_CORN' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:451) in function 'load_reg_tile3<ap_int<11>, 1, 4, 4>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:453) in function 'load_reg_tile3<ap_int<11>, 1, 4, 4>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1' (src/wino_cell.cpp:425) in function 'load_reg_tile4<ap_int<6>, 1, 4, 4, 1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_cell.cpp:427) in function 'load_reg_tile4<ap_int<6>, 1, 4, 4, 1>' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_buffer.cpp:921) in function 'weight_streamer' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_buffer.cpp:924) in function 'weight_streamer' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_buffer.cpp:948) in function 'weight_streamer' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2.1' (src/wino_buffer.cpp:951) in function 'weight_streamer' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_buffer.cpp:957) in function 'weight_streamer' completely with a factor of 2.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_buffer.cpp:401) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1.1' (src/wino_buffer.cpp:404) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_buffer.cpp:452) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_buffer.cpp:496) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_buffer.cpp:513) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4.1' (src/wino_buffer.cpp:516) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_buffer.cpp:548) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5.1' (src/wino_buffer.cpp:551) in function 'input_transform' completely with a factor of 4.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:320) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:340) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_IO.cpp:345) in function 'load_input_row_from_ddr<1>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3.1' (src/wino_IO.cpp:348) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_IO.cpp:354) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_IO.cpp:362) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_IO.cpp:368) in function 'load_input_row_from_ddr<1>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6.1' (src/wino_IO.cpp:371) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_IO.cpp:377) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.1' (src/wino_IO.cpp:584) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.2' (src/wino_IO.cpp:589) in function 'load_input_row_from_ddr<1>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.2.1' (src/wino_IO.cpp:592) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.3' (src/wino_IO.cpp:601) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4' (src/wino_IO.cpp:607) in function 'load_input_row_from_ddr<1>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4.1' (src/wino_IO.cpp:610) in function 'load_input_row_from_ddr<1>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.1' (src/wino_IO.cpp:320) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.2' (src/wino_IO.cpp:340) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3' (src/wino_IO.cpp:345) in function 'load_input_row_from_ddr<0>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.3.1' (src/wino_IO.cpp:348) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.4' (src/wino_IO.cpp:354) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.5' (src/wino_IO.cpp:362) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6' (src/wino_IO.cpp:368) in function 'load_input_row_from_ddr<0>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.6.1' (src/wino_IO.cpp:371) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-1.7' (src/wino_IO.cpp:377) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.1' (src/wino_IO.cpp:584) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.2' (src/wino_IO.cpp:589) in function 'load_input_row_from_ddr<0>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.2.1' (src/wino_IO.cpp:592) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.3' (src/wino_IO.cpp:601) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4' (src/wino_IO.cpp:607) in function 'load_input_row_from_ddr<0>' completely with a factor of 7.
+INFO: [HLS 200-489] Unrolling loop 'Loop-2.4.1' (src/wino_IO.cpp:610) in function 'load_input_row_from_ddr<0>' completely with a factor of 8.
+INFO: [XFORM 203-102] Partitioning array 'row_idx_selected.V' (src/wino_IO.cpp:834) automatically.
+INFO: [XFORM 203-102] Partitioning array 'trans_weight_reg.V' (src/wino_buffer.cpp:633) automatically.
+INFO: [XFORM 203-102] Automatically partitioning streamed array 'weight_stream_out.V.V' .
+INFO: [XFORM 203-102] Automatically partitioning streamed array 'input_tile_transformed_stream.V.V' .
+INFO: [XFORM 203-102] Automatically partitioning streamed array 'input_tile_stream.V.V' .
+INFO: [XFORM 203-101] Partitioning array 'input_buffer.V' (src/wino.cpp:686) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bias_buffer0'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bias_buffer1'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_buffer.V'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile.V' (src/wino_cell.cpp:3229) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_value_temp.V' (src/wino_cell.cpp:3206) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile.V' (src/wino_cell.cpp:3064) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'stream_temp_reg0.V' (src/wino_cell.cpp:3047) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'stream_temp_reg1.V' (src/wino_cell.cpp:3051) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_buff.V'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'g_tile.V' (src/wino_buffer.cpp:643) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'gG_tile.V' (src/wino_buffer.cpp:683) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'GgG_tile.V' (src/wino_buffer.cpp:701) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'GgG_tile_flat.V' (src/wino_buffer.cpp:732) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_row_idx.V' (src/wino_buffer.cpp:40) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_col_idx.V' (src/wino_buffer.cpp:43) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'wino_col_offset_constant.V' (src/wino_buffer.cpp:47) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'row_legal_flag.V' (src/wino_buffer.cpp:116) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'row_address_offset_bit1.V' (src/wino_buffer.cpp:126) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'row_address_offset_bit2.V' (src/wino_buffer.cpp:129) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'col_legal_flag.V' (src/wino_buffer.cpp:154) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'col_pix_address_offset.V' (src/wino_buffer.cpp:170) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'buffer_address.V' (src/wino_buffer.cpp:191) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_buffer_val.V' (src/wino_buffer.cpp:213) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_plane_tile_row.V' (src/wino_buffer.cpp:229) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_plane_tile.V' (src/wino_buffer.cpp:253) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'row_idx.V' (src/wino_IO.cpp:829) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'row_idx_sel.V' (src/wino_IO.cpp:831) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'temp0.V' (src/wino_IO.cpp:23) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_lo.V' (src/wino_IO.cpp:1059) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_hi.V' (src/wino_IO.cpp:1065) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outdata_vect.V' (src/wino_IO.cpp:1130) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_scale.V' (src/wino_IO.cpp:1163) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_sat.V' (src/wino_IO.cpp:1194) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data.V' (src/wino_IO.cpp:1222) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_lo.V' (src/wino_IO.cpp:1059) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_hi.V' (src/wino_IO.cpp:1065) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outdata_vect.V' (src/wino_IO.cpp:1130) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_scale.V' (src/wino_IO.cpp:1163) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_sat.V' (src/wino_IO.cpp:1194) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data.V' (src/wino_IO.cpp:1222) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile_reg.V' (src/wino_cell.cpp:3251) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_reg.V'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'temp18.V' (src/wino_buffer.cpp:911) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'temp16x36.V' (src/wino_buffer.cpp:945) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'register_matrix.V' (src/wino_IO.cpp:261) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'DDR_data_divided.V' (src/wino_IO.cpp:317) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bank_data.V.1' (src/wino_IO.cpp:335) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bank_data.V' (src/wino_IO.cpp:579) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'register_matrix.V' (src/wino_IO.cpp:261) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'DDR_data_divided.V' (src/wino_IO.cpp:317) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bank_data.V.2' (src/wino_IO.cpp:335) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'bank_data.V' (src/wino_IO.cpp:579) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'in.V' (src/wino_buffer.cpp:394) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'DB.V' (src/wino_buffer.cpp:444) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'BtDB.V' (src/wino_buffer.cpp:484) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV_MUL_TILE'  in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV.V' (src/wino_cell.cpp:3371) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'UVA.V' (src/wino_cell.cpp:3421) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'ATA.V' (src/wino_cell.cpp:3438) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'data0.V' (src/wino_cell.cpp:3569) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'data1.V' (src/wino_cell.cpp:3571) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value_back.V' (src/wino_cell.cpp:3610) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value.V' (src/wino_cell.cpp:3506) in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_stream_out.V.V' in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_transformed_stream.V.V' in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_stream.V.V' in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_buffer.V' (src/wino.cpp:686) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_buffer.V'  in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile.V' (src/wino_cell.cpp:3229) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile.V' (src/wino_cell.cpp:3064) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'stream_temp_reg0.V' (src/wino_cell.cpp:3047) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'stream_temp_reg1.V' (src/wino_cell.cpp:3051) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_buff.V'  in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'g_tile.V' (src/wino_buffer.cpp:643) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'gG_tile.V' (src/wino_buffer.cpp:683) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'GgG_tile.V' (src/wino_buffer.cpp:701) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_col_idx.V' (src/wino_buffer.cpp:43) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'buffer_address.V' (src/wino_buffer.cpp:191) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_buffer_val.V' (src/wino_buffer.cpp:213) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_plane_tile_row.V' (src/wino_buffer.cpp:229) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_lo.V' (src/wino_IO.cpp:1059) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_hi.V' (src/wino_IO.cpp:1065) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outdata_vect.V' (src/wino_IO.cpp:1130) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_scale.V' (src/wino_IO.cpp:1163) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_sat.V' (src/wino_IO.cpp:1194) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data.V' (src/wino_IO.cpp:1222) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_lo.V' (src/wino_IO.cpp:1059) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outbuffer_data_hi.V' (src/wino_IO.cpp:1065) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outdata_vect.V' (src/wino_IO.cpp:1130) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_scale.V' (src/wino_IO.cpp:1163) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data_sat.V' (src/wino_IO.cpp:1194) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'outmem_data.V' (src/wino_IO.cpp:1222) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile_reg.V' (src/wino_cell.cpp:3251) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_reg.V'  in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'register_matrix.V' (src/wino_IO.cpp:261) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'register_matrix.V' (src/wino_IO.cpp:261) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'in.V' (src/wino_buffer.cpp:394) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'DB.V' (src/wino_buffer.cpp:444) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'BtDB.V' (src/wino_buffer.cpp:484) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV_MUL_TILE'  in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV.V' (src/wino_cell.cpp:3371) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'UVA.V' (src/wino_cell.cpp:3421) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'ATA.V' (src/wino_cell.cpp:3438) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value_back.V' (src/wino_cell.cpp:3610) in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value.V' (src/wino_cell.cpp:3506) in dimension 2 completely.
+WARNING: [XFORM 203-105] Ignore complete array partition directive on 'weight_stream_out.V.V.0' in dimension 1: conflict with memory core assignment directive.
+.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_transformed_stream.V.V' in dimension 2 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile.V' (src/wino_cell.cpp:3229) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile.V' (src/wino_cell.cpp:3064) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'g_tile.V' (src/wino_buffer.cpp:643) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'gG_tile.V' (src/wino_buffer.cpp:683) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'GgG_tile.V' (src/wino_buffer.cpp:701) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile_reg.V' (src/wino_cell.cpp:3251) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_reg.V'  in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'in.V' (src/wino_buffer.cpp:394) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'DB.V' (src/wino_buffer.cpp:444) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'BtDB.V' (src/wino_buffer.cpp:484) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV_MUL_TILE'  in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV.V' (src/wino_cell.cpp:3371) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'UVA.V' (src/wino_cell.cpp:3421) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'ATA.V' (src/wino_cell.cpp:3438) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value_back.V' (src/wino_cell.cpp:3610) in dimension 3 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value.V' (src/wino_cell.cpp:3506) in dimension 3 completely.
+WARNING: [XFORM 203-105] Ignore complete array partition directive on 'input_tile_transformed_stream.V.V.0.0' in dimension 1: conflict with memory core assignment directive.
+.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile.V' (src/wino_cell.cpp:3229) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile.V' (src/wino_cell.cpp:3064) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'weight_tile_reg.V' (src/wino_cell.cpp:3251) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_reg.V'  in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV_MUL_TILE'  in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV.V' (src/wino_cell.cpp:3371) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'UVA.V' (src/wino_cell.cpp:3421) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'ATA.V' (src/wino_cell.cpp:3438) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value_back.V' (src/wino_cell.cpp:3610) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'out_value.V' (src/wino_cell.cpp:3506) in dimension 4 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 5 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 5 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile.V' (src/wino_cell.cpp:3064) in dimension 5 completely.
+INFO: [XFORM 203-101] Partitioning array 'UV_MUL_TILE'  in dimension 5 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer0.V' (src/wino.cpp:690) in dimension 6 completely.
+INFO: [XFORM 203-101] Partitioning array 'output_buffer1.V' (src/wino.cpp:694) in dimension 6 completely.
+INFO: [XFORM 203-102] Automatically partitioning streamed array 'weight_stream_out.V.V.0' .
+INFO: [XFORM 203-102] Automatically partitioning streamed array 'input_tile_transformed_stream.V.V.0.0' .
+INFO: [XFORM 203-101] Partitioning array 'weight_stream_out.V.V.0' in dimension 1 completely.
+INFO: [XFORM 203-101] Partitioning array 'input_tile_transformed_stream.V.V.0.0' in dimension 1 completely.
+INFO: [XFORM 203-602] Inlining function 'weight_streamer' into 'weight_feed_one_port<0>206' (src/wino_buffer.cpp:1093) automatically.
+INFO: [XFORM 203-602] Inlining function 'load_weight_tile_2x2' into 'winoPEB_CORN207' (src/wino_cell.cpp:3235) automatically.
+INFO: [XFORM 203-602] Inlining function 'load_reg<ap_uint<10> >' into 'winoPEB_CORN207' (src/wino_cell.cpp:3513) automatically.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[0][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[0][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[0][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[0][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[0][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[0][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[0][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[0][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[0][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[0][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[0][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[0][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[1][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[1][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[1][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[1][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[1][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[1][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[1][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[1][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[1][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer0_0_0[1][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer0_0_0[1][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer0_0_0[1][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[0][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[0][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[0][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[0][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[0][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[0][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[0][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[0][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[0][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[0][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[0][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[0][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[1][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[1][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[1][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[1][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[1][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[1][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[1][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[1][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[1][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer1_0_0[1][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer1_0_0[1][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer1_0_0[1][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[0][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[0][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[0][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[0][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[0][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[0][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[0][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[0][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[0][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[0][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[0][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[0][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[1][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[1][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[1][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[1][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[1][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[1][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[1][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[1][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[1][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer2_0_0[1][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer2_0_0[1][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer2_0_0[1][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[0][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[0][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[0][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[0][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[0][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[0][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[0][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[0][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[0][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[0][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[0][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[0][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[1][0].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[1][0].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[1][0].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[1][1].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[1][1].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[1][1].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[1][2].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[1][2].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[1][2].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+WARNING: [XFORM 203-713] Reading dataflow channel 'out_buffer3_0_0[1][3].V' in the middle of dataflow may stall the dataflow pipeline:
+WARNING: [XFORM 203-713] Argument 'out_buffer3_0_0[1][3].V' has read and write operations in process function 'winoPEB_CORN207'.
+WARNING: [XFORM 203-713] All the elements of global array 'out_buffer3_0_0[1][3].V' should be updated in process function 'winoPEB_CORN207', otherwise it may not be synthesized correctly.
+INFO: [XFORM 203-712] Applying dataflow to function 'wino_systolic_kernel', detected/extracted 6 process function(s): 
+	 'wino_systolic_kernel.entry399'
+	 'input_feed_underconstruction'
+	 'wino_systolic_kernel_Block_codeRepl13_proc'
+	 'input_transform205'
+	 'weight_feed_one_port<0>206'
+	 'winoPEB_CORN207'.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:1057:3) to (src/wino_IO.cpp:1053:66) in function 'write_output_row<1>'... converting 8 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:1057:3) to (src/wino_IO.cpp:1053:66) in function 'write_output_row<0>'... converting 8 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino.cpp:437:9) to (src/wino.cpp:434:64) in function 'wino_kernel_merge_row'... converting 6 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino.cpp:536:10) to (src/wino.cpp:535:71) in function 'wino_input_compute'... converting 3 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_cell.cpp:124:28) to (src/wino_cell.cpp:3716:5) in function 'winoPEB_CORN207'... converting 108 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_cell.cpp:3758:6) to (src/wino_cell.cpp:3128:48) in function 'winoPEB_CORN207'... converting 11 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_buffer.cpp:638:3) to (src/wino_buffer.cpp:816:18) in function 'load_weight_ddr_one_port'... converting 3 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:311:3) to (src/wino_IO.cpp:412:6) in function 'load_input_row_from_ddr<1>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:533:7) to (src/wino_IO.cpp:571:3) in function 'load_input_row_from_ddr<1>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:576:3) to (src/wino_IO.cpp:643:3) in function 'load_input_row_from_ddr<1>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:311:3) to (src/wino_IO.cpp:412:6) in function 'load_input_row_from_ddr<0>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:533:7) to (src/wino_IO.cpp:571:3) in function 'load_input_row_from_ddr<0>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_IO.cpp:576:3) to (src/wino_IO.cpp:643:3) in function 'load_input_row_from_ddr<0>'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_buffer.cpp:389:3) to (src/wino_buffer.cpp:388:59) in function 'input_transform205'... converting 4 basic blocks.
+INFO: [XFORM 203-401] Performing if-conversion on hyperblock from (src/wino_buffer.cpp:106:4) to (src/wino_buffer.cpp:105:61) in function 'input_feed_underconstruction'... converting 262 basic blocks.
+INFO: [XFORM 203-11] Balancing expressions in function 'wino_input_compute' (src/wino.cpp:466)...4 expression(s) balanced.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:49 ; elapsed = 00:01:03 . Memory (MB): peak = 1095.285 ; gain = 655.152 ; free physical = 12167 ; free virtual = 105946
+WARNING: [XFORM 203-542] Cannot flatten a loop nest 'Loop-1' (src/wino_buffer.cpp:1060:24) in function 'weight_feed_one_port<0>206' : 
+
+the outer loop is not a perfect loop because there is nontrivial logic in the loop latch.
+INFO: [XFORM 203-541] Flattening a loop nest 'Loop-2' (src/wino_buffer.cpp:100:44) in function 'input_feed_underconstruction'.
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel_wrapper' to 'wino_systolic_kernel.1' (src/wino_systolic_kernel.cpp:141:1)
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel_Block_codeRepl13_proc' to 'wino_systolic_kernel.1.1' (src/wino_systolic_kernel.cpp:71:2)
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel.entry399' to 'wino_systolic_kernel.2' (src/wino_systolic_kernel.cpp:32:1)
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel' to 'wino_systolic_kernel.3' (src/wino_systolic_kernel.cpp:15:1)
+WARNING: [XFORM 203-631] Renaming function 'wino_kernel_merge_row' to 'wino_kernel_merge_ro' (src/wino.cpp:421:1)
+WARNING: [XFORM 203-631] Renaming function 'weight_feed_one_port<0>206' to 'weight_feed_one_port' (src/wino_buffer.cpp:15:58)
+WARNING: [XFORM 203-631] Renaming function 'load_weight_ddr_one_port' to 'load_weight_ddr_one_' (src/wino_buffer.cpp:577:60)
+WARNING: [XFORM 203-631] Renaming function 'load_reg_tile4<ap_int<6>, 1, 4, 4, 1>' to 'load_reg_tile4' (src/wino_cell.cpp:412:1)
+WARNING: [XFORM 203-631] Renaming function 'load_reg_tile3<ap_int<11>, 1, 4, 4>' to 'load_reg_tile3' (src/wino_cell.cpp:441:1)
+WARNING: [XFORM 203-631] Renaming function 'load_input_rowtile_from_ddr' to 'load_input_rowtile_f' (src/wino_IO.cpp:803:1)
+WARNING: [XFORM 203-631] Renaming function 'load_input_row_from_ddr<1>' to 'load_input_row_from_' (src/wino_IO.cpp:250:34)
+WARNING: [XFORM 203-631] Renaming function 'load_input_row_from_ddr<0>' to 'load_input_row_from_.1' (src/wino_IO.cpp:250:34)
+WARNING: [XFORM 203-631] Renaming function 'input_feed_underconstruction' to 'input_feed_undercons' (src/wino_buffer.cpp:15:24)
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.5'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.7.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.4'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.2.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.5.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.0.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.4.6'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.1.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.3.7'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'input_buffer.V.6.6'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer0_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer1_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer2_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false inter dependency for variable 'out_buffer3_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer0_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer1_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer2_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[1][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[0][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[0][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[1][2].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[1][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[1][3].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[0][1].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'out_buffer3_0_0[0][0].V'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.0.3'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.1.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.1.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.1.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.0.1'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.0.2'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.0.0'.
+WARNING: [ANALYSIS 214-52] Found false intra dependency for variable 'weight_buff.V.1.3'.
+INFO: [HLS 200-472] Inferring partial write operation for 'output_buffer0[0][0]' (src/wino.cpp:706:33)
+INFO: [HLS 200-472] Inferring partial write operation for 'output_buffer1[0][0]' (src/wino.cpp:706:72)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer0_0_0[0][0].V' (src/wino_cell.cpp:3735:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer1_0_0[0][0].V' (src/wino_cell.cpp:3736:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer2_0_0[0][0].V' (src/wino_cell.cpp:3737:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer3_0_0[0][0].V' (src/wino_cell.cpp:3738:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer0_0_0[1][0].V' (src/wino_cell.cpp:3740:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer1_0_0[1][0].V' (src/wino_cell.cpp:3741:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer2_0_0[1][0].V' (src/wino_cell.cpp:3742:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_buffer3_0_0[1][0].V' (src/wino_cell.cpp:3743:36)
+INFO: [HLS 200-472] Inferring partial write operation for 'weight_buff.V.0.3' (src/wino_buffer.cpp:816:18)
+INFO: [HLS 200-472] Inferring partial write operation for 'params.V' (src/wino.cpp:27:2)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[0].V' (src/wino_IO.cpp:425:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[1].V' (src/wino_IO.cpp:426:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[2].V' (src/wino_IO.cpp:427:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[3].V' (src/wino_IO.cpp:428:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[4].V' (src/wino_IO.cpp:429:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[5].V' (src/wino_IO.cpp:430:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[6].V' (src/wino_IO.cpp:431:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[7].V' (src/wino_IO.cpp:432:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[0].V' (src/wino_IO.cpp:483:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[1].V' (src/wino_IO.cpp:484:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[2].V' (src/wino_IO.cpp:485:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[3].V' (src/wino_IO.cpp:486:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[4].V' (src/wino_IO.cpp:487:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[5].V' (src/wino_IO.cpp:488:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[6].V' (src/wino_IO.cpp:489:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[7].V' (src/wino_IO.cpp:490:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[0].V' (src/wino_IO.cpp:653:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[1].V' (src/wino_IO.cpp:654:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[2].V' (src/wino_IO.cpp:655:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[3].V' (src/wino_IO.cpp:656:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[4].V' (src/wino_IO.cpp:657:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[5].V' (src/wino_IO.cpp:658:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[6].V' (src/wino_IO.cpp:659:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[7].V' (src/wino_IO.cpp:660:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[0].V' (src/wino_IO.cpp:711:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[1].V' (src/wino_IO.cpp:712:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[2].V' (src/wino_IO.cpp:713:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[3].V' (src/wino_IO.cpp:714:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[4].V' (src/wino_IO.cpp:715:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[5].V' (src/wino_IO.cpp:716:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[6].V' (src/wino_IO.cpp:717:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[7].V' (src/wino_IO.cpp:718:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[0].V' (src/wino_IO.cpp:425:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[1].V' (src/wino_IO.cpp:426:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[2].V' (src/wino_IO.cpp:427:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[3].V' (src/wino_IO.cpp:428:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[4].V' (src/wino_IO.cpp:429:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[5].V' (src/wino_IO.cpp:430:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[6].V' (src/wino_IO.cpp:431:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[7].V' (src/wino_IO.cpp:432:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[0].V' (src/wino_IO.cpp:483:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[1].V' (src/wino_IO.cpp:484:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[2].V' (src/wino_IO.cpp:485:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[3].V' (src/wino_IO.cpp:486:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[4].V' (src/wino_IO.cpp:487:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[5].V' (src/wino_IO.cpp:488:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[6].V' (src/wino_IO.cpp:489:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[7].V' (src/wino_IO.cpp:490:24)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[0].V' (src/wino_IO.cpp:653:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[1].V' (src/wino_IO.cpp:654:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[2].V' (src/wino_IO.cpp:655:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[3].V' (src/wino_IO.cpp:656:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[4].V' (src/wino_IO.cpp:657:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[5].V' (src/wino_IO.cpp:658:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[6].V' (src/wino_IO.cpp:659:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer[7].V' (src/wino_IO.cpp:660:22)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[0].V' (src/wino_IO.cpp:711:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[1].V' (src/wino_IO.cpp:712:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[2].V' (src/wino_IO.cpp:713:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[3].V' (src/wino_IO.cpp:714:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[4].V' (src/wino_IO.cpp:715:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[5].V' (src/wino_IO.cpp:716:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[6].V' (src/wino_IO.cpp:717:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'input_buffer1[7].V' (src/wino_IO.cpp:718:23)
+INFO: [HLS 200-472] Inferring partial write operation for 'biasbuffer0[0].V' (src/wino_IO.cpp:37:17)
+INFO: [HLS 200-472] Inferring partial write operation for 'biasbuffer1[0].V' (src/wino_IO.cpp:38:19)
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel.3.entry243' to 'wino_systolic_kernel' 
+WARNING: [XFORM 203-631] Renaming function 'wino_systolic_kernel.1' to 'wino_systolic_kernel.1.1.1' (src/wino_systolic_kernel.cpp:123:1)
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:57 ; elapsed = 00:01:11 . Memory (MB): peak = 1351.285 ; gain = 911.152 ; free physical = 11931 ; free virtual = 105712
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'wino_systolic_top' ...
+WARNING: [SYN 201-103] Legalizing function name 'load_input_row_from_.1' to 'load_input_row_from_1'.
+WARNING: [SYN 201-103] Legalizing function name 'load_input_row_from_' to 'load_input_row_from_s'.
+WARNING: [SYN 201-103] Legalizing function name 'wino_systolic_kernel.2' to 'wino_systolic_kernel_2'.
+WARNING: [SYN 201-103] Legalizing function name 'wino_systolic_kernel.1.1' to 'wino_systolic_kernel_1_1'.
+WARNING: [SYN 201-103] Legalizing function name 'load_weight_ddr_one_' to 'load_weight_ddr_one_s'.
+WARNING: [SYN 201-103] Legalizing function name 'wino_systolic_kernel.3' to 'wino_systolic_kernel_3'.
+WARNING: [SYN 201-103] Legalizing function name 'wino_systolic_kernel.1.1.1' to 'wino_systolic_kernel_1_1_1'.
+WARNING: [SYN 201-103] Legalizing function name 'write_output_row<0>' to 'write_output_row_0_s'.
+WARNING: [SYN 201-103] Legalizing function name 'write_output_row<1>' to 'write_output_row_1_s'.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_params' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 3.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 71.23 seconds; current allocated memory: 506.216 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.26 seconds; current allocated memory: 506.938 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_bias_value' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 5.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.28 seconds; current allocated memory: 507.164 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.09 seconds; current allocated memory: 507.491 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_input_row_from_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 6.
+INFO: [SCHED 204-61] Pipelining loop 'Loop 2'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.33 seconds; current allocated memory: 508.666 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.46 seconds; current allocated memory: 511.082 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_input_row_from_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 6.
+INFO: [SCHED 204-61] Pipelining loop 'Loop 2'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.78 seconds; current allocated memory: 512.523 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.46 seconds; current allocated memory: 514.936 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_input_rowtile_f' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.55 seconds; current allocated memory: 515.422 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.37 seconds; current allocated memory: 516.391 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_kernel' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.53 seconds; current allocated memory: 516.951 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.04 seconds; current allocated memory: 517.104 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_kernel_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.24 seconds; current allocated memory: 517.232 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.05 seconds; current allocated memory: 517.476 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'input_feed_undercons' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 2'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 7.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.44 seconds; current allocated memory: 519.776 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.87 seconds; current allocated memory: 523.632 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_kernel_1_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.92 seconds; current allocated memory: 524.018 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.02 seconds; current allocated memory: 524.049 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'input_transform205' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 4.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.1 seconds; current allocated memory: 524.441 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.16 seconds; current allocated memory: 525.168 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_weight_ddr_one_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 8.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.25 seconds; current allocated memory: 525.769 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.19 seconds; current allocated memory: 526.571 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'weight_feed_one_port' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1.1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 4.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.32 seconds; current allocated memory: 526.987 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.18 seconds; current allocated memory: 527.608 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_input_tile_2x2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'load_input_tile_2x2'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.21 seconds; current allocated memory: 527.811 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.05 seconds; current allocated memory: 527.986 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_reg_tile4' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'load_reg_tile4'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.07 seconds; current allocated memory: 528.081 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.05 seconds; current allocated memory: 528.223 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'load_reg_tile3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'load_reg_tile3'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 1.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.07 seconds; current allocated memory: 528.317 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.05 seconds; current allocated memory: 528.460 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'winoPEB_CORN207' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 10.
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.65 seconds; current allocated memory: 531.968 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 1.48 seconds; current allocated memory: 537.408 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_kernel_3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 1.56 seconds; current allocated memory: 538.314 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 1.38 seconds; current allocated memory: 540.598 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_kernel_1_1_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.9 seconds; current allocated memory: 541.622 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.4 seconds; current allocated memory: 542.434 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_kernel_merge_ro' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.84 seconds; current allocated memory: 543.528 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.43 seconds; current allocated memory: 544.444 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_input_compute' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.89 seconds; current allocated memory: 545.695 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 1.05 seconds; current allocated memory: 547.516 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_output_row_0_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 13.
+WARNING: [SCHED 204-21] Estimated clock period (1.9505ns) exceeds the target (target clock period: 2ns, clock uncertainty: 0.25ns, effective delay budget: 1.75ns).
+WARNING: [SCHED 204-21] The critical path in module 'write_output_row_0_s' consists of the following:
+	'or' operation ('or_ln879', src/wino_IO.cpp:1281) [179]  (0 ns)
+	'select' operation ('select_ln879_6', src/wino_IO.cpp:1281) [180]  (0 ns)
+	'select' operation ('p_0805_3', src/wino_IO.cpp:1295) [181]  (0.287 ns)
+	'phi' operation ('p_0805_0', src/wino_IO.cpp:1295) with incoming values : ('p_0805_3', src/wino_IO.cpp:1295) [62]  (0 ns)
+	'add' operation ('ret.V', src/wino_IO.cpp:1260) [159]  (0.673 ns)
+	'icmp' operation ('icmp_ln879', src/wino_IO.cpp:1260) [161]  (0.991 ns)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 1.34 seconds; current allocated memory: 549.332 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.22 seconds; current allocated memory: 550.185 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_output_row_1_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining loop 'Loop 1'.
+INFO: [SCHED 204-61] Pipelining result : Target II = 1, Final II = 1, Depth = 13.
+WARNING: [SCHED 204-21] Estimated clock period (1.9505ns) exceeds the target (target clock period: 2ns, clock uncertainty: 0.25ns, effective delay budget: 1.75ns).
+WARNING: [SCHED 204-21] The critical path in module 'write_output_row_1_s' consists of the following:
+	'or' operation ('or_ln879', src/wino_IO.cpp:1281) [179]  (0 ns)
+	'select' operation ('select_ln879_2', src/wino_IO.cpp:1281) [180]  (0 ns)
+	'select' operation ('p_0805_3', src/wino_IO.cpp:1295) [181]  (0.287 ns)
+	'phi' operation ('p_0805_0', src/wino_IO.cpp:1295) with incoming values : ('p_0805_3', src/wino_IO.cpp:1295) [62]  (0 ns)
+	'add' operation ('ret.V', src/wino_IO.cpp:1260) [159]  (0.673 ns)
+	'icmp' operation ('icmp_ln879', src/wino_IO.cpp:1260) [161]  (0.991 ns)
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.36 seconds; current allocated memory: 550.798 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.22 seconds; current allocated memory: 551.694 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_output_to_DDR3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.27 seconds; current allocated memory: 551.961 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.18 seconds; current allocated memory: 552.466 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'wino_systolic_top' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 0.39 seconds; current allocated memory: 553.745 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_0_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_1_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_2_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer0_3_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_0_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_1_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_2_0_7' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_1' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_2' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_3' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_4' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_5' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_6' will be ignored if a simpler one can be used.
+WARNING: [BIND 205-102] The specified resource core for memory 'output_buffer1_3_0_7' will be ignored if a simpler one can be used.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 3.05 seconds; current allocated memory: 557.926 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_params' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'load_params_params_V' to 'load_params_parambkb' due to the length limit 20
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_params'.
+INFO: [HLS 200-111]  Elapsed time: 1.94 seconds; current allocated memory: 566.210 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_bias_value' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_bias_value'.
+INFO: [HLS 200-111]  Elapsed time: 0.35 seconds; current allocated memory: 569.516 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_input_row_from_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_mul_16ns_16ns_21_3_1' to 'wino_systolic_topcud' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topcud': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_input_row_from_1'.
+INFO: [HLS 200-111]  Elapsed time: 0.19 seconds; current allocated memory: 573.449 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_input_row_from_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topcud': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_input_row_from_s'.
+INFO: [HLS 200-111]  Elapsed time: 0.99 seconds; current allocated memory: 584.642 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_input_rowtile_f' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Register 'loaded_input_row_num' is power-on initialization.
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mux_42_16_1_1' to 'wino_systolic_topdEe' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topdEe': 4 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_input_rowtile_f'.
+INFO: [HLS 200-111]  Elapsed time: 1.01 seconds; current allocated memory: 594.822 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_kernel' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_kernel'.
+INFO: [HLS 200-111]  Elapsed time: 0.61 seconds; current allocated memory: 597.267 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_kernel_2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_kernel_2'.
+INFO: [HLS 200-111]  Elapsed time: 0.11 seconds; current allocated memory: 597.810 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'input_feed_undercons' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_32ns_16ns_48_5_1' to 'wino_systolic_topeOg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mux_83_16_1_1' to 'wino_systolic_topfYi' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topeOg': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topfYi': 48 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'input_feed_undercons'.
+INFO: [HLS 200-111]  Elapsed time: 0.25 seconds; current allocated memory: 604.531 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_kernel_1_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_kernel_1_1'.
+INFO: [HLS 200-111]  Elapsed time: 1.59 seconds; current allocated memory: 617.530 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'input_transform205' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'input_transform205'.
+INFO: [HLS 200-111]  Elapsed time: 0.18 seconds; current allocated memory: 618.869 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_weight_ddr_one_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_weight_ddr_one_s'.
+INFO: [HLS 200-111]  Elapsed time: 0.45 seconds; current allocated memory: 622.596 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'weight_feed_one_port' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Register 'DDR_offset_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Register 'DDR_load_cnt_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Register 'pingpong_V' is power-on initialization.
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_0_0' to 'weight_feed_one_pg8j' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_0_1' to 'weight_feed_one_phbi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_0_2' to 'weight_feed_one_pibs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_0_3' to 'weight_feed_one_pjbC' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_1_0' to 'weight_feed_one_pkbM' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_1_1' to 'weight_feed_one_plbW' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_1_2' to 'weight_feed_one_pmb6' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'weight_feed_one_port_weight_buff_V_1_3' to 'weight_feed_one_pncg' due to the length limit 20
+INFO: [RTGEN 206-100] Finished creating RTL model for 'weight_feed_one_port'.
+INFO: [HLS 200-111]  Elapsed time: 0.61 seconds; current allocated memory: 626.691 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_input_tile_2x2' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_input_tile_2x2'.
+INFO: [HLS 200-111]  Elapsed time: 0.5 seconds; current allocated memory: 629.569 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_reg_tile4' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_reg_tile4'.
+INFO: [HLS 200-111]  Elapsed time: 0.23 seconds; current allocated memory: 630.876 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'load_reg_tile3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'load_reg_tile3'.
+INFO: [HLS 200-111]  Elapsed time: 0.22 seconds; current allocated memory: 632.177 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'winoPEB_CORN207' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_mul_11s_6s_17_3_1' to 'wino_systolic_topocq' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topocq': 32 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'winoPEB_CORN207'.
+INFO: [HLS 200-111]  Elapsed time: 0.41 seconds; current allocated memory: 642.863 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_kernel_3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'start_for_wino_systolic_kernel_2_U0' to 'start_for_wino_sypcA' due to the length limit 20
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_kernel_3'.
+INFO: [HLS 200-111]  Elapsed time: 3.05 seconds; current allocated memory: 668.563 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_kernel_1_1_1' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_kernel_1_1_1'.
+INFO: [HLS 200-111]  Elapsed time: 1.38 seconds; current allocated memory: 677.269 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_kernel_merge_ro' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_kernel_merge_ro'.
+INFO: [HLS 200-111]  Elapsed time: 1.2 seconds; current allocated memory: 683.055 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_input_compute' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_0' to 'wino_input_computqcK' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_1' to 'wino_input_computrcU' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_2' to 'wino_input_computsc4' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_3' to 'wino_input_computtde' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_4' to 'wino_input_computudo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_5' to 'wino_input_computvdy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_6' to 'wino_input_computwdI' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_0_7' to 'wino_input_computxdS' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_0' to 'wino_input_computyd2' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_1' to 'wino_input_computzec' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_2' to 'wino_input_computAem' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_3' to 'wino_input_computBew' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_4' to 'wino_input_computCeG' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_5' to 'wino_input_computDeQ' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_6' to 'wino_input_computEe0' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_4_7' to 'wino_input_computFfa' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_0' to 'wino_input_computGfk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_1' to 'wino_input_computHfu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_2' to 'wino_input_computIfE' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_3' to 'wino_input_computJfO' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_4' to 'wino_input_computKfY' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_5' to 'wino_input_computLf8' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_6' to 'wino_input_computMgi' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_1_7' to 'wino_input_computNgs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_0' to 'wino_input_computOgC' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_1' to 'wino_input_computPgM' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_2' to 'wino_input_computQgW' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_3' to 'wino_input_computRg6' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_4' to 'wino_input_computShg' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_5' to 'wino_input_computThq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_6' to 'wino_input_computUhA' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_5_7' to 'wino_input_computVhK' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_0' to 'wino_input_computWhU' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_1' to 'wino_input_computXh4' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_2' to 'wino_input_computYie' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_3' to 'wino_input_computZio' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_4' to 'wino_input_comput0iy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_5' to 'wino_input_comput1iI' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_6' to 'wino_input_comput2iS' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_2_7' to 'wino_input_comput3i2' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_0' to 'wino_input_comput4jc' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_1' to 'wino_input_comput5jm' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_2' to 'wino_input_comput6jw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_3' to 'wino_input_comput7jG' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_4' to 'wino_input_comput8jQ' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_5' to 'wino_input_comput9j0' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_6' to 'wino_input_computbak' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_6_7' to 'wino_input_computbbk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_0' to 'wino_input_computbck' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_1' to 'wino_input_computbdk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_2' to 'wino_input_computbek' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_3' to 'wino_input_computbfk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_4' to 'wino_input_computbgk' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_5' to 'wino_input_computbhl' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_6' to 'wino_input_computbil' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_3_7' to 'wino_input_computbjl' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_0' to 'wino_input_computbkl' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_1' to 'wino_input_computbll' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_2' to 'wino_input_computbml' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_3' to 'wino_input_computbnm' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_4' to 'wino_input_computbom' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_5' to 'wino_input_computbpm' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_6' to 'wino_input_computbqm' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_input_compute_input_buffer_V_7_7' to 'wino_input_computbrm' due to the length limit 20
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_input_compute'.
+INFO: [HLS 200-111]  Elapsed time: 1.9 seconds; current allocated memory: 691.823 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_output_row_0_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_9ns_31s_31_5_1' to 'wino_systolic_topbsm' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_32s_10ns_32_5_1' to 'wino_systolic_topbtn' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mux_42_9_1_1' to 'wino_systolic_topbun' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_mul_mul_9s_16s_25_3_1' to 'wino_systolic_topbvn' due to the length limit 20
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbsm': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbtn': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbun': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbvn': 4 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_output_row_0_s'.
+INFO: [HLS 200-111]  Elapsed time: 2.08 seconds; current allocated memory: 698.009 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_output_row_1_s' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbsm': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbtn': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbun': 4 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'wino_systolic_topbvn': 4 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_output_row_1_s'.
+INFO: [HLS 200-111]  Elapsed time: 0.71 seconds; current allocated memory: 702.032 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_output_to_DDR3' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Register 'out_ddr_offset0_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Register 'out_ddr_offset1_V' is power-on initialization.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_output_to_DDR3'.
+INFO: [HLS 200-111]  Elapsed time: 0.74 seconds; current allocated memory: 706.109 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'wino_systolic_top' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/input_DDR0_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/input_DDR1_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/weight_DDR0_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/output_DDR0_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/output_DDR1_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'wino_systolic_top/mem_params_V' to 'ap_memory'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'wino_systolic_top' to 'ap_ctrl_hs'.
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0' to 'wino_systolic_topbwn' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_1' to 'wino_systolic_topbxn' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_2' to 'wino_systolic_topbyn' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_3' to 'wino_systolic_topbzo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_4' to 'wino_systolic_topbAo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_5' to 'wino_systolic_topbBo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_6' to 'wino_systolic_topbCo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_0_0_7' to 'wino_systolic_topbDo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0' to 'wino_systolic_topbEo' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_1' to 'wino_systolic_topbFp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_2' to 'wino_systolic_topbGp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_3' to 'wino_systolic_topbHp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_4' to 'wino_systolic_topbIp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_5' to 'wino_systolic_topbJp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_6' to 'wino_systolic_topbKp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_1_0_7' to 'wino_systolic_topbLp' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0' to 'wino_systolic_topbMq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_1' to 'wino_systolic_topbNq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_2' to 'wino_systolic_topbOq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_3' to 'wino_systolic_topbPq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_4' to 'wino_systolic_topbQq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_5' to 'wino_systolic_topbRq' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_6' to 'wino_systolic_topbSr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_2_0_7' to 'wino_systolic_topbTr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0' to 'wino_systolic_topbUr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_1' to 'wino_systolic_topbVr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_2' to 'wino_systolic_topbWr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_3' to 'wino_systolic_topbXr' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_4' to 'wino_systolic_topbYs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_5' to 'wino_systolic_topbZs' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_6' to 'wino_systolic_topb0s' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer0_3_0_7' to 'wino_systolic_topb1s' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0' to 'wino_systolic_topb2s' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_1' to 'wino_systolic_topb3s' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_2' to 'wino_systolic_topb4t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_3' to 'wino_systolic_topb5t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_4' to 'wino_systolic_topb6t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_5' to 'wino_systolic_topb7t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_6' to 'wino_systolic_topb8t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_0_0_7' to 'wino_systolic_topb9t' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0' to 'wino_systolic_topcau' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_1' to 'wino_systolic_topcbu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_2' to 'wino_systolic_topccu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_3' to 'wino_systolic_topcdu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_4' to 'wino_systolic_topceu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_5' to 'wino_systolic_topcfu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_6' to 'wino_systolic_topcgu' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_1_0_7' to 'wino_systolic_topchv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0' to 'wino_systolic_topciv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_1' to 'wino_systolic_topcjv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_2' to 'wino_systolic_topckv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_3' to 'wino_systolic_topclv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_4' to 'wino_systolic_topcmv' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_5' to 'wino_systolic_topcnw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_6' to 'wino_systolic_topcow' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_2_0_7' to 'wino_systolic_topcpw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0' to 'wino_systolic_topcqw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_1' to 'wino_systolic_topcrw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_2' to 'wino_systolic_topcsw' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_3' to 'wino_systolic_topctx' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_4' to 'wino_systolic_topcux' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_5' to 'wino_systolic_topcvx' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_6' to 'wino_systolic_topcwx' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_output_buffer1_3_0_7' to 'wino_systolic_topcxx' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_0' to 'wino_systolic_topcyx' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_1' to 'wino_systolic_topczy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_2' to 'wino_systolic_topcAy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_3' to 'wino_systolic_topcBy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_4' to 'wino_systolic_topcCy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_5' to 'wino_systolic_topcDy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_6' to 'wino_systolic_topcEy' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer0_7' to 'wino_systolic_topcFz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_0' to 'wino_systolic_topcGz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_1' to 'wino_systolic_topcHz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_2' to 'wino_systolic_topcIz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_3' to 'wino_systolic_topcJz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_4' to 'wino_systolic_topcKz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_5' to 'wino_systolic_topcLz' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_6' to 'wino_systolic_topcMA' due to the length limit 20
+INFO: [SYN 201-210] Renamed object name 'wino_systolic_top_bias_buffer1_7' to 'wino_systolic_topcNA' due to the length limit 20
+INFO: [RTGEN 206-100] Finished creating RTL model for 'wino_systolic_top'.
+INFO: [HLS 200-111]  Elapsed time: 1.77 seconds; current allocated memory: 718.454 MB.
+INFO: [HLS 200-790] **** Loop Constraint Status: All loop constraints were satisfied.
+INFO: [HLS 200-789] **** Estimated Fmax: 512.69 MHz
+INFO: [RTMG 210-278] Implementing memory 'load_params_parambkb_ram (RAM)' using block RAMs.
+INFO: [RTMG 210-282] Generating pipelined core: 'wino_systolic_topeOg_MulnS_0'
+INFO: [RTMG 210-278] Implementing memory 'weight_feed_one_pg8j_ram (RAM_S2P_BRAM)' using block RAMs with power-on initialization.
+INFO: [RTMG 210-285] Implementing FIFO 'start_row_idx_minus_4_U(fifo_w16_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_col_idx_minus_3_U(fifo_w16_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'reset_DDR_offset_V_c_1_U(fifo_w32_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'first_flag_c2_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'last_flag_c3_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'clear_flag_c4_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_row_idx_minus_2_U(fifo_w16_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_col_idx_minus_4_U(fifo_w16_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'reset_DDR_offset_V_c_U(fifo_w32_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'first_flag_c_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'last_flag_c_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'clear_flag_c_U(fifo_w1_d4_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'icmp_ln71_loc_channe_U(fifo_w1_d2_A)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'input_tile_transform_1_U(fifo_w96_d2_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'weight_stream_out_V_1_U(fifo_w176_d2_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'weight_stream_out_V_s_U(fifo_w176_d2_S)' using Shift Registers.
+INFO: [RTMG 210-285] Implementing FIFO 'start_for_wino_sypcA_U(start_for_wino_sypcA)' using Shift Registers.
+INFO: [RTMG 210-278] Implementing memory 'wino_input_computqcK_ram (RAM_S2P_BRAM)' using block RAMs with power-on initialization.
+INFO: [RTMG 210-282] Generating pipelined core: 'wino_systolic_topbsm_MulnS_1'
+INFO: [RTMG 210-282] Generating pipelined core: 'wino_systolic_topbtn_MulnS_2'
+INFO: [RTMG 210-278] Implementing memory 'wino_systolic_topbwn_ram (RAM_T2P_BRAM)' using block RAMs.
+INFO: [RTMG 210-278] Implementing memory 'wino_systolic_topcyx_ram (RAM)' using block RAMs.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:01:39 ; elapsed = 00:02:05 . Memory (MB): peak = 1607.285 ; gain = 1167.152 ; free physical = 11697 ; free virtual = 105481
+INFO: [VHDL 208-304] Generating VHDL RTL for wino_systolic_top.
+INFO: [VLOG 209-307] Generating Verilog RTL for wino_systolic_top.
+INFO: [IMPL 213-8] Exporting RTL as a Vivado IP.
+
+****** Vivado v2019.2 (64-bit)
+  **** SW Build 2700185 on Thu Oct 24 18:45:48 MDT 2019
+  **** IP Build 2699827 on Thu Oct 24 21:16:38 MDT 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source run_ippack.tcl -notrace
+bad lexical cast: source type value could not be interpreted as target
+    while executing
+"rdi::set_property core_revision 2610101249 {component component_1}"
+    invoked from within
+"set_property core_revision $Revision $core"
+    (file "run_ippack.tcl" line 950)
+INFO: [Common 17-206] Exiting Vivado at Sat Oct 10 12:50:16 2026...
+ERROR: [IMPL 213-28] Failed to generate IP.
+command 'ap_source' returned error code
+    while executing
+"source asic_scripts/script_asic.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel \#0 [list source $arg] "
+
+INFO: [HLS 200-112] Total elapsed time: 162.24 seconds; peak allocated memory: 718.454 MB.
+INFO: [Common 17-206] Exiting vivado_hls at Sat Oct 10 12:50:26 2026...

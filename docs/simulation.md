@@ -55,7 +55,8 @@ O modo ASIC (`-DWINO_ASIC`) troca só os pragmas de memória; o C-sim ignora.
 > **Nota de escopo.** O C-sim de `single_main` usa `scale_oback_int` fixo (não
 > calculado); ele valida o datapath, não é um teste de acurácia para dados
 > aleatórios de grande magnitude. O micro é funcional para `h/w` até 64×64
-> (com **depth múltiplo de 8**; ver `micro_progress.md`).
+> nos casos já testados com profundidades alinhadas a 8. Também foi validado
+> `32×32, Cin=3, Cout=12` com dados de baixa amplitude (ver `micro_progress.md`).
 
 ---
 
@@ -97,11 +98,19 @@ python3 asic_scripts/bin2hex.py .
 ```
 
 Ressalvas:
-- o `single_main` usa `scale_oback_int` fixo; pesos/entradas de magnitude alta
-  saturam (a lib gera `sim int -r` com pesos em `0..Cout*Cin*9`, que estouram
-  int8). Use magnitudes pequenas ou o fluxo completo com fatores de escala.
-- **depth 3** (RGB) ainda esbarra na limitação pré-existente de `depth` não
-  múltiplo de 8; use depth múltiplo de 8 por enquanto.
+- a memória agrupa canais em tiles de 8, mas as dimensões lógicas podem ser
+  menores/não múltiplas de 8. Para a saída, `output_burst_length` precisa cobrir
+  o último tile físico alinhado, e o unpack do software precisa percorrer esse
+  tile parcial. O caso `Cin=3, Cout=12` foi validado em 32×32 após essas
+  correções; não generalize essa evidência para todas as profundidades.
+- `single_main` usa `scale_oback_int` fixo e o campo `scale` do `params.json`
+  FastConv não é automaticamente uma escala WinoCNN. O fixture original
+  `sim-032-3-12-normal-trunc-nbits16` ainda não passa: com `scale=128`, 3.498 de
+  10.800 outputs diferem. O loader de `weight.bin` também precisa respeitar a
+  pré-quantização WinoCNN para `G_WIDTH=7`; o arquivo FastConv contém pesos
+  signed-8, e não pesos já escalados para esse caminho. Detalhes e os limites do
+  teste derivado estão em [`micro_progress.md`](micro_progress.md#diagnostico-do-fixture-fastconv-original).
+  Não use a passagem com operandos reduzidos como validação do fixture original.
 
 ---
 
@@ -251,3 +260,71 @@ seed, escalas, métricas e status da validação. O script também exporta os
 operandos int8 realmente fornecidos ao WinoCNN e códigos de saída para permitir
 reprodução e depuração. Só depois de corrigir o mismatch e obter `Not different!`
 as métricas devem ser usadas para comparação acadêmica.
+
+### Diagnóstico antes de `Scale_oback`
+
+Para localizar a origem do R² negativo, o script também compara a correlação
+inteira exata em int64 dos mesmos operandos quantizados (`input_int8` e
+`weight_int8`) com o `output_buffer` do modelo WinoCNN **antes** de
+`Scale_oback`. Na execução acima, a convolução direta quantizada cobre
+`[-2790, 2947]` e tem valores positivos e negativos (50,0% positivos), enquanto
+o modelo Winograd antes da escala cobre apenas `[-3, 0]` (nenhum positivo).
+A correlação entre as saídas é 0,445; mesmo o melhor ajuste afim meramente
+diagnóstico explica só R²=0,198. Isso localiza o problema antes da escala final
+de saída: alterar apenas `Scale_oback` não deve resolver a discrepância.
+
+Como teste de sensibilidade, repetir com alvos de quantização maiores para
+entrada/peso (127/63) manteve a saída pré-escala em `[-3, 0]`, reduziu a
+correlação para 0,053 e aumentou os mismatches C-sim/modelo inteiro para
+7.021/10.800. Portanto, aumentar a magnitude dos operandos não é uma correção.
+Uma sondagem de flips/transposição espacial e permutação simples de canais
+também não melhorou materialmente a correlação; isso não exclui outros erros de
+layout. A causa exata ainda não está isolada, mas os dados apontam para a
+aritmética/quantização intermediária da transformada ou outra interpretação
+dos tensores antes da saída, não para um R² calculado incorretamente. O
+diagnóstico de maior faixa está em `/tmp/winocnn-fullrange` e é exploratório,
+não um resultado de comparação.
+
+### Dataset padrão para publicação (2026-10-10)
+
+Para os experimentos de publicação com `32×32`, `Cin=3`, `Cout=12`, kernel
+`3×3`, stride 1 e sem padding, fica adotado o dataset determinístico
+WinoCNN-modulo em
+`reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/`: features signed de 5 bits
+(`[-16, 15]`), pesos signed de 4 bits (`[-8, 7]`) e seed 1. A geração adapta
+as rotinas aleatórias do WinoCNN por redução módulo (`random()%32` para
+features, interpretado como complemento de dois signed-5; `random()%16-8`
+para pesos). A proveniência completa está no `provenance.json` do dataset.
+
+O C-sim comparou sem divergências (`Not different!`, 0 mismatches) para
+padding 0 e também passou no teste adicional com padding 1. O caso sem padding
+é o padrão do experimento e produz `12×30×30` saídas; padding 1 é somente uma
+validação extra, com `12×32×32` saídas. Esta escolha é um workload derivado e
+quantizado para o WinoCNN, não deve ser descrita como o dataset nativo do paper
+nem como equivalência bit a bit com os operandos FastConv.
+
+O fluxo RTL → SHM → Genus foi executado para essa condição em 2026-10-10, com
+HLS F(2×2,3×3), `M=2, N=1, Q=1, B=1` (32 multiplicadores), TSMC 28 nm e
+corner nominal `0,90 V / 25 °C`. O C-sim passou (`Not different!`, 0 mismatches).
+A síntese HLS gerou o RTL e o relatório C-synthesis; o empacotamento opcional
+de IP terminou com o erro conhecido `bad lexical cast` do Vivado 2019.2, mas os
+artefatos Verilog estavam presentes e foram aceitos pelos fluxos Xcelium/Genus.
+A simulação RTL completou em 50.293 ciclos (latência `ap_start`→`ap_done` de
+100,586 µs a 2 ns), com 1.120 leituras de input, 2.101 de pesos, 129 de
+parâmetros e 3.840 writes físicos.
+
+O relatório SHM dá potência média total de **10,2384 mW**: 9,12138 mW interna,
+0,763946 mW de switching e 0,353082 mW leakage. A janela completa do SHM foi
+102,627 µs (inclui reset e os 2 µs de drenagem após `ap_done`), portanto a
+energia total nessa janela é **1.050,74 nJ** (1.014,50 nJ dinâmica e 36,24 nJ
+leakage). A energia é do intervalo inteiro analisado, não somente do trecho
+ativo entre start e done. As memórias externas/black boxes continuam excluídas:
+Genus reporta 0 mW em `memory`/`bbox`, o que não significa memória física sem
+consumo. A anotação cobriu 100% dos flops e portas primárias; 178 ICGs ficaram
+sem atividade anotada e o log reporta alguns pinos `ap_return_0` não dirigidos.
+
+Artefatos (incluindo logs, estímulos `.hex`, SHM, DB e netlist mapeado) estão em
+[`reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/power_flow_20261010/`](../reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/power_flow_20261010/).
+Os relatórios de power antigos para `8×8×8` continuam sendo outro workload.
+As tentativas com features/pesos de 6/5 e 8/7 bits divergiram do golden; ver os
+respectivos `csim_validation.json`.

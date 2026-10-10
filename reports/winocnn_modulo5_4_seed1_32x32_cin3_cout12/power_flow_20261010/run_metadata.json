@@ -1,0 +1,102 @@
+{
+  "run_id": "winocnn_modulo5_4_seed1_32x32_cin3_cout12_power_20261010",
+  "date": "2026-10-10",
+  "repository": {
+    "branch": "experiment/winocnn-micro",
+    "head": "146fa38d11fdf3860f854250f01f5f76ffaeb4a6",
+    "working_tree_dirty": true,
+    "remote_run_directory": "/sim/tarsio/WinoCNN-power-5_4-20261010-oSKE9J"
+  },
+  "workload": {
+    "feature_bits": 5,
+    "feature_range": [-16, 15],
+    "weight_bits": 4,
+    "weight_range": [-8, 7],
+    "seed": 1,
+    "input_chw": [3, 32, 32],
+    "output_chw": [12, 30, 30],
+    "kernel": [3, 3],
+    "stride": 1,
+    "padding": 0,
+    "scale_oback_int": 128,
+    "csim": "PASS: Not different!, 0 mismatches"
+  },
+  "architecture": {
+    "winograd": "F(2x2,3x3)",
+    "M": 2,
+    "N": 1,
+    "Q": 1,
+    "B": 1,
+    "multipliers": 32
+  },
+  "tools": {
+    "vivado_hls": "2019.2",
+    "xcelium": "23.03-s003",
+    "genus": "21.12-s068_1",
+    "technology": "TSMC 28 nm BWP30P140",
+    "corner": "tt0p9v25c",
+    "voltage_v": 0.9,
+    "temperature_c": 25,
+    "clock_period_ns": 2
+  },
+  "flow_status": {
+    "hls_csynth_and_rtl_generation": "RTL generated; optional IP packaging failed with Vivado 2019.2 bad lexical cast",
+    "rtl_simulation": "PASS, Xcelium exit 0",
+    "genus_synthesis": "PASS, Normal exit",
+    "genus_power": "PASS, Normal exit"
+  },
+  "commands": [
+    "python3 codegen/gen_systolic.py",
+    "vivado_hls -f asic_scripts/script_asic.tcl",
+    "bash asic_scripts/run_sim_asic.sh",
+    "genus -f asic_scripts/genus_core.tcl",
+    "genus -f asic_scripts/power.tcl"
+  ],
+  "rtl_simulation": {
+    "cycles_start_to_done": 50293,
+    "active_latency_us": 100.586,
+    "shm_start_ns": 0,
+    "shm_end_ns": 102627,
+    "shm_window_us": 102.627,
+    "input_reads": 1120,
+    "weight_reads": 2101,
+    "parameter_reads": 129,
+    "output_writes": 3840,
+    "max_input_address": 1023,
+    "max_weight_address": 127,
+    "rtl_output_compared_bitwise_to_csim": false
+  },
+  "synthesis": {
+    "cell_area_um2": 64821.456,
+    "net_area_um2": 22233.616,
+    "total_area_um2": 87055.072,
+    "sequential_instances": 19252,
+    "combinational_instances": 31151,
+    "nominal_setup_slack_ps": 451
+  },
+  "power_mw": {
+    "leakage": 0.353082,
+    "internal": 9.12138,
+    "switching": 0.763946,
+    "dynamic": 9.885326,
+    "total": 10.2384,
+    "memory_and_bbox": 0
+  },
+  "energy_nj_over_full_shm_window": {
+    "leakage": 36.235746,
+    "dynamic": 1014.501351,
+    "total": 1050.736277
+  },
+  "annotation": {
+    "primary_inputs_percent": 100.0,
+    "primary_outputs_percent_reported": 100.0,
+    "flop_outputs_percent": 100.0,
+    "unannotated_inferred_icg_count": 178,
+    "driver_nets_asserted_percent": 51.85,
+    "warnings": [
+      "Undriven hierarchical ap_return_0 assertions were not used for propagation",
+      "Eight primary outputs are reported unconnected",
+      "External and black-box memory power is excluded"
+    ]
+  }
+}

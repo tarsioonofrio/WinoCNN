@@ -19,7 +19,8 @@ module tb;
   localparam OUT_DEPTH = 1 << 19;  // output_DDR0/1: 32-bit
   localparam P_DEPTH   = 1 << 16;  // mem_params   : 32-bit
 
-  localparam OUT_DUMP_WORDS = 256;
+  // Enough to retain both output-bank dumps for the 32x32, Cout=12 workload.
+  localparam OUT_DUMP_WORDS = 8192;
 
   reg  ap_clk = 0;
   reg  ap_rst = 1;
@@ -175,7 +176,9 @@ module tb;
   // Watchdog: abort if the DUT does not finish (e.g. wrong external RAM
   // latency makes the FSM loop).
   initial begin
-    #200000;
+    // Larger than the original 8x8 smoke test; the 32x32 workload runs much
+    // longer, but still aborts if a memory-latency/control bug stalls the DUT.
+    #10000000;
     $display("WINO_SIM_TIMEOUT cycles=%0d", cycle_count);
     $finish;
   end
