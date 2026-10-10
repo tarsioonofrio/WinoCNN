@@ -205,13 +205,60 @@ AddrGen/controle e registradores de pipeline — reflexo do estilo HLS. O domín
 
 - **Macros SRAM do PDK**: hoje as memórias são black-box (área excluída). Para
   uma variante "com memória", mapear às macros do PDK.
-- **Paridade com o FastConv**: aplicar exatamente a mesma metodologia (mesma
-  lib, 2 ns, mesmo critério de black-box) e montar a tabela de PPA.
+- **Normalização estrita para comparação científica**: os resultados FastConv
+  já coletados usam o mesmo PDK TSMC 28 nm, clock de 2 ns e não incluem a área
+  das memórias externas. Ainda é preciso igualar largura numérica, workload e
+  política de atrasos I/O antes de comparar Fmax, energia por operação ou
+  afirmar equivalência de precisão.
 
-## 9. Definição de pronto
+## 9. Comparação de referência com FastConv (resultados existentes)
+
+Usei os relatórios já completos do checkout `FastConv_SystemVerilog` para
+preencher a referência — não rodei uma nova campanha. As configurações abaixo
+são convolução 3×3, com 3 canais de entrada e 12 de saída; IFN9 oferece 6, 12 e
+18 multiplicadores, e TCN9 oferece 5. O WinoCNN micro usa F(2×2,3×3) e 32
+multiplicadores escalares.
+
+| arquitetura/configuração | mult. escalares | precisão configurada | cell area (µm²) | FF | pior caminho / slack¹ (ps) | potência @ atividade (mW) | execução (µs) | energia estimada² (nJ) |
+|---|---:|---|---:|---:|---:|---:|---:|---:|
+| FastConv IFN9, 3×3 | 6 | NBITS=16 | 13 503.294 | 1 562 | 992 / +8 | 4.29459 | 88.280 | 379.126 |
+| FastConv TCN9, 3×3 | 5 | NBITS=16 | 26 980.884 | 1 500 | 1 975 / 0 | 4.43671 | 81.080 | 359.728 |
+| FastConv IFN9, 3×3 | 12 | NBITS=16 | 17 063.676 | 1 846 | 990 / +10 | 5.40972 | 66.680 | 360.720 |
+| FastConv IFN9, 3×3 | 18 | NBITS=16 | 22 464.036 | 2 137 | 975 / +25 | 7.07957 | 59.480 | 421.093 |
+| **WinoCNN micro, F(2×2,3×3)** | **32** | **precisão original** | **64 812.9** | **19 070** | **1 939 / +39** | **8.457** | **68.244** | **577.140** |
+
+¹ Caminho reportado e slack no corner lento (`ssg0p81v125c`), cada um sob o SDC
+da respectiva arquitetura. Ambos os projetos definem clock de 2 ns, mas o
+FastConv aplica atrasos externos de meio período a todas as portas, enquanto o
+WinoCNN exclui handshake HLS e aplica atrasos aos caminhos de dados/memória.
+Assim, esses números de caminho/slack **não são uma comparação direta de Fmax**.
+
+As duas metodologias usam a biblioteca `tcbn28hpcplusbwp30p140` e excluem as
+memórias externas: FastConv tem `memory=0` nos relatórios de potência; WinoCNN
+mantém as RAMs como black boxes. A comparação ainda não é igualdade de
+bitwidth: FastConv está em `NBITS=16`, enquanto WinoCNN permanece na precisão
+original do projeto. Os perfis de atividade também não são o mesmo workload
+(WinoCNN: conv 8×8×8; FastConv: benchmark dos projetos IFN9/TCN9). Portanto,
+área e contagem de FF são referências PPA sob a mesma tecnologia, mas potência
+deve ser lida como indicativa, não como energia normalizada por uma operação
+comum.
+
+² Energia estimada por `potência média reportada × tempo de execução`; para
+FastConv, o tempo vem de `p_start→p_end` em `report/time.csv`; para WinoCNN,
+`34 122 ciclos × 2 ns`. Como os estímulos não representam o mesmo workload,
+esses valores não são energia por operação comparável entre arquiteturas.
+
+Fontes FastConv: `report/logical.csv`, `report/power.csv`,
+`report/timing-summary.csv` e `report/flow-status.csv`; os quatro projetos
+3×3 usados constam como completos no status consolidado. Os resultados WinoCNN
+vêm de `reports/genus/dom4/` e da atividade SHM documentada em
+[`simulation.md`](simulation.md) §7–8.
+
+## 10. Definição de pronto
 
 - [x] HLS ASIC roda e exporta RTL.
 - [x] Genus sintetiza o core com as memórias black-box.
 - [x] Relatórios de área/FF/Fmax/potência (dom4 e dom6).
 - [x] Testbench RTL + SHM; potência com atividade real.
-- [ ] Mesma metodologia aplicada ao FastConv + tabela de PPA.
+- [x] Referência FastConv coletada e tabela PPA montada (resultados existentes, mesmos 2 ns/PDK, memórias externas excluídas).
+- [ ] Igualar precisão, workload e política de atrasos I/O para uma comparação direta de Fmax/energia.

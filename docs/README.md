@@ -16,8 +16,8 @@ sob a mesma metodologia ASIC.
 |---|---|
 | [`architecture.md`](architecture.md) | hierarquia de módulos a partir de `wino_systolic_top` |
 | [`address_generation.md`](address_generation.md) | geração de endereços de entrada/peso/saída; hardware vs software |
-| [`configuration_exploration.md`](configuration_exploration.md) | exploração das configurações suportadas; menor config funcional; domínio 4 vs 6 |
-| [`micro_progress.md`](micro_progress.md) | jornada do WinoCNN-micro (Q, N, H, B; bloqueio de M=1) |
+| [`configuration_exploration.md`](configuration_exploration.md) | exploração das configurações; baseline micro adotado de 32 multiplicadores; domínio 4 vs 6 |
+| [`micro_progress.md`](micro_progress.md) | jornada do WinoCNN-micro; configuração funcional adotada e bloqueio estrutural de M=1 |
 | [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md) | detalhe do fix de `BATCH_SIZE=1` (layout da palavra, overflow, macros) |
 
 ## Referência
@@ -25,7 +25,7 @@ sob a mesma metodologia ASIC.
 | documento | conteúdo |
 |---|---|
 | [`history.md`](history.md) | relato de todas as mudanças desde o commit original preservado |
-| [`agent_brief_16macs.md`](agent_brief_16macs.md) | brief do alvo de 16 MACs |
+| [`agent_brief_16macs.md`](agent_brief_16macs.md) | histórico do alvo exploratório de 16 MACs, não adotado como baseline |
 
 ## Convenções
 
@@ -33,5 +33,6 @@ sob a mesma metodologia ASIC.
   Artefatos são separados por domínio: `reports/genus/dom<N>/` (síntese),
   `sim_asic/dom<N>/` (simulação), `testbench/stim/dom<N>/` (estímulo).
 - Config micro validada: `M=2, N=1, H2=2, W2=1, Q=1, B=1` → 1 PE.
+- Configuração micro escolhida para comparação: domínio 4, 32 multiplicadores escalares. O alvo de 16 exigiria refatoração estrutural do PE/feed de pesos e fica fora do baseline atual.
 - Ferramentas: Vivado HLS 2019.2, Genus 21.12, Xcelium 23.03 (host `paxos`),
   TSMC 28 nm BWP30P140, 2 ns.

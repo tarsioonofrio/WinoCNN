@@ -1,6 +1,8 @@
 # WinoCNN-micro — progresso
 
-Alvo: `M=WINO_HEIGHT=1, N=WINO_WIDTH=1, Q=INDEPTH_MINITILE_SIZE=1, B=BATCH_SIZE=1`, F(2×2,3×3) (`WINO_DOMAIN_SIZE=4`), `WINO_H2=WINO_W2=1` → 1 PE, ~16 multiplicadores (hadamard do domínio 4×4).
+Configuração micro adotada: `M=WINO_HEIGHT=2, N=WINO_WIDTH=1, Q=INDEPTH_MINITILE_SIZE=1, B=BATCH_SIZE=1`, F(2×2,3×3) (`WINO_DOMAIN_SIZE=4`), `WINO_H2=2, WINO_W2=1` → 1 PE, 32 multiplicadores escalares no hadamard (duas linhas de saída × 16 pontos do domínio).
+
+O alvo anterior de 16 multiplicadores (`M=1`) fica registrado como exploração futura, não como requisito do baseline: a implementação atual do PE pressupõe duas linhas de pesos e de write-back.
 
 Base: F(2,3) funcional (M=4,N=2,Q=4,B=2), que por sua vez parte dos 3 fixes do caminho F(2,3) (ver `configuration_exploration.md`).
 
@@ -58,14 +60,16 @@ Verificado em C-sim (ASan limpo), dom4 e dom6 micro: 8×8, 16×8, 8×16, 16×16,
 
 1. ~~Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).~~ ✅ feito (commit `1a43e69`); resta só depth ≠ múltiplo de 8, que é limitação pré-existente do fonte original.
 2. ~~Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`)~~ ✅ feito.
-3. Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`) — **bloqueio estrutural** (ver abaixo).
+3. ~~Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`)~~ — não necessário para o baseline de 32; mantido como exploração futura e bloqueado por assunção estrutural do PE (ver abaixo).
 4. ~~Reduzir B=1 (`BATCH_SIZE=1`)~~ ✅ feito; detalhes completos em
    [`b1_pack_unpack_detail.md`](b1_pack_unpack_detail.md).
-5. Wrapper de memória síncrona (substituir AXI) + black-box das memórias.
-6. Síntese ASIC (Genus) core-only e system-level.
+5. ~~Wrapper de memória síncrona (substituir AXI) + black-box das memórias~~ — fluxo ASIC documentado em `synthesis.md`.
+6. ~~Síntese ASIC (Genus)~~ — resultados registrados em `synthesis.md`; falta paridade de metodologia com FastConv.
 
-Configuração funcional atual: `M=2, N=1, H2=2, W2=1, Q=1, B=1` → 1 PE, 32
-multiplicadores escalares. Bloqueio do alvo de 16 MACs: `M=1` (item 3).
+Configuração funcional adotada: `M=2, N=1, H2=2, W2=1, Q=1, B=1` → 1 PE,
+32 multiplicadores escalares. Essa é a contagem usada para a comparação; não deve
+ser descrita como 16 MACs. O alvo de 16 permanece bloqueado pela necessidade de
+refatorar o caminho de pesos e a saída do PE para suportar uma única linha.
 
 ## Execução do runbook — B=1
 

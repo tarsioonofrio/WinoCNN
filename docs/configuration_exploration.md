@@ -55,13 +55,24 @@ Os `#pragma HLS dependence variable=out_buffer_4/5` (nas 4 funções `winoPEB_*`
 
 ---
 
-## Bloqueios para reduzir paralelismo (M=N=Q=B=1)
+## Configuração micro adotada e limite de redução
 
-A menor configuração **funcional** (sem rewrite arquitetural) é:
+A configuração escolhida para a comparação controlada é `WINO_DOMAIN_SIZE=4`
+(F(2×2,3×3), 1 PE), `M=2, N=1, Q=1, B=1`. Ela passa a regressão funcional
+registrada em `micro_progress.md` e usa **32 multiplicadores escalares** no
+hadamard (duas linhas de saída × 16 pontos do domínio × um batch). Esse é o
+baseline micro; não o número nominal de 16, que pressuporia uma única linha de
+saída.
+
+## Bloqueios para reduzir paralelismo até M=N=Q=B=1
+
+A configuração mais reduzida validada nesta exploração, sem uma refatoração
+estrutural do PE para suportar uma única linha, é:
 
 ```
-F(2×2,3×3): WINO_DOMAIN_SIZE=4, WINO_HEIGHT=4, WINO_WIDTH=2,
-            INDEPTH_MINITILE_SIZE=4, BATCH_SIZE=2
+F(2×2,3×3): WINO_DOMAIN_SIZE=4, WINO_HEIGHT=2, WINO_WIDTH=1,
+            INDEPTH_MINITILE_SIZE=1, BATCH_SIZE=1,
+            WINO_H2=2, WINO_W2=1
 ```
 
 Reduções adicionais **quebram a correção** (não são mudanças só de config):
@@ -94,8 +105,8 @@ do feed de pesos e do codegen.
 WINO_DOMAIN_SIZE² × (INDEPTH_MINITILE_SIZE/2) × BATCH_SIZE × 2
 ```
 
-- **F(2,3) mínimo funcional** (M=4,N=2,Q=4,B=2): `4×4 × 2 × 2 × 2 = 128` mult/PE, com `(4/2)×(2/2)=2` PEs → **256 mult** (≈128 DSP48E, via `__builtin_mac16x2`).
-- **Alvo micro** (M=1,N=1,Q=1,B=1): `4×4 × 1 × 1 = 16` mult → **16 multiplicadores físicos** (o hadamard do domínio 4×4).
+- **Configuração micro adotada** (M=2,N=1,Q=1,B=1, um PE): `4×4 × 1 × 1 × 2 = 32` multiplicadores escalares.
+- **Alvo exploratório não adotado** (M=1,N=1,Q=1,B=1): seriam 16 multiplicadores, mas o source atual acessa uma segunda linha de pesos e de write-back em `winoPEB_CORN`; não é uma configuração funcional só por ajuste de parâmetros.
 
 ## Validação funcional (nota)
 
