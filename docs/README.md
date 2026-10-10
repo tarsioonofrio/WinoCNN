@@ -8,7 +8,7 @@ sob a mesma metodologia ASIC.
 | documento | conteúdo |
 |---|---|
 | [`synthesis.md`](synthesis.md) | escolher o domínio, interface de memória ASIC (`-DWINO_ASIC`), HLS → Genus, black-box das RAMs, constraints, resultados (dom4/dom6) |
-| [`simulation.md`](simulation.md) | C-sim (funcional), estímulo, testbench RTL, SHM, potência com atividade real, validação, resultados |
+| [`simulation.md`](simulation.md) | C-sim, estímulo, simulação RTL e gate-level/SDF, SHM, golden, potência e resultados |
 
 ## Arquitetura e micro-arquitetura
 

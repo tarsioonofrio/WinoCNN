@@ -98,11 +98,26 @@
     "mae_codes": 2.577777777777778,
     "max_abs_codes": 64
   },
+  "pre_rescale_diagnostic": {
+    "comparison": "exact int64 direct cross-correlation on input_int8 and weight_int8 vs WinoCNN output_buffer before Scale_oback",
+    "direct_quantized_min": -2790,
+    "direct_quantized_max": 2947,
+    "winocnn_prescale_min": -3,
+    "winocnn_prescale_max": 0,
+    "direct_positive_fraction": 0.5003703703703704,
+    "winocnn_prescale_positive_fraction": 0.0,
+    "winocnn_prescale_at_signed_9bit_rail_fraction": 0.0,
+    "correlation_direct_vs_prescale": 0.44470963890781195,
+    "best_affine_fit_slope": 0.0006210836770514686,
+    "best_affine_fit_intercept": -1.4252840717148643,
+    "best_affine_fit_r2_diagnostic_only": 0.1977666629375311
+  },
   "result_scope_warning": "Diagnostic only: do not use as paper PPA/accuracy evidence because hardware C-sim differs from the integer golden.",
   "artifacts": {
     "feature_int8": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/feature_int8.bin",
     "weight_int8": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/weight_int8.bin",
     "hardware_output_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/hw_codes.csv",
-    "integer_model_output_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/model_codes.csv"
+    "integer_model_output_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/model_codes.csv",
+    "integer_model_prescale_codes": "/home/tarsio/gaph/WinoCNN/reports/winocnn_normal/model_prescale_codes.csv"
   }
 }

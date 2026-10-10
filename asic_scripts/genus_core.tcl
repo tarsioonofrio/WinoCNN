@@ -38,6 +38,16 @@ proc wino_domain {root} {
 }
 set WINO_DOM [wino_domain $GIT_ROOT]
 set OUT_FILES [file join $GIT_ROOT reports genus "dom${WINO_DOM}"]
+set GOLDEN_CHECK [file join $GIT_ROOT sim_asic "dom${WINO_DOM}" rtl_golden_check.json]
+if {![file exists $GOLDEN_CHECK]} {
+    error "RTL-vs-golden comparison missing at $GOLDEN_CHECK; run asic_scripts/run_sim_asic.sh first"
+}
+set check_f [open $GOLDEN_CHECK r]
+set check_json [read $check_f]
+close $check_f
+if {![regexp {\"result\"\s*:\s*\"PASS\"} $check_json]} {
+    error "RTL-vs-golden comparison did not PASS: $GOLDEN_CHECK"
+}
 puts "INFO: Winograd domain $WINO_DOM -> reports in $OUT_FILES"
 
 # --- 1. Technology (TSMC 28 nm) --------------------------------------------

@@ -1,0 +1,32 @@
+{
+  "result": "FAIL",
+  "golden_image": "output_golden.bin",
+  "rtl_write_trace": "out_writes.txt",
+  "golden_sha256": "12084a3373ff6a0f9eb9c3a87f97f78a65c634e159f7403862a4d81ff3500b08",
+  "rtl_write_trace_sha256": "08cbd333b88011a7e4cfe0e71029f22bd7221150f1ae7878e947db5dd7d02d05",
+  "expected_writes": 3840,
+  "checked_writes": 3,
+  "unique_bank_addresses": 3,
+  "mismatch_count": 3,
+  "mismatches": [
+    {
+      "line": 1,
+      "bank": 0,
+      "address": 0,
+      "rtl": "0x00000000",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 2,
+      "bank": 0,
+      "address": 1,
+      "rtl": "0x00000000",
+      "golden": "0xffffffff"
+    },
+    {
+      "reason": "incomplete or excess RTL write coverage",
+      "expected_writes": 3840,
+      "checked_writes": 3
+    }
+  ]
+}

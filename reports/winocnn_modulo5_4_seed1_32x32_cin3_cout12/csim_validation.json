@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "test": "WinoCNN C-simulation compare mode",
+  "exit_code": 0,
+  "dataset": {
+    "feature_bits": 5,
+    "feature_range": [-16, 15],
+    "weight_bits": 4,
+    "weight_range": [-8, 7],
+    "seed": 1
+  },
+  "convolution": {
+    "input": [3, 32, 32],
+    "output": [12, 30, 30],
+    "kernel": [3, 3],
+    "stride": 1,
+    "padding": 0,
+    "scale_oback_int": 128
+  },
+  "mismatches": 0,
+  "command": "./single_csim.out 32 32 3 30 30 12 3 3 1 0 0 0 128 file:<feature.bin> random file:<weight.bin> compare . 3",
+  "additional_padding1_test": {
+    "result": "PASS",
+    "output": [12, 32, 32],
+    "padding": 1,
+    "mismatches": 0,
+    "exit_code": 0
+  }
+}

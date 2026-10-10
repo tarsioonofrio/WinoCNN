@@ -144,12 +144,29 @@ bool diff_feature_map(
     int width,
     int depth)
 {
+    int mismatch_count = 0;
     for(int i=0;i<height*width*depth;i++)
     {
-        if(feature_map1[i]!=feature_map2[i]) return false;
+        if(feature_map1[i]!=feature_map2[i])
+        {
+            if(mismatch_count < 8)
+            {
+                const int channel = i / (height * width);
+                const int spatial = i % (height * width);
+                const int row = spatial / width;
+                const int column = spatial % width;
+                fprintf(stderr,
+                        "mismatch[%d] at c=%d y=%d x=%d: golden=%d hardware=%d\n",
+                        mismatch_count, channel, row, column,
+                        static_cast<int>(feature_map1[i]),
+                        static_cast<int>(feature_map2[i]));
+            }
+            mismatch_count++;
+        }
     }
-
-    return true;
+    if(mismatch_count > 8)
+        fprintf(stderr, "... %d additional mismatches\n", mismatch_count - 8);
+    return mismatch_count == 0;
 }
 
 

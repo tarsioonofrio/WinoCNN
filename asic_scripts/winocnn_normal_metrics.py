@@ -34,6 +34,21 @@ def conv2d_valid(x, w):
     return y
 
 
+def conv2d_valid_int(x, w):
+    """Exact int64 cross-correlation over the quantized operands."""
+    cin, h, width = x.shape
+    cout, wcin, kh, kw = w.shape
+    if cin != wcin:
+        raise ValueError("Cin mismatch")
+    y = np.zeros((cout, h - kh + 1, width - kw + 1), dtype=np.int64)
+    for oc in range(cout):
+        for ic in range(cin):
+            for ky in range(kh):
+                for kx in range(kw):
+                    y[oc] += x[ic, ky:ky + y.shape[1], kx:kx + y.shape[2]].astype(np.int64) * int(w[oc, ic, ky, kx])
+    return y
+
+
 def metrics(reference, estimate, quantized_reference, codes):
     err = estimate - reference
     sse = float(np.sum(err * err))
@@ -65,6 +80,10 @@ def main():
     parser.add_argument("--cin", type=int, default=3)
     parser.add_argument("--cout", type=int, default=12)
     parser.add_argument("--seed", type=int, default=3)
+    parser.add_argument("--input-quant-max", type=float, default=48.0,
+                        help="target absolute quantized input range before rounding")
+    parser.add_argument("--weight-quant-max", type=float, default=31.0,
+                        help="target absolute quantized 3x3 weight range before rounding")
     parser.add_argument("--out", type=Path, help="output directory (default: reports/winocnn_normal)")
     args = parser.parse_args()
 
@@ -83,8 +102,8 @@ def main():
     # The source has narrow fixed-point transform intermediates (notably the
     # 6-bit BTB input). Use headroom instead of filling every operand bit;
     # the chosen native ranges are part of this reproducible experiment.
-    scale_i = 48.0 / float(np.max(np.abs(x_float)))
-    scale_w = 31.0 / float(np.max(np.abs(w_float)))
+    scale_i = args.input_quant_max / float(np.max(np.abs(x_float)))
+    scale_w = args.weight_quant_max / float(np.max(np.abs(w_float)))
     x_q = np.clip(np.rint(x_float * scale_i), -128, 127).astype(np.int8)
     w_q = np.clip(np.rint(w_float * scale_w), -64, 63).astype(np.int8)
 
@@ -121,16 +140,30 @@ def main():
         raise RuntimeError("C-sim dump_metrics falhou:\n" + dump.stdout[-3000:] + dump.stderr[-2000:])
     codes_path = outdir / "hw_codes.csv"
     model_codes_path = outdir / "model_codes.csv"
+    prescale_codes_path = outdir / "model_prescale_codes.csv"
     if not codes_path.is_file():
         raise RuntimeError("C-sim não produziu hw_codes.csv")
     if not model_codes_path.is_file():
         raise RuntimeError("C-sim não produziu model_codes.csv")
+    if not prescale_codes_path.is_file():
+        raise RuntimeError("C-sim não produziu model_prescale_codes.csv")
     codes = np.loadtxt(codes_path, delimiter=",", dtype=np.int64).reshape(y_float.shape)
     model_codes = np.loadtxt(model_codes_path, delimiter=",", dtype=np.int64).reshape(y_float.shape)
+    prescale_codes = np.loadtxt(prescale_codes_path, delimiter=",", dtype=np.int64).reshape(y_float.shape)
+    direct_quantized = conv2d_valid_int(x_q, w_q)
     estimate = codes.astype(np.float64) / scale_o
     model_estimate = model_codes.astype(np.float64) / scale_o
     yq = np.trunc(y_float * scale_o).astype(np.int64)
     hw_model_diff = codes.astype(np.int64) - model_codes.astype(np.int64)
+    direct_flat = direct_quantized.ravel().astype(np.float64)
+    prescale_flat = prescale_codes.ravel().astype(np.float64)
+    direct_variance = float(np.sum((direct_flat - np.mean(direct_flat)) ** 2))
+    fit_slope = float(np.sum((direct_flat - np.mean(direct_flat)) * (prescale_flat - np.mean(prescale_flat))) / direct_variance) if direct_variance else 0.0
+    fit_intercept = float(np.mean(prescale_flat) - fit_slope * np.mean(direct_flat))
+    fit_residual = prescale_flat - (fit_slope * direct_flat + fit_intercept)
+    prescale_variance = float(np.sum((prescale_flat - np.mean(prescale_flat)) ** 2))
+    prescale_fit_r2 = 1.0 - float(np.sum(fit_residual ** 2)) / prescale_variance if prescale_variance else (1.0 if np.all(fit_residual == 0) else 0.0)
+    correlation = float(np.corrcoef(direct_flat, prescale_flat)[0, 1]) if np.std(direct_flat) and np.std(prescale_flat) else None
     extra_mismatches = re.search(r"\.\.\. (\d+) additional mismatches", compare_log)
     printed_mismatches = len(re.findall(r"mismatch\[\d+\] at", compare_log))
 
@@ -147,6 +180,8 @@ def main():
             "fastconv_quant_rule": "trunc(normal * 2**8), retained as provenance; not the WinoCNN operands",
             "winocnn_input_bits": 8,
             "winocnn_weight_bits": 7,
+            "winocnn_input_quant_target_abs_max": args.input_quant_max,
+            "winocnn_weight_quant_target_abs_max": args.weight_quant_max,
             "winocnn_input_quant_scale": scale_i,
             "winocnn_weight_quant_scale": scale_w,
             "winocnn_input_rounding": "nearest-even (numpy.rint), clipped to [-128,127]",
@@ -176,9 +211,24 @@ def main():
             "mae_codes": float(np.mean(np.abs(hw_model_diff))),
             "max_abs_codes": int(np.max(np.abs(hw_model_diff))),
         },
+        "pre_rescale_diagnostic": {
+            "comparison": "exact int64 direct cross-correlation on input_int8 and weight_int8 vs WinoCNN output_buffer before Scale_oback",
+            "direct_quantized_min": int(np.min(direct_quantized)),
+            "direct_quantized_max": int(np.max(direct_quantized)),
+            "winocnn_prescale_min": int(np.min(prescale_codes)),
+            "winocnn_prescale_max": int(np.max(prescale_codes)),
+            "direct_positive_fraction": float(np.mean(direct_quantized > 0)),
+            "winocnn_prescale_positive_fraction": float(np.mean(prescale_codes > 0)),
+            "winocnn_prescale_at_signed_9bit_rail_fraction": float(np.mean((prescale_codes <= -256) | (prescale_codes >= 255))),
+            "correlation_direct_vs_prescale": correlation,
+            "best_affine_fit_slope": fit_slope,
+            "best_affine_fit_intercept": fit_intercept,
+            "best_affine_fit_r2_diagnostic_only": prescale_fit_r2,
+        },
         "result_scope_warning": "Diagnostic only: do not use as paper PPA/accuracy evidence because hardware C-sim differs from the integer golden.",
         "artifacts": {"feature_int8": str(feature_path), "weight_int8": str(weight_path),
-                      "hardware_output_codes": str(codes_path), "integer_model_output_codes": str(model_codes_path)},
+                      "hardware_output_codes": str(codes_path), "integer_model_output_codes": str(model_codes_path),
+                      "integer_model_prescale_codes": str(prescale_codes_path)},
     }
     report_path = outdir / "metrics.json"
     report_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

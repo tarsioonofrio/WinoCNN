@@ -1,0 +1,153 @@
+{
+  "result": "FAIL",
+  "golden_image": "output_golden.bin",
+  "rtl_write_trace": "out_writes.txt",
+  "golden_sha256": "12084a3373ff6a0f9eb9c3a87f97f78a65c634e159f7403862a4d81ff3500b08",
+  "rtl_write_trace_sha256": "8e0f6a64c4fb3067163b8bcd703928c8693daaeec2299cff9071eb5d9dabf676",
+  "expected_writes": 3840,
+  "checked_writes": 3840,
+  "unique_bank_addresses": 3840,
+  "mismatch_count": 1350,
+  "mismatches": [
+    {
+      "line": 3,
+      "bank": 0,
+      "address": 1,
+      "rtl": "0x00ffffff",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 4,
+      "bank": 1,
+      "address": 129,
+      "rtl": "0xffffff00",
+      "golden": "0x00ffffff"
+    },
+    {
+      "line": 6,
+      "bank": 1,
+      "address": 130,
+      "rtl": "0xff00ffff",
+      "golden": "0xff00ff00"
+    },
+    {
+      "line": 7,
+      "bank": 0,
+      "address": 3,
+      "rtl": "0xffffffff",
+      "golden": "0x00ffffff"
+    },
+    {
+      "line": 8,
+      "bank": 1,
+      "address": 131,
+      "rtl": "0x0000ffff",
+      "golden": "0xffffff00"
+    },
+    {
+      "line": 11,
+      "bank": 0,
+      "address": 5,
+      "rtl": "0x0000ffff",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 12,
+      "bank": 1,
+      "address": 133,
+      "rtl": "0xffffffff",
+      "golden": "0x0000ffff"
+    },
+    {
+      "line": 14,
+      "bank": 1,
+      "address": 134,
+      "rtl": "0x0000ff00",
+      "golden": "0x0000ffff"
+    },
+    {
+      "line": 15,
+      "bank": 0,
+      "address": 7,
+      "rtl": "0xffffffff",
+      "golden": "0x0000ffff"
+    },
+    {
+      "line": 16,
+      "bank": 1,
+      "address": 135,
+      "rtl": "0x00ff00ff",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 19,
+      "bank": 0,
+      "address": 9,
+      "rtl": "0x00000000",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 20,
+      "bank": 1,
+      "address": 137,
+      "rtl": "0xffffffff",
+      "golden": "0x00ff00ff"
+    },
+    {
+      "line": 21,
+      "bank": 0,
+      "address": 10,
+      "rtl": "0x0000ffff",
+      "golden": "0x00000000"
+    },
+    {
+      "line": 23,
+      "bank": 0,
+      "address": 11,
+      "rtl": "0xffffffff",
+      "golden": "0x00000000"
+    },
+    {
+      "line": 24,
+      "bank": 1,
+      "address": 139,
+      "rtl": "0x0000ffff",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 27,
+      "bank": 0,
+      "address": 13,
+      "rtl": "0x0000ffff",
+      "golden": "0xffffffff"
+    },
+    {
+      "line": 28,
+      "bank": 1,
+      "address": 141,
+      "rtl": "0xffffff00",
+      "golden": "0x0000ffff"
+    },
+    {
+      "line": 29,
+      "bank": 0,
+      "address": 14,
+      "rtl": "0x00ff0000",
+      "golden": "0x00ffffff"
+    },
+    {
+      "line": 31,
+      "bank": 0,
+      "address": 15,
+      "rtl": "0xffffffff",
+      "golden": "0x0000ffff"
+    },
+    {
+      "line": 32,
+      "bank": 1,
+      "address": 143,
+      "rtl": "0xffff0000",
+      "golden": "0xffffff00"
+    }
+  ]
+}

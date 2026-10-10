@@ -1384,7 +1384,9 @@ void featuremap_hw_to_int_pointers(
     int group_depth
 )
 {
-    int group_depth_by8=group_depth/8;
+    // A logical group may end in a partial 8-channel DDR tile (e.g. Cout=12).
+    // Visit that final tile too; depth_ceildiv8 below masks its padded lanes.
+    int group_depth_by8=CEIL_DIV(group_depth,8);
     int width_align8= ALIGN(width,8);
     int group_depth_offset_by8=group_depth_offset/8;
     int depth_ceildiv8 = CEIL_DIV(depth,8);

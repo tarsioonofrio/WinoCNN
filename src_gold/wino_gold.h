@@ -30,7 +30,8 @@ void wino_model_int(
     int stride,
     bool relu_flag,
     int Scale_oback_int,
-    int use_kernel_size
+    int use_kernel_size,
+    int* output_prescale = NULL
 );
 
 void wino_model_float(

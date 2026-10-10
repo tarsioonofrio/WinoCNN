@@ -1,0 +1,28 @@
+{
+  "dataset": {
+    "feature_bits": 8,
+    "feature_range": [-128, 127],
+    "weight_bits": 7,
+    "weight_range": [-64, 63],
+    "seed": 1
+  },
+  "padding0_test": {
+    "result": "FAIL",
+    "output": [12, 30, 30],
+    "padding": 0,
+    "scale_oback_int": 128,
+    "mismatches": 3637,
+    "output_count": 10800,
+    "exit_code": 3
+  },
+  "padding1_test": {
+    "result": "FAIL",
+    "output": [12, 32, 32],
+    "padding": 1,
+    "scale_oback_int": 128,
+    "mismatches": 4118,
+    "output_count": 12288,
+    "exit_code": 3
+  },
+  "interpretation": "Padding 1 does not make this full-range random feature/weight dataset match the WinoCNN integer golden. The 5-bit feature / 4-bit weight dataset passes with both padding 0 and padding 1."
+}

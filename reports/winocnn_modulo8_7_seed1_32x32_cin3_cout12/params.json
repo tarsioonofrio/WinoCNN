@@ -1,0 +1,17 @@
+{
+  "input_height": 32,
+  "input_width": 32,
+  "input_depth": 3,
+  "output_height": 30,
+  "output_width": 30,
+  "output_depth": 12,
+  "kernel_size_h": 3,
+  "kernel_size_w": 3,
+  "stride": 1,
+  "pad_size_h": 0,
+  "pad_size_w": 0,
+  "relu": 0,
+  "scale": 128,
+  "feature_layout": "feature[c*H*W + h*W + w], signed int8 bit pattern from random()%256",
+  "weight_layout": "weight[(od*Cin + id)*kh*kw + ks], signed int7 from random()%128-64"
+}

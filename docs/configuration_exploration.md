@@ -119,8 +119,9 @@ O golden (`wino_gold.cpp`) usa `long int` (64-bit) nos acumuladores; o hardware 
 Confirmado: `WINO_DOMAIN_SIZE=6` com `WINO_HEIGHT=2, WINO_WIDTH=1, WINO_H2=2,
 WINO_W2=1, INDEPTH_MINITILE_SIZE_BITWIDTH=0 (Q=1), BATCH_SIZE=1` **compila e
 passa 4/4** no C-sim (ASan limpo), sem nenhuma mudança de código — é só trocar
-o `wino_hw_config.h`. Funcional para h/w até **64×64** (depth múltiplo de 8);
-ver a nota de Q>8 em `micro_progress.md`.
+o `wino_hw_config.h`. Funcional para h/w até **64×64** nos casos testados com
+depth alinhado a 8; o caso dom4 `Cin=3/Cout=12`, 32×32, também foi validado após
+ajustes no burst/unpack de saída. Ver `micro_progress.md` e a nota de Q>8.
 
 Trocar o domínio é feito por `src/wino_hw_config.h` + `python3 codegen/gen_systolic.py`.
 

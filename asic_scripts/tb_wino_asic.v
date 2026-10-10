@@ -1,17 +1,22 @@
 `timescale 1ns/1ps
 // ---------------------------------------------------------------------------
-// WinoCNN ASIC-flow RTL testbench (micro config, 1 PE).
+// WinoCNN ASIC-flow testbench for the current micro config (M=2: 2 PEs).
 //
 // Models the four external synchronous RAMs (ap_memory ports of
 // wino_systolic_top), preloads them from $readmemh files produced by
 // asic_scripts/bin2hex.py, runs one convolution, counts cycles and memory
 // transactions, dumps the output DDR, and (under +define+XRUN) writes an SHM
-// for Genus power analysis.
+// for Genus power analysis. Define GATE_SIM to suppress the redundant VCD
+// dump when the mapped netlist and SDF generate the power-activity SHM.
 //
 // The top port list below matches the generated RTL for
 // WINO_WIDTH=1 (single weight port).  Re-generate/adapt if the config changes.
 // ---------------------------------------------------------------------------
 module tb;
+
+  // Timing-only assumptions for the behavioral SRAM stand-ins. These are
+  // not characterized macro values and do not affect synthesized area.
+  localparam real EXT_MEM_TCO_NS = 0.20;
 
   // Address spaces of the top ports (2^address_width).
   localparam IN_DEPTH  = 1 << 19;  // input_DDR0/1 : 128-bit
@@ -80,17 +85,20 @@ module tb;
       p_d1 <= 0;   p_d2 <= 0;   p_q   <= 0;
     end else begin
       if (in0_ce) begin
-        in0_d1 <= mem_in0[in0_addr]; in0_d2 <= in0_d1; in0_q <= in0_d2;
+        in0_d1 <= mem_in0[in0_addr]; in0_d2 <= in0_d1;
+        in0_q <= #EXT_MEM_TCO_NS in0_d2;
       end
       if (in1_ce) begin
-        in1_d1 <= mem_in1[in1_addr]; in1_d2 <= in1_d1; in1_q <= in1_d2;
+        in1_d1 <= mem_in1[in1_addr]; in1_d2 <= in1_d1;
+        in1_q <= #EXT_MEM_TCO_NS in1_d2;
       end
       if (w0_ce) begin
-        w0_d1 <= mem_w0[w0_addr]; w0_d2 <= w0_d1; w0_q <= w0_d2;
+        w0_d1 <= mem_w0[w0_addr]; w0_d2 <= w0_d1;
+        w0_q <= #EXT_MEM_TCO_NS w0_d2;
       end
       // The parameter descriptor is read by a simple loop: 1-cycle latency.
       if (p_ce) begin
-        p_q <= mem_p[p_addr];
+        p_q <= #EXT_MEM_TCO_NS mem_p[p_addr];
       end
     end
   end
@@ -105,17 +113,21 @@ module tb;
   integer ow;
   initial ow = $fopen("out_writes.txt", "w");
   always @(posedge ap_clk) begin
-    if (o0_ce && o0_we) $fwrite(ow, "0 %0d %08x\n", o0_addr, o0_d);
-    if (o1_ce && o1_we) $fwrite(ow, "1 %0d %08x\n", o1_addr, o1_d);
+    if ((o0_ce === 1'b1) && (o0_we === 1'b1))
+      $fwrite(ow, "0 %0d %08x\n", o0_addr, o0_d);
+    if ((o1_ce === 1'b1) && (o1_we === 1'b1))
+      $fwrite(ow, "1 %0d %08x\n", o1_addr, o1_d);
   end
 
   // Memory traffic counters.
   always @(posedge ap_clk) begin
-    input_reads   <= input_reads   + (in0_ce ? 1 : 0) + (in1_ce ? 1 : 0);
-    weight_reads  <= weight_reads  + (w0_ce ? 1 : 0);
-    param_reads   <= param_reads   + (p_ce ? 1 : 0);
-    output_writes <= output_writes + ((o0_ce && o0_we) ? 1 : 0)
-                                   + ((o1_ce && o1_we) ? 1 : 0);
+    input_reads   <= input_reads   + ((in0_ce === 1'b1) ? 1 : 0)
+                                   + ((in1_ce === 1'b1) ? 1 : 0);
+    weight_reads  <= weight_reads  + ((w0_ce === 1'b1) ? 1 : 0);
+    param_reads   <= param_reads   + ((p_ce === 1'b1) ? 1 : 0);
+    output_writes <= output_writes
+                   + (((o0_ce === 1'b1) && (o0_we === 1'b1)) ? 1 : 0)
+                   + (((o1_ce === 1'b1) && (o1_we === 1'b1)) ? 1 : 0);
     if (in0_ce) begin
       if (in0_addr > max_in_addr) max_in_addr <= in0_addr;
       if (in0_addr > 63) in_oob <= in_oob + 1;
@@ -178,12 +190,23 @@ module tb;
   initial begin
     // Larger than the original 8x8 smoke test; the 32x32 workload runs much
     // longer, but still aborts if a memory-latency/control bug stalls the DUT.
+`ifdef GATE_SIM
+    // The nominal RTL run is ~101 us. Keep the SDF watchdog at 5x that bound;
+    // a 10 ms timeout makes a stalled gate-level run needlessly expensive.
+    #500000;
+`else
     #10000000;
+`endif
     $display("WINO_SIM_TIMEOUT cycles=%0d", cycle_count);
     $finish;
   end
 
   initial begin
+    // Initialize behavioral RAM outputs/pipelines before reset clocks. Without
+    // this, gate-level timing checks can see X transitions at time zero.
+    in0_q = 0; in1_q = 0; w0_q = 0; p_q = 0;
+    in0_d1 = 0; in0_d2 = 0; in1_d1 = 0; in1_d2 = 0;
+    w0_d1 = 0; w0_d2 = 0; p_d1 = 0; p_d2 = 0;
     cycle_count = 0;
     input_reads = 0;
     weight_reads = 0;
@@ -214,8 +237,10 @@ module tb;
     $readmemh("weight.hex", mem_w0);
     $readmemh("param.hex",  mem_p);
 
+`ifndef GATE_SIM
     $dumpfile("dump.vcd");
     $dumpvars(0, tb);
+`endif
 `ifdef XRUN
     $shm_open("dut.shm");
     $shm_probe(tb.dut, "ASM");

@@ -50,15 +50,71 @@ corrigidas (commit `1a43e69`):
    (chamadores atualizados em `src/wino.cpp` e `codegen/gen_systolic.py`).
 
 Verificado em C-sim (ASan limpo), dom4 e dom6 micro: 8×8, 16×8, 8×16, 16×16,
-32×32, 32×16, 16×32, 24×24, **64×64** — com depth múltiplo de 8.
+32×32, 32×16, 16×32, 24×24, **64×64**, com os casos originais de profundidade
+alinhada a 8.
 
-**Limitação restante (pré-existente):** depth que **não** é múltiplo de 8 (ex.:
-3) falha — mas isso também falha na config original dos autores
-(M4/N2/Q4/B2), então não é do micro.
+## Cin=3, Cout=12 em 32×32
+
+O suporte lógico é possível sem alterar a convolução para `Cin=8/Cout=16`.
+Dois pontos de software estavam truncando os tiles de saída:
+
+1. `software/param.cpp`: o writer calculava `output_burst_length` com `Cout`
+   lógico (`12`), mas as operações/endereços externos são organizados em tiles
+   físicos de 8. Agora os ciclos cobrem `outdepth_align8` (`16` físicos; 12
+   válidos e 4 lanes do último tile são padding).
+2. `software/buffer.cpp`: `featuremap_hw_to_int_pointers` usava divisão inteira
+   `group_depth/8`, deixando de desempacotar o segundo tile quando `Cout=12`.
+   Agora percorre `CEIL_DIV(group_depth,8)` e ignora lanes fora de `depth`.
+
+Com essas mudanças, `32×32, Cin=3, Cout=12` passou no C-sim (`one/center`). A
+regressão 8×8×8 também passou nos quatro padrões (`one/center`,
+`one/kernel_order`, `order/center`, `random/center`). Isso valida dimensões e
+endereçamento, mas não o fixture de dados completo.
+
+**Regressão confirmada em 2026-10-10:** usando os dados gerados pelo próprio
+`single_main` (sem arquivos externos), `32×32, Cin=3, Cout=12`, kernel 3×3,
+stride 1, padding 1, escala 128 passou nos quatro padrões `one/center`,
+`one/kernel_order`, `order/center` e `random/center` (`Not different!`, exit 0).
+Essa confirmação é exclusivamente de C-sim e não altera o status do fixture
+FastConv descrito abaixo.
+
+## Diagnóstico do fixture FastConv original
+
+Reproduzido com `feature.bin`, `weight.bin` e `scale=128` do pacote
+`sim-032-3-12-normal-trunc-nbits16`: o C-sim falha (exit 3), com **3.498 de
+10.800 saídas** diferentes. A primeira diferença é `c=0,y=0,x=0` (`golden=-1`,
+`hardware=0`). O testbench agora imprime as primeiras oito divergências e a
+contagem restante.
+
+Há um erro concreto no caminho do fixture: o loader `file:` copia os pesos
+int8 diretamente para `weightbuffer_quant`, mas o caminho normal do WinoCNN
+escala os pesos de convolução para `G_WIDTH=7` antes de empacotá-los. Neste
+fixture os pesos vão de -128 a 127, e 256 dos 324 valores estão fora do intervalo
+representável signed-7-bit `[-64,63]`. Além disso, `params.json` traz `scale=128`
+do benchmark FastConv; `single_main` o usa como `scale_oback_int` fixo, sem
+calcular a escala WinoCNN. Portanto, o arquivo não está sendo convertido com a
+pré-quantização/escala esperadas pelo software do WinoCNN.
+
+Teste diagnóstico: reduzir *ambos* os operandos por 16 (divisão signed com
+arredondamento para baixo) e usar `scale_oback_int=32767` produz `Not
+different!`, mas altera os dados para aproximadamente 4 bits e não é equivalente
+ao fixture original. Não é aceito como correção nem como validação do workload
+original. As tentativas de apenas reescalar o output, ou de pré-escalar só os
+pesos para 7 bits, ainda falham; logo a pré-quantização explica um problema do
+loader, mas a equivalência numérica completa ainda não foi fechada.
+
+**Conclusão atual:** o suporte de dimensões está validado; o fixture FastConv
+original ainda não. Antes de RTL/ASIC, falta definir/aplicar a conversão de
+pesos e escala compatível com o WinoCNN e validar os 10.800 outputs contra uma
+referência adequada. Não atribuir o teste derivado à mesma precisão do fixture.
+
+Essa mudança aumenta o trabalho de saída para completar o tile alinhado de 16
+canais; métricas de ciclos/tráfego/energia precisam ser coletadas novamente
+com esse descritor. Ainda não há validação RTL/SHM de 32×32 neste registro.
 
 ## Próximos passos
 
-1. ~~Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).~~ ✅ feito (commit `1a43e69`); resta só depth ≠ múltiplo de 8, que é limitação pré-existente do fonte original.
+1. ~~Fechar o mismatch de largura > 8 para Q=1 (banking do input buffer / `buffer_address_mid_increment_step`).~~ ✅ feito (commit `1a43e69`).
 2. ~~Reduzir N=1 (`WINO_WIDTH=1, WINO_W2=1`)~~ ✅ feito.
 3. ~~Reduzir M=1 (`WINO_HEIGHT=1, WINO_H2=1`)~~ — não necessário para o baseline de 32; mantido como exploração futura e bloqueado por assunção estrutural do PE (ver abaixo).
 4. ~~Reduzir B=1 (`BATCH_SIZE=1`)~~ ✅ feito; detalhes completos em

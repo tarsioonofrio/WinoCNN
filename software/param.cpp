@@ -417,7 +417,9 @@ void process_element6x6_soft(
 
     //out buffer related
     conv_desc.outdepth_ceildiv8 = CEIL_DIV(conv_desc.outdepth, 8);
-    conv_desc.output_burst_length = conv_desc.outwidth_align8*CEIL_DIV(conv_desc.outdepth, OUT_PORT_BATCH_NUM)/stride_size;
+    // The output DDR is organized in 8-channel tiles. Run the final padded
+    // tile as well when logical Cout is not a multiple of 8 (e.g. Cout=12).
+    conv_desc.output_burst_length = conv_desc.outwidth_align8*CEIL_DIV(conv_desc.outdepth_align8, OUT_PORT_BATCH_NUM)/stride_size;
 
 
     //output write back related

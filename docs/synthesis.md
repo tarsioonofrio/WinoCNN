@@ -156,7 +156,7 @@ timing, potência, qor, clock gating). Os artefatos grandes
 
 ---
 
-## 6. Resultados (micro, 1 PE)
+## 6. Resultados (micro, 2 PEs)
 
 Ferramentas: Vivado HLS 2019.2 → Genus 21.12, TSMC 28 nm BWP30P140, 2 ns.
 
@@ -210,6 +210,9 @@ AddrGen/controle e registradores de pipeline — reflexo do estilo HLS. O domín
   das memórias externas. Ainda é preciso igualar largura numérica, workload e
   política de atrasos I/O antes de comparar Fmax, energia por operação ou
   afirmar equivalência de precisão.
+- **Gate-level/SDF validado**: o runner foi adicionado, mas a tentativa atual
+  falhou na comparação com o golden (SDF: 0/3.840 writes; controle sem SDF:
+  1.350 divergências). A potência SDF não está disponível até resolver isso.
 
 ## 9. Comparação de referência com FastConv (resultados existentes)
 
@@ -225,7 +228,7 @@ multiplicadores escalares.
 | FastConv TCN9, 3×3 | 5 | NBITS=16 | 26 980.884 | 1 500 | 1 975 / 0 | 4.43671 | 81.080 | 359.728 |
 | FastConv IFN9, 3×3 | 12 | NBITS=16 | 17 063.676 | 1 846 | 990 / +10 | 5.40972 | 66.680 | 360.720 |
 | FastConv IFN9, 3×3 | 18 | NBITS=16 | 22 464.036 | 2 137 | 975 / +25 | 7.07957 | 59.480 | 421.093 |
-| **WinoCNN micro, F(2×2,3×3)** | **32** | **precisão original** | **64 812.9** | **19 070** | **1 939 / +39** | **8.457** | **68.244** | **577.140** |
+| **WinoCNN micro, F(2×2,3×3)** | **32** | **entrada/saída int8; peso espacial signed-7b** | **64 812.9** | **19 070** | **1 939 / +39** | **8.457** | **68.244** | **577.140** |
 
 ¹ Caminho reportado e slack no corner lento (`ssg0p81v125c`), cada um sob o SDC
 da respectiva arquitetura. Ambos os projetos definem clock de 2 ns, mas o
@@ -235,9 +238,16 @@ Assim, esses números de caminho/slack **não são uma comparação direta de Fm
 
 As duas metodologias usam a biblioteca `tcbn28hpcplusbwp30p140` e excluem as
 memórias externas: FastConv tem `memory=0` nos relatórios de potência; WinoCNN
-mantém as RAMs como black boxes. A comparação ainda não é igualdade de
-bitwidth: FastConv está em `NBITS=16`, enquanto WinoCNN permanece na precisão
-original do projeto. Os perfis de atividade também não são o mesmo workload
+mantém as RAMs como black boxes. **Decisão de precisão para este baseline:**
+manter a interface numérica nativa do WinoCNN, com entrada/saída int8 e pesos
+espaciais 3×3 quantizados em signed-7 bits (`G_WIDTH=7`); não ampliar o datapath
+para 16 bits. No F(2×2,3×3), as larguras internas são diferentes dessas larguras
+de interface (por exemplo, peso Winograd `W_WIDTH=11` e produto Hadamard
+`UV_MUL_WIDTH=18`). Os resultados FastConv nesta tabela continuam em `NBITS=16`,
+portanto ainda não há igualdade de precisão entre as linhas. Para uma comparação
+controlada por precisão, será necessário gerar/sintetizar também o FastConv em
+8 bits ou manter esta tabela explicitamente identificada como referência de
+precisões diferentes. Os perfis de atividade também não são o mesmo workload
 (WinoCNN: conv 8×8×8; FastConv: benchmark dos projetos IFN9/TCN9). Portanto,
 área e contagem de FF são referências PPA sob a mesma tecnologia, mas potência
 deve ser lida como indicativa, não como energia normalizada por uma operação
@@ -251,14 +261,16 @@ esses valores não são energia por operação comparável entre arquiteturas.
 Fontes FastConv: `report/logical.csv`, `report/power.csv`,
 `report/timing-summary.csv` e `report/flow-status.csv`; os quatro projetos
 3×3 usados constam como completos no status consolidado. Os resultados WinoCNN
-vêm de `reports/genus/dom4/` e da atividade SHM documentada em
-[`simulation.md`](simulation.md) §7–8.
+vêm de `reports/genus/dom4/` e da atividade SHM RTL documentada em
+[`simulation.md`](simulation.md) §7–8; não são resultados de atividade
+gate-level/SDF.
 
 ## 10. Definição de pronto
 
 - [x] HLS ASIC roda e exporta RTL.
 - [x] Genus sintetiza o core com as memórias black-box.
 - [x] Relatórios de área/FF/Fmax/potência (dom4 e dom6).
-- [x] Testbench RTL + SHM; potência com atividade real.
+- [x] Testbench RTL + SHM; potência com atividade da simulação RTL.
+- [ ] Gate-level com SDF + comparação golden aprovada e nova execução Genus power.
 - [x] Referência FastConv coletada e tabela PPA montada (resultados existentes, mesmos 2 ns/PDK, memórias externas excluídas).
 - [ ] Igualar precisão, workload e política de atrasos I/O para uma comparação direta de Fmax/energia.

@@ -93,7 +93,7 @@ Esses layouts são os do `software/buffer.cpp` do WinoCNN, então o
 # 1) empacotar + validar contra o golden do WinoCNN
 ./single_csim.out <H> <W> <Cin> <Oh> <Ow> <Cout> 3 3 1 0 0 0 128 \
     file:<sim>/winocnn/feature.bin random file:<sim>/winocnn/weight.bin compare . 3
-# 2) gerar o estímulo RTL (empacota o DDR e converte)
+# 2) gerar o estímulo (empacota o DDR, roda C-sim e salva golden)
 python3 asic_scripts/bin2hex.py .
 ```
 
@@ -130,7 +130,8 @@ um SHM para o Genus.
 | `mem_params` | 1 ciclo |
 
 Contadores de simulação (não sintetizados): ciclos, reads de entrada/peso/params,
-writes de saída, endereços máximos e out-of-range.
+writes de saída, endereços máximos e out-of-range. O testbench registra cada
+write como `banco endereço dado` em `out_writes.txt`.
 
 ---
 
@@ -140,9 +141,17 @@ writes de saída, endereços máximos e out-of-range.
 ssh -p 8888 -i ~/.ssh/gaph tarsio.onofrio@paxos.inf.pucrs.br
 cd ~/gaph/WinoCNN
 source /etc/profile.d/modules.sh && module use /soft64/modulefiles
+module load vivado_hls
 module load cadence/xcelium/2303
-bash asic_scripts/run_sim_asic.sh
-# -> sim_asic/dom<N>/dut.shm, output_rtl*.hex, out_writes.txt, dump.vcd
+module load cadence/genus/211
+# gere stimulus e golden com o mesmo C-sim/dataset antes da RTL:
+bash asic_scripts/prepare_asic_stimulus.sh \
+  32 32 3 30 30 12 3 3 1 0 0 0 128 \
+  reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/feature.bin \
+  reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/weight.bin \
+  testbench/stim/dom4 3
+bash asic_scripts/run_asic_flow.sh all
+# -> HLS, RTL/golden, Genus synthesis, gate-level/SDF + golden e power
 ```
 
 O runner deriva `<N>` de `src/wino_hw_config.h`, copia o estímulo de
@@ -150,12 +159,24 @@ O runner deriva `<N>` de `src/wino_hw_config.h`, copia o estímulo de
 fazem `$readmemh("./*_ram.dat")`; sem eles o RTL simula com memória não
 inicializada e a saída sai errada).
 
+`prepare_asic_stimulus.sh` primeiro roda `single_csim.out` em modo `compare` e
+só continua com `Not different!`; depois gera a imagem DDR esperada e os `.hex`
+com os mesmos arquivos de features/pesos. `run_sim_asic.sh` falha se
+`output_golden.bin` não existir,
+se a RTL não emitir `WINO_SIM_DONE`, ou se a comparação falhar. Ele compara
+bit a bit todos os writes RTL por banco/endereço com a saída DDR do modelo C,
+confere a cobertura esperada e salva `rtl_golden_check.json`. Síntese e power
+também recusam prosseguir sem esse marcador em PASS.
+
 ---
 
 ## 6. Validação (RTL vs modelo C)
 
-A união dos bancos ping-pong `output_DDR0` + `output_DDR1` bate com o
-`autotvout_output_DDR0` do cosim do HLS em **128/128 palavras** (dom4 e dom6).
+A união dos bancos ping-pong `output_DDR0` + `output_DDR1` bateu com o
+`autotvout_output_DDR0` do cosim do HLS em **128/128 palavras** nos testes
+anteriores (dom4 e dom6). Para cada execução de potência, a verificação atual
+compara todos os writes RTL bit a bit contra a imagem DDR do modelo C gerada
+para o mesmo estímulo.
 
 O cosim do HLS em si **falha** (rc=3), mas por um artefato conhecido: o
 testbench C aponta `output_DDR0` e `output_DDR1` para o **mesmo buffer**,
@@ -164,10 +185,45 @@ memórias separadas e por isso é a referência válida.
 
 ---
 
-## 7. SHM e potência
+## 7. Simulação gate-level com SDF
+
+Depois da simulação RTL validada e da síntese Genus, `run_gate_sim_asic.sh`
+simula a netlist mapeada com o SDF nominal (`tt0p90v25c`) e modelos Verilog das
+células padrão TSMC. Como o Genus mantém os buffers RAM inferidos como
+black-box, o runner também compila seus modelos comportamentais gerados pelo
+HLS; as portas de memória externas são dirigidas pelos modelos síncronos do
+testbench. Essas RAMs não fazem parte da netlist de potência. O runner gera SHM
+da instância gate-level, verifica a conclusão, exige log de anotação SDF e
+compara os writes da netlist bit a bit com o mesmo golden C antes de aprovar potência.
+O caminho do modelo Verilog pode ser sobrescrito por `WINO_CELL_MODELS`.
+
+O SDF é escolhido com `MTM_CONTROL=MAXIMUM` e `-maxdelays` para a view nominal,
+seguindo o padrão usado nos fluxos ASIC locais. Isto é simulação temporizada de
+netlist sintetizada, ainda sem parasitas pós-route. As mensagens `WSDF-201` do
+Genus indicam instâncias sem descrição de atraso; devem ser revisadas no log de
+geração e no log de anotação Xcelium, e impedem tratar a simulação como
+totalmente anotada sem essa evidência. O Xcelium também informa a cobertura de
+timing checks separadamente dos path delays; ambos os percentuais devem ser
+reportados, não apenas a mensagem de anotação bem-sucedida.
+
+Os modelos comportamentais RAM usados nesta etapa não têm tCO caracterizado.
+Para evitar leitura ideal de saída no mesmo instante da borda, o runner cria
+cópias temporárias dos modelos HLS e aplica 30 ps aos seis outputs de leitura;
+o modelo das memórias externas no testbench aplica 200 ps. Isso não modifica os
+RTL HLS, não entra na síntese e **não representa caracterização de SRAM/DDR**.
+Esses valores são hipóteses de simulação e limitam a interpretação temporal e
+de potência até serem substituídos por modelos de memória apropriados.
+
+O fluxo completo agora executa `run_asic_flow.sh all`: HLS → RTL/C-golden →
+Genus → gate-level/SDF/C-golden → potência. As etapas podem ser chamadas
+separadamente com `gate-sim` e `power`; potência recusa continuar sem o JSON
+PASS da comparação gate-level.
+
+## 8. SHM e potência
 
 `asic_scripts/power.tcl` recria um MMMC de canto `tt`, lê o DB mapeado
-(`reports/genus/dom<N>/gate_level/...`) e anota a atividade do SHM:
+(`reports/genus/dom<N>/gate_level/...`) e anota a atividade do SHM da
+simulação gate-level/SDF (`sim_asic/dom<N>/gate/dut.shm`):
 
 ```bash
 module load cadence/genus/211
@@ -190,7 +246,7 @@ dava 27.5 mW (dom4) e 72.6 mW (dom6) em tt — o número com SHM é o realista.
 
 ---
 
-## 8. Resultados (micro, 1 PE, conv 8×8×8)
+## 9. Resultados (micro, 2 PEs, conv 8×8×8)
 
 | métrica | dom4 (F(2×2,3×3)) | dom6 (F(4×4,3×3)) |
 |---|---:|---:|
@@ -204,7 +260,7 @@ dava 27.5 mW (dom4) e 72.6 mW (dom6) em tt — o número com SHM é o realista.
 
 ---
 
-## 9. Armadilhas
+## 10. Armadilhas
 
 1. **`*_ram.dat` ausentes** → RAMs internas não inicializadas → saída errada. O
    runner os copia; não rode o `xrun` à mão sem eles.
@@ -220,7 +276,7 @@ dava 27.5 mW (dom4) e 72.6 mW (dom6) em tt — o número com SHM é o realista.
 
 ---
 
-## 10. Dados normais e métricas compatíveis com FastConv
+## 11. Dados normais e métricas compatíveis com FastConv
 
 `asic_scripts/winocnn_normal_metrics.py` reproduz a geração `cmd_sim_normal` do
 FastConv (`RandomState(seed)`, primeiro `N(0,1)` para a entrada NCHW, depois
@@ -312,6 +368,42 @@ artefatos Verilog estavam presentes e foram aceitos pelos fluxos Xcelium/Genus.
 A simulação RTL completou em 50.293 ciclos (latência `ap_start`→`ap_done` de
 100,586 µs a 2 ns), com 1.120 leituras de input, 2.101 de pesos, 129 de
 parâmetros e 3.840 writes físicos.
+
+Depois, o trace RTL arquivado foi comparado bit a bit com a imagem DDR gerada
+pelo modelo C usando exatamente os `.hex` do run: **3.840/3.840 writes
+conferem, sem divergências**. Essa checagem retrospectiva está em
+`power_flow_20261010/rtl_sim/rtl_golden_check.json`. O run original não tinha
+esse gate integrado; o runner atualizado exige comparação antes de power.
+
+Na campanha isolada de 2026-10-10, os primeiros modelos comportamentais de RAM
+geravam violações setup/hold e `X` na netlist; sem SDF, a temporização dos modelos
+de célula também gerava divergência. A causa operacional era a combinação de
+saídas RAM idealizadas sem clock-to-output explícito com os delays/checks das
+células e clocks gated. Com saídas e pipelines inicializados, tCO explícito nos
+modelos de RAM e contadores do testbench que ignoram enables `X`, o runner gate
+SDF completou em 50.295 ciclos, com 1.120 leituras de input, 2.101 de pesos,
+129 de parâmetros e 3.840 writes. Os **3.840/3.840 writes passaram** na
+comparação bit a bit com o golden C. O SDF nominal foi aplicado em `tb.dut`;
+271.429/271.437 path delays (100,00%) e 66.834/182.168 timing checks (36,69%)
+foram anotados pelo Xcelium. Não houve avisos de violação setup/hold durante a
+execução, mas a baixa cobertura de timing checks e os tCO assumidos impedem
+tratar esse resultado como signoff de timing ou como modelo de memória
+caracterizado.
+
+Com a comparação gate-SDF em PASS, o Genus Power executou sobre o SHM da mesma
+simulação, no canto `tt0p9v25c`: potência média total **10,6353 mW**, com
+register 9,4910 mW, logic 0,6450 mW e clock 0,4994 mW. Memórias aparecem como
+0 mW porque são externas/black-box e não estão sintetizadas. Essa é uma
+estimativa de potência activity-based da netlist sintetizada; não é medida
+pós-route e depende dos modelos/atrasos assumidos acima. Multiplicando pela
+janela SHM completa de 102,62916 µs (reset + operação + drenagem), a energia
+estimada é **≈1.091,49 nJ**; é derivada de potência média × tempo, não uma
+medição direta de energia. Logs, checker, trace e relatório estão em
+[`gate_sdf_attempt_20261010/`](../reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/gate_sdf_attempt_20261010/).
+
+Os números de potência anteriores, gerados com atividade RTL, permanecem
+históricos e não devem ser confundidos com o novo resultado baseado em
+gate-level/SDF.
 
 O relatório SHM dá potência média total de **10,2384 mW**: 9,12138 mW interna,
 0,763946 mW de switching e 0,353082 mW leakage. A janela completa do SHM foi

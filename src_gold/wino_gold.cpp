@@ -519,7 +519,8 @@ void wino_model_int(
     int stride,
     bool relu_flag,
     int Scale_oback_int,
-    int use_kernel_size
+    int use_kernel_size,
+    int* output_prescale
 )
 {
     std::cout<<"********wino_model_int************"<<std::endl;
@@ -819,6 +820,8 @@ void wino_model_int(
             
             // std::cout<<" "<<bias_value<<"]";
             int stride_addr=od*output_width*output_height*stride*stride+oh*stride*output_width*stride+ow*stride;
+            if(output_prescale!=NULL)
+                output_prescale[addr]=(int)output_buffer[stride_addr];
        
             int result= ((output_buffer[stride_addr]*Scale_oback_int)>>OBACK_QUANT_BIT)+bias_value;
             if( result >  (1<<(IN_WIDTH-1))-1) 

@@ -257,6 +257,9 @@ int main(int argc, char** argv)
 
 
     init_bias_int(linfo_vect[0].biasbuffer_quant[0],output_depth,"zero");
+    int* output_prescale_codes=NULL;
+    if(dump_method=="dump_metrics")
+        output_prescale_codes=new int[output_depth*output_height*output_width];
 if(dump_method!="dump_param" )
 {
     wino_model_int(fmap_dict["in"].buffers_int[0],
@@ -276,7 +279,8 @@ if(dump_method!="dump_param" )
         stride_size,
         relu_flag,
         Scale_oback_int,
-        use_kernel_size
+        use_kernel_size,
+        output_prescale_codes
     );
 
 #if BATCH_SIZE>1
@@ -340,7 +344,7 @@ if(dump_method!="dump_param" )
     fwrite(fmap_dict["in"].buffers_hw[0], 16,CEIL_DIV(input_depth,8)*input_height*ALIGN(input_height,8),fptr);
     fclose(fptr);
 
-    if(dump_method == "compare" || dump_method=="dump_txt" || dump_method=="dump_metrics")
+    if(dump_method == "compare" || dump_method=="dump_txt" || dump_method=="dump_metrics" || dump_method=="dump_asic_golden")
     {
         wino_systolic_top(
             (ap_uint<128> *) inputddr,
@@ -376,7 +380,32 @@ if(dump_method!="dump_param" )
     delete [] conv_desc_param;
     delete [] bias;
 
-    if(dump_method=="dump_bin")
+    if(dump_method=="dump_asic_golden")
+    {
+        // The ASIC testbench has two physical output RAM banks. In this C
+        // model both ports share one flat DDR allocation; preserve its full
+        // address space so every RTL bank/address write can be checked.
+        char filename[512];
+        sprintf(filename, "%s/output_golden.bin", folder.c_str());
+        fptr=fopen(filename,"wb");
+        if(!fptr) {
+            std::cerr << "could not open " << filename << std::endl;
+            return 2;
+        }
+        // The software DDR serializer stores 16 bytes for each output-depth
+        // tile / aligned output position. This covers the RTL 32-bit word
+        // address range while retaining both interleaved output lanes.
+        size_t output_bytes = (size_t)CEIL_DIV(output_depth,8) * output_height
+                            * ALIGN(output_height,8) * 16;
+        fwrite(fmap_dict["out"].buffers_hw[0],1,output_bytes,fptr);
+        fclose(fptr);
+        std::cout << "Wrote ASIC golden DDR image: " << filename
+                  << " (" << output_bytes << " bytes)" << std::endl;
+        del_featuremap_mem(fmap_dict);
+        del_weight_buffer_pointer(linfo_vect);
+        return 0;
+    }
+    else if(dump_method=="dump_bin")
     {
         featuremap_int_to_hw_pointers(
         fmap_dict["out"].buffers_int[0],
@@ -430,6 +459,10 @@ if(dump_method!="dump_param" )
         if(dump_method=="dump_metrics")
         {
             int output_size=linfo_vect[0].outdim[0]*linfo_vect[0].outdim[1]*linfo_vect[0].outdim[2];
+            sprintf(filename, "%s/model_prescale_codes.csv", folder.c_str());
+            FILE* prescale_codes=fopen(filename,"w");
+            for(int i=0;i<output_size;i++) fprintf(prescale_codes,"%d\n",output_prescale_codes[i]);
+            fclose(prescale_codes);
             sprintf(filename, "%s/model_codes.csv", folder.c_str());
             FILE* model_codes=fopen(filename,"w");
             for(int i=0;i<output_size;i++) fprintf(model_codes,"%d\n",(int)fmap_dict["out"].buffers_int[0][i]);
@@ -475,6 +508,7 @@ if(dump_method!="dump_param" )
 
         del_featuremap_mem(fmap_dict);
         del_weight_buffer_pointer(linfo_vect);
+        delete [] output_prescale_codes;
         
         return 0;
         

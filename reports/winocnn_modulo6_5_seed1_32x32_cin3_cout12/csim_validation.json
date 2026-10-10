@@ -1,0 +1,30 @@
+{
+  "test": "WinoCNN C-simulation compare mode",
+  "dataset": {
+    "feature_bits": 6,
+    "feature_range": [-32, 31],
+    "weight_bits": 5,
+    "weight_range": [-16, 15],
+    "seed": 1
+  },
+  "scale_oback_int": 128,
+  "convolution": {
+    "input": [3, 32, 32],
+    "kernel": [3, 3],
+    "stride": 1
+  },
+  "padding0": {
+    "result": "FAIL",
+    "output": [12, 30, 30],
+    "mismatches": 529,
+    "output_count": 10800,
+    "exit_code": 3
+  },
+  "padding1": {
+    "result": "FAIL",
+    "output": [12, 32, 32],
+    "mismatches": 616,
+    "output_count": 12288,
+    "exit_code": 3
+  }
+}
