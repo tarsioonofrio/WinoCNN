@@ -446,3 +446,53 @@ Artefatos (incluindo logs, estímulos `.hex`, SHM, DB e netlist mapeado) estão 
 Os relatórios de power antigos para `8×8×8` continuam sendo outro workload.
 As tentativas com features/pesos de 6/5 e 8/7 bits divergiram do golden; ver os
 respectivos `csim_validation.json`.
+
+### Reexecução de potência com atividade Gate-SDF (2026-10-11)
+
+O fluxo de potência foi reexecutado na Paxos sobre a atividade SHM da mesma
+simulação gate-level com SDF descrita acima. O SHM pertence à netlist mapeada
+Genus do workload determinístico 5/4: imagem 32×32, `Cin=3`, `Cout=12`, kernel
+3×3, padding 0, domínio 4 / F(2×2,3×3), `M=2, N=1, Q=1, B=1` (32
+multiplicadores), corner `tt0p9v25c` a 0,90 V / 25 °C. O check gate-vs-golden
+arquivado passou em 3.840/3.840 writes, com zero divergências.
+
+A execução reproduziu a entrada usada pelo FastConv: `module load
+cadence/genus/211` e `genus -f asic_scripts/power.tcl`, em um workroot isolado
+na Paxos. O script e as constraints eram idênticos aos arquivos versionados
+(`power.tcl` SHA-256 `dd559d85e2830e17d2c22b2b138a2652887cf99bad105ba3a7057dbaa97e689f`;
+`constraints.sdc` SHA-256
+`1164faa69857c758de6e33b208af9c5a29ed673f147a326bf74db6cdac4f850a`). O log
+registra a leitura do banco mapeado e de `dut.shm` via
+`read_stimulus -dut_instance tb.dut`, e `report_power` informa que usou o
+engine Joules. O job terminou com `PWRA-0007 Completed successfully` e `Normal
+exit`.
+
+Resultado do relatório desta execução: potência média total **10,6353 mW**
+(register 9,49094 mW; logic 0,644961 mW; clock 0,499393 mW; leakage 0,351326
+mW). O intervalo reportado no SHM vai de 0 a 102.630160 µs; logo a energia
+estimada para a janela completa é **1.091,50 nJ** (`10,6353 mW × 102,630160
+µs`). É energia derivada da potência média, não uma medição direta. A simulação
+Xcelium encerrou em 102.629160 µs; o endpoint do frame SHM usado pelo Genus é
+1 ns posterior. Memórias seguem externas/black-box: o relatório atribui-lhes
+0 mW porque não fazem parte da netlist sintetizada, não porque seu consumo
+físico seja nulo.
+
+O `read_stimulus` terminou sem erros fatais. A atividade foi anotada em
+419/419 entradas primárias, 21.108/21.108 saídas de flops e 178/178 ICGs;
+59.720/59.721 driver nets têm atividade. Há 8 saídas primárias não conectadas
+e avisos TUI-94 para atributos de atividade em pinos hierárquicos sem driver
+(`ap_idle` e `ap_return_0`). Portanto o número é uma estimativa activity-based
+da netlist sintetizada para essa janela, não power pós-route ou signoff.
+
+O executável standalone tentou obter a licença `Joules_RTL_Power` em duas
+tentativas e falhou por indisponibilidade/configuração do servidor de licença.
+Isso não invalida o relatório acima: o fluxo Genus conseguiu usar a licença
+`Joules_XL`, e seu log confirma explicitamente que o engine Joules foi usado
+por `report_power`. Para evitar ambiguidade, os dois logs de falha também foram
+preservados.
+
+Logs e relatório desta reexecução estão em
+[`joules_gate_sdf_20261011/`](../reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/joules_gate_sdf_20261011/).
+O SHM, a anotação SDF e o check funcional que alimentaram essa análise estão
+arquivados em
+[`gate_sdf_attempt_20261010/`](../reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/gate_sdf_attempt_20261010/).
