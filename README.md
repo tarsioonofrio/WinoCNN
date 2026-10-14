@@ -1,5 +1,13 @@
 # WinoCNN
 
+## ISCAS 2027 paper experiments
+
+The WinoCNN implementation, experiment reports, and reproduction instructions
+used for the ISCAS 2027 paper are maintained on the [`iscas2027` branch](https://github.com/tarsioonofrio/WinoCNN/tree/iscas2027).
+See that branch's README for the workload configuration, dataset provenance,
+validation evidence, and commands to reproduce the experiments. This `master`
+branch remains the upstream-integration line.
+
 WinoCNN combines systolic array and fast Winograd algorithm for CNN acceleration. This system supports flexible convolution kernel sizes without sacrificing DSP efficiency through various algorithmic, architecture and on-chip memory subsystem designs and optimizations. Overall, our accelerator delivers high throughput and state-of-the-art DSP efficiency compared to previous accelerator implementations.
 
 Copyright (c) <2021> 
