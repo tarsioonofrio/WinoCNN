@@ -12,7 +12,7 @@ This run uses the paper-branch WinoCNN configuration, F(2x2,3x3), with 2 PEs (M=
 - Input: 32x32, Cin=3; output: 32x32, Cout=12; 3x3 kernel, stride 1, padding 1.
 - Signed feature values: 5 bits, [-16, 15]. Signed weights: 4 bits, [-8, 7]. Seed 1, glibc `random()`.
 - Scale 128; ReLU disabled; batch 1.
-- The generated feature, weight and golden-output `.bin` files are binary. The `.hex` memory stimulus files are ASCII text, but are generated data as well; none are included in Git. Their preserved copies and hashes are listed in [artifacts_external.md](artifacts_external.md).
+- The generated feature, weight and golden-output `.bin` files are binary and remain in the external artifact archive. The three ASCII memory inputs (`input.hex`, `weight.hex`, `param.hex`) are included under `stimulus/` so the RTL/gate-level run can be reproduced directly; their archived originals and hashes are listed in [artifacts_external.md](artifacts_external.md).
 
 ## Reproduction
 

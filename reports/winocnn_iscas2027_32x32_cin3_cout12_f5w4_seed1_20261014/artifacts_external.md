@@ -4,7 +4,7 @@ Local persistente no Paxos:
 
 `/sim/tarsio.onofrio/artifacts/wino-iscas2027-20261014-32x32-cin3-cout12/`
 
-Esse diretório preserva logs completos, estímulos, C-model golden, RTL HLS, waveform SHM, netlist, DB e SDF usados. Dados e artefatos EDA ficam fora do Git; os reports e métricas compactos deste run são versionados.
+Esse diretório preserva logs completos, cópias dos estímulos, C-model golden, RTL HLS, waveform SHM, netlist, DB e SDF usados. Os arquivos binários e artefatos EDA ficam fora do Git; os três estímulos ASCII também estão versionados em `stimulus/` neste relatório, junto dos reports e métricas compactos.
 
 ## Dados do workload
 
@@ -17,7 +17,7 @@ Esse diretório preserva logs completos, estímulos, C-model golden, RTL HLS, wa
 | `stimulus/weight.hex` | ASCII hex | 4224 B | `046253a559323fc5bbb7325270fea08c4bcf054230ee4dbac4bd630bb371ddbd` |
 | `stimulus/param.hex` | ASCII hex | 1152 B | `5a3e27d6d79b5b5d97dfa60abe7fd2ddad00240819892d743ff8c2255f7d62b0` |
 
-Os `.bin` são binários; os `.hex` são texto ASCII, mas também dados gerados, então nenhum deles foi incluído no Git.
+Os `.bin` são binários e permanecem fora do Git. Os `.hex` são texto ASCII: as cópias usadas estão em `stimulus/` no relatório versionado, e os originais arquivados mantêm os hashes abaixo.
 
 ## Gate-level e síntese
 
