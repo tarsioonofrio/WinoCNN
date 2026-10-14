@@ -55,4 +55,4 @@ Traffic counters from the gate testbench: 1,120 input reads, 2,232 weight reads,
 
 The nominal SDF was read and annotation completed. Xcelium reports 271,429/271,437 path delays annotated (100.00%), but only 66,834/182,168 timing checks (36.69%). It also emits a `FLFNOF` warning for an annotation-command line without an SDF file. Therefore this is a gate-level simulation with SDF delay annotation and golden checking, but it is **not** complete timing-check annotation or timing signoff. The Genus STA result is reported separately.
 
-The compact validation, PPA reports and provenance are committed here. Full tool logs, generated RTL, mapped netlist/DB, SDF, SHM, and binary data are preserved outside Git under `/sim/tarsio.onofrio/artifacts/wino-iscas2027-20261014-32x32-cin3-cout12/`; see [artifacts_external.md](artifacts_external.md).
+The compact validation, provenance and all text artifacts from the run are committed here under `archive_text/`; binary datasets, DB and SHM remain in the external archive. See [artifacts_external.md](artifacts_external.md).

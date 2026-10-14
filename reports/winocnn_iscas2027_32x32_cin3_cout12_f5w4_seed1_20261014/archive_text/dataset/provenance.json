@@ -1,0 +1,33 @@
+{
+  "generator": "WinoCNN modulo-style dataset generator",
+  "source_functions_adapted": [
+    "software/buffer.h:feature_map_buffer_init random branch (random()%256)",
+    "software/buffer.h:init_weight random branch (random()%128-64)"
+  ],
+  "rng": "glibc random()",
+  "seed": 1,
+  "feature_generation": "random()%32, interpreted as signed 5-bit two's-complement",
+  "weight_generation": "random()%16-8 (signed 4-bit range)",
+  "feature_bits": 5,
+  "weight_bits": 4,
+  "feature_signed_range": [
+    -16,
+    15
+  ],
+  "weight_signed_range": [
+    -8,
+    7
+  ],
+  "feature_shape_chw": [
+    3,
+    32,
+    32
+  ],
+  "weight_shape_oihw": [
+    12,
+    3,
+    3,
+    3
+  ],
+  "caveat": "Modulo reduction has the same small bias as the original C++ generator."
+}
