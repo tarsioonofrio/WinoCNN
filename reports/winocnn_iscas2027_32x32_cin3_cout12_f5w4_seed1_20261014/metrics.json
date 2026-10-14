@@ -1,0 +1,74 @@
+{
+  "run_id": "20261014-32x32-cin3-cout12-f5w4-seed1",
+  "top": "wino_systolic_top",
+  "source_commit_before_run": "776c144215fe389b7b8d3e74284481cd6d277c5d",
+  "validation": {
+    "csim_vs_integer_golden": "PASS",
+    "rtl_vs_golden": "PASS",
+    "gate_sdf_vs_golden": "PASS",
+    "expected_writes": 4096,
+    "checked_writes": 4096,
+    "mismatch_count": 0,
+    "golden_sha256": "be657f8d2933da5fd05142c010640ce88987a382b989728e34fb0bef8b97b432",
+    "rtl_write_trace_sha256": "f8fcbdf93a8d65eca6425a8af17d334f22ffbee7ecba2f675ffc82a669d1c4e5"
+  },
+  "traffic": {
+    "input_reads": 1120,
+    "weight_reads": 2232,
+    "parameter_reads": 129,
+    "output_writes": 4096
+  },
+  "latency": {
+    "cycles": 52453,
+    "clock_period_ns": 2.0,
+    "runtime_us_derived": 104.906
+  },
+  "synthesis": {
+    "tool": "Cadence Genus 21.12-s068_1",
+    "technology": "TSMC 28 nm HPC+",
+    "worst_corner": "SSG 0.81 V 125 C",
+    "cell_area_um2": 64821.456,
+    "net_area_um2": 22233.616,
+    "cell_plus_net_area_um2": 87055.072,
+    "sequential_instances": 19252,
+    "combinational_instances": 31151,
+    "clock_period_ns": 2.0,
+    "worst_slack_ps": 39.4,
+    "violating_paths": 0,
+    "runtime_s_from_qor_report": 942
+  },
+  "power": {
+    "tool": "Cadence Genus/Joules 21.12-s068_1",
+    "activity_source": "gate-level Xcelium SHM after nominal SDF annotation",
+    "corner": "TT 0.90 V 25 C",
+    "average_power_mw": 10.8059,
+    "estimated_energy_nj": 1133.6,
+    "energy_method": "average_power_mW multiplied by cycles times target_period_ns; estimate, not direct integration",
+    "components_mw": {
+      "register_total": 9.62207,
+      "logic_total": 0.674107,
+      "clock_total": 0.509758,
+      "memory_macro_included": false
+    }
+  },
+  "sdf_annotation": {
+    "corner": "TT 0.90 V 25 C nominal",
+    "path_delays": {
+      "annotated": 271429,
+      "total": 271437,
+      "percent": 100.0
+    },
+    "timing_checks": {
+      "annotated": 66834,
+      "total": 182168,
+      "percent": 36.69
+    },
+    "simulation_completed_and_golden_passed": true,
+    "timing_signoff": false
+  },
+  "scope": {
+    "external_memory_macros_included": false,
+    "physical_design_or_place_and_route": false,
+    "power_boundary": "mapped WinoCNN logic/control/clock; external SRAMs excluded"
+  }
+}

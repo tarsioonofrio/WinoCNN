@@ -1,0 +1,31 @@
+{
+  "run_id": "20261014-32x32-cin3-cout12-f5w4-seed1",
+  "branch": "iscas2027",
+  "source_commit_before_run": "776c144215fe389b7b8d3e74284481cd6d277c5d",
+  "tracked_source_change_for_flow": "asic_scripts/script_asic.tcl: skip redundant export_design IP packaging and exit after csynth_design",
+  "dataset_generator": "asic_scripts/generate_winocnn_modulo_dataset.py",
+  "dataset_rng": "glibc random()",
+  "seed": 1,
+  "dataset_generation": {
+    "features": "random()%32 interpreted as signed int5",
+    "weights": "random()%16-8 interpreted as signed int4",
+    "feature_shape_chw": [3, 32, 32],
+    "weight_shape_oihw": [12, 3, 3, 3]
+  },
+  "convolution": {
+    "input": [1, 3, 32, 32],
+    "output": [1, 12, 32, 32],
+    "kernel": [3, 3],
+    "stride": [1, 1],
+    "padding": [1, 1],
+    "relu": false,
+    "scale": 128
+  },
+  "tools": {
+    "vivado_hls": "2019.2",
+    "xcelium": "23.03-s003",
+    "genus": "21.12-s068_1",
+    "pdk": "TSMC 28 nm HPC+"
+  },
+  "dataset_artifacts_path": "/sim/tarsio.onofrio/artifacts/wino-iscas2027-20261014-32x32-cin3-cout12/dataset"
+}
