@@ -1,0 +1,26 @@
+{
+  "image": [
+    32,
+    32
+  ],
+  "cin": 3,
+  "cout": 12,
+  "kernel": [
+    3,
+    3
+  ],
+  "stride": 1,
+  "padding": 0,
+  "seed": 20261042,
+  "random_physical_memory_words": {
+    "input": 1024,
+    "weight": 4096
+  },
+  "parameter_descriptor": "WinoCNN single_csim.out dump_param; no convolution/output comparison",
+  "descriptor_values": {
+    "input_ddr_128bits": 1024,
+    "weightDDR_buffer_burst_length": 64,
+    "weightDDR_port_burst_length": 128,
+    "weightDDR_burst_number": 1
+  }
+}

@@ -1,0 +1,1 @@
+-smartorder -work work -top tb -access +rw -timescale 1ns/1ps

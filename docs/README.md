@@ -27,6 +27,13 @@ sob a mesma metodologia ASIC.
 | [`history.md`](history.md) | relato de todas as mudanças desde o commit original preservado |
 | [`agent_brief_16macs.md`](agent_brief_16macs.md) | histórico do alvo exploratório de 16 MACs, não adotado como baseline |
 
+## Manutenção do repositório
+
+| documento | conteúdo |
+|---|---|
+| [`repository_organization.md`](repository_organization.md) | relação com upstream, política de branches, compatibilidade e organização das mudanças locais |
+| [`../reports/README.md`](../reports/README.md) | convenção para registrar resultados e separar evidências compactas de artefatos grandes |
+
 ## Convenções
 
 - **Domínio** `<N>` = `WINO_DOMAIN_SIZE` (4 = F(2×2,3×3), 6 = F(4×4,3×3)).

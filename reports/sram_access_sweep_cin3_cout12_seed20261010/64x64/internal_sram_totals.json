@@ -1,0 +1,27 @@
+{
+  "load_params_parambkb_ram": {
+    "instances": 1,
+    "reads": 50,
+    "writes": 128
+  },
+  "weight_feed_one_pg8j_ram": {
+    "instances": 8,
+    "reads": 492032,
+    "writes": 16384
+  },
+  "wino_input_computqcK_ram": {
+    "instances": 64,
+    "reads": 492032,
+    "writes": 32768
+  },
+  "wino_systolic_topbwn_ram": {
+    "instances": 64,
+    "reads": 4247552,
+    "writes": 2033664
+  },
+  "wino_systolic_topcyx_ram": {
+    "instances": 16,
+    "reads": 0,
+    "writes": 32
+  }
+}

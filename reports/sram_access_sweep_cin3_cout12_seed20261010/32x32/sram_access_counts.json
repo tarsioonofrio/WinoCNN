@@ -1,0 +1,992 @@
+{
+  "source_counter_file": "/sim/tarsio/WinoCNN-gate-sdf-20261010.7uUqh7/reports/sram_access_sweep_cin3_cout12_seed20261010/32x32/sram_access_counts.tsv",
+  "external_sram_ports": [
+    {
+      "module": "external",
+      "name": "input_DDR0",
+      "reads": 560,
+      "writes": 0
+    },
+    {
+      "module": "external",
+      "name": "input_DDR1",
+      "reads": 560,
+      "writes": 0
+    },
+    {
+      "module": "external",
+      "name": "weight_DDR0",
+      "reads": 2101,
+      "writes": 0
+    },
+    {
+      "module": "external",
+      "name": "mem_params",
+      "reads": 129,
+      "writes": 0
+    },
+    {
+      "module": "external",
+      "name": "output_DDR0",
+      "reads": 0,
+      "writes": 1792
+    },
+    {
+      "module": "external",
+      "name": "output_DDR1",
+      "reads": 0,
+      "writes": 1792
+    }
+  ],
+  "internal_sram_instances": [
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_0_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_1_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 40288,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_2_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer0_3_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 38496,
+      "writes": 7744
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_0_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_1_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 41248,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_2_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_1_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_2_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_3_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_4_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_5_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_6_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topbwn_ram",
+      "name": "tb.dut.output_buffer1_3_0_7_U.wino_systolic_topbwn_ram_U",
+      "reads": 39456,
+      "writes": 8704
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_0_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_1_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_2_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_3_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_4_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_5_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_6_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer0_7_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_0_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_1_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_2_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_3_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_4_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_5_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_6_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_systolic_topcyx_ram",
+      "name": "tb.dut.bias_buffer1_7_U.wino_systolic_topcyx_ram_U",
+      "reads": 0,
+      "writes": 2
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_0_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_4_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_1_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_5_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_2_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_6_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_3_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_0_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_1_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_2_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_3_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_4_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_5_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_6_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "wino_input_computqcK_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.input_buffer_V_7_7_U.wino_input_computqcK_ram_U",
+      "reads": 1800,
+      "writes": 128
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_0_0_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_0_1_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_0_2_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_0_3_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_1_0_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_1_1_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_1_2_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "weight_feed_one_pg8j_ram",
+      "name": "tb.dut.grp_wino_input_compute_fu_1544.grp_wino_kernel_merge_ro_fu_683.grp_wino_systolic_kernel_1_1_1_fu_558.grp_wino_systolic_kernel_3_fu_504.weight_feed_one_port_U0.weight_buff_V_1_3_U.weight_feed_one_pg8j_ram_U",
+      "reads": 14400,
+      "writes": 1024
+    },
+    {
+      "module": "load_params_parambkb_ram",
+      "name": "tb.dut.grp_load_params_fu_1859.params_V_U.load_params_parambkb_ram_U",
+      "reads": 50,
+      "writes": 128
+    }
+  ],
+  "internal_totals_by_module": {
+    "load_params_parambkb_ram": {
+      "instances": 1,
+      "reads": 50,
+      "writes": 128
+    },
+    "weight_feed_one_pg8j_ram": {
+      "instances": 8,
+      "reads": 115200,
+      "writes": 8192
+    },
+    "wino_input_computqcK_ram": {
+      "instances": 64,
+      "reads": 115200,
+      "writes": 8192
+    },
+    "wino_systolic_topbwn_ram": {
+      "instances": 64,
+      "reads": 2551808,
+      "writes": 526336
+    },
+    "wino_systolic_topcyx_ram": {
+      "instances": 16,
+      "reads": 0,
+      "writes": 32
+    }
+  },
+  "total": {
+    "reads": 2785608,
+    "writes": 546464
+  }
+}

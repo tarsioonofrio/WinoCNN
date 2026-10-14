@@ -1,0 +1,12 @@
+single_csim.out: software/param.cpp:343: void process_element6x6_soft(int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, ConvDesc_t&): Assertion `maximum_row_step >= conv_desc.wino_output_tile_size' failed.
+Traceback (most recent call last):
+  File "/home/tarsio/gaph/WinoCNN/asic_scripts/prepare_sram_access_stimulus.py", line 69, in <module>
+    main()
+    ~~~~^^
+  File "/home/tarsio/gaph/WinoCNN/asic_scripts/prepare_sram_access_stimulus.py", line 32, in main
+    subprocess.run(cmd, cwd=out, check=True, stdout=subprocess.DEVNULL)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/tarsio/gaph/WinoCNN/single_csim.out', '512', '512', '3', '510', '510', '12', '3', '3', '1', '0', '0', '0', '128', 'random', 'random', 'random', 'dump_param', '.', '3']' died with <Signals.SIGABRT: 6>.
