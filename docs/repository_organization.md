@@ -7,35 +7,31 @@ código, HLS e testbench.
 
 ## Upstream e branches
 
-O upstream dos autores é [`xliu0709/WinoCNN`](https://github.com/xliu0709/WinoCNN),
-referenciado também pela página de software do grupo de Deming Chen. O remoto
-local `upstream` aponta para esse repositório; `origin` aponta para o fork de
-trabalho `tarsioonofrio/WinoCNN`.
+O código-base dos autores é [`xliu0709/WinoCNN`](https://github.com/xliu0709/WinoCNN),
+referenciado também pela página de software do grupo de Deming Chen. Este
+repositório de trabalho tem um único remoto, `origin`
+(`git@github.com:tarsioonofrio/WinoCNN.git`); não há remoto `upstream`
+configurado. As branches publicadas são `master` (base estável) e `iscas2027`
+(a linha do artigo ISCAS 2027).
 
-Snapshot conferido em 2026-10-13:
-
-| referência | commit | relação observada |
-|---|---|---|
-| `upstream/master` | `4a62569851db0276dc124bce4c4a738457ebf696` | master público dos autores na consulta; igual a `baseline/winocnn` |
-| `master` e ref local `origin/master` | `4bb2ccb10788b155b5db468159179dce172d035f` | 2 commits à frente do upstream |
-| `experiment/winocnn-micro` | `ff28359c14497d60025642dc59cd40e502225666` | 43 commits à frente de `master` |
-| ref local `origin/experiment/winocnn-micro` | `37cf595c28034057352657c3c3f11d47bc56aab1` | remote-tracking ref; a branch local estava 1 commit à frente dessa ref |
-
-Os hashes e contagens acima são um registro daquele snapshot, não aliases
-permanentes, e as refs `origin/*` só representam o remoto até o último fetch.
-Atualize-as antes de publicar ou comparar branches. A branch `baseline/winocnn`
-é a referência congelada usada para identificar o source dos autores; não a
-avance para incorporar mudanças experimentais.
+O source original dos autores está preservado no commit `4a62569`
+("Update README.md"), ancestral de `master` e de `iscas2027`. Esse snapshot já
+foi referenciado pela branch `baseline/winocnn`, que não existe mais.
 
 Procedimento de sincronização:
 
 ```bash
-git fetch --no-tags upstream master
-git fetch --no-tags origin master experiment/winocnn-micro
-git merge-base --is-ancestor upstream/master experiment/winocnn-micro
-git log --oneline upstream/master..experiment/winocnn-micro
-git diff --stat upstream/master...experiment/winocnn-micro
+git fetch --no-tags origin
+git merge-base --is-ancestor origin/master origin/iscas2027
+git log --oneline origin/master..origin/iscas2027
+git diff --stat origin/master...origin/iscas2027
+git rev-list --left-right --count origin/master...origin/iscas2027
 ```
+
+As refs `origin/*` só representam o remoto até o último fetch.
+Atualize-as antes de publicar ou comparar branches. Use o commit `4a62569`
+como referência congelada do source dos autores; não o avance para incorporar
+mudanças experimentais.
 
 Branches experimentais publicadas não devem receber rebase destrutivo para
 acompanhar o upstream. Faça a atualização em uma branch de sincronização

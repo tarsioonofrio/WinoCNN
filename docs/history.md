@@ -1,7 +1,8 @@
 # WinoCNN — a história das nossas mudanças
 
 > Um relato literário de tudo o que mudou desde o commit original preservado
-> (`baseline/winocnn`, `4a62569`). Não é um changelog: é a narrativa de por que
+> (`4a62569`, então referenciado pela branch `baseline/winocnn`, que não existe
+> mais). Não é um changelog: é a narrativa de por que
 > cada linha foi escrita, onde ela mora e como se verifica. Onde houver código,
 > o trecho aparece; onde houver número, ele foi medido — não estimado.
 
@@ -14,8 +15,9 @@ array sistólico com o algoritmo rápido de Winograd, publicado em 2021 pela
 University of Illinois (Liu, Chen, Hao, Dhar, Chen). Ele é um projeto de HLS
 C++ que vira Verilog pela mão do Vivado HLS e, em FPGA, vira bitstream.
 
-O ponto de partida intacto está guardado em `baseline/winocnn` (`4a62569`,
-"Update README.md"). A partir dele, `master` já continha dois commits que não
+O ponto de partida intacto está guardado no commit `4a62569`
+("Update README.md") — na época, sob a branch `baseline/winocnn`, que não
+existe mais. A partir dele, `master` já continha dois commits que não
 são nossos, mas são o solo onde pisamos:
 
 - `b837e5f` — os primeiros documentos (`docs/architecture.md`,
@@ -26,8 +28,10 @@ são nossos, mas são o solo onde pisamos:
   `element_wise_mult_4x4_cell`), `src_gold/wino_gold.cpp` (`int` → `long int`)
   e `testbench/single_main.cpp` (religar o golden model).
 
-É desse `master` que nascem os 33 commits desta história. A branch é
-`experiment/winocnn-micro`.
+É desse `master` que nasce a história que segue; para a contagem corrente de
+commits, veja `git log origin/master..origin/iscas2027`. Na época, a branch de
+trabalho era `experiment/winocnn-micro`, que não existe mais; a linha
+experimental publicada hoje é `iscas2027`.
 
 A pergunta que guia tudo é simples de enunciar e difícil de responder: *o
 WinoCNN original, reduzido à menor configuração de hardware possível, ainda é
@@ -410,9 +414,10 @@ topo), `src/wino_mem_if.h` (novo; interface ASIC), `src/wino_hw_config.h`
 **Resultados**: `reports/genus/dom4/` e `reports/genus/dom6/` (relatórios texto;
 os `.v`/`.db`/`.sdf` grandes ficam fora do versionamento).
 
-**Commits**: 31 desde `master` (`4bb2ccb`), que por sua vez traz 2 commits
-sobre o original preservado (`baseline/winocnn`, `4a62569`) — 33 no total. A
-branch é `experiment/winocnn-micro`.
+**Commits**: `master` (`4bb2ccb`) traz 2 commits sobre o original preservado
+(`4a62569`) e, na época, a branch `experiment/winocnn-micro` acumulava os
+demais — a contagem corrente está em `git log origin/master..origin/iscas2027`.
+Essa branch não existe mais; a linha experimental publicada hoje é `iscas2027`.
 
 ### O que ficou em aberto, dito sem rodeios
 
