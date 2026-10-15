@@ -27,14 +27,11 @@ When referencing this application in a publication, please cite the following pa
 
 ## Experiments used in the ISCAS 2027 paper
 
-This repository contains the WinoCNN implementation and its flow evidence; the
-paper source and the script that imports WinoCNN's results live in the local
-sibling checkout `../iscas2027`. For the paper's WinoCNN row, start with:
+This repository contains the WinoCNN implementation and its flow evidence; for
+the paper's WinoCNN row, start with:
 
 | What | Where |
 |---|---|
-| Paper table and its scope note | `../iscas2027/tab/asic-results.tex` |
-| How the paper reads WinoCNN results and computes its row | `../iscas2027/scripts/access_model.py` and `../iscas2027/scripts/gen_tables.py` |
 | Exact workload, dataset provenance, and C-sim result | [`reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/`](reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/), especially `README.md`, `provenance.json`, and `csim_validation.json` |
 | Gate-SDF run, golden comparison, and activity-based power | [`gate_sdf_attempt_20261010/RESULTS.md`](reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/gate_sdf_attempt_20261010/RESULTS.md) and [`joules_gate_sdf_20261011/README.md`](reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/joules_gate_sdf_20261011/README.md) |
 | Mapped cell area and synthesis provenance | [`power_flow_20261010/RESULTS.md`](reports/winocnn_modulo5_4_seed1_32x32_cin3_cout12/power_flow_20261010/RESULTS.md) |
@@ -53,19 +50,8 @@ separately archived stage; the ISCAS table script explicitly reads their
 results rather than treating the original RTL-activity power as gate-level
 power.
 
-To check the paper's access model against its archived WinoCNN RTL sweep and
-re-evaluate its activity-based comparison, run from this repository root:
-
-```bash
-(cd ../iscas2027 && WINOCNN_DIR=../WinoCNN python3 scripts/access_model.py)
-```
-
-This needs the sibling paper checkout and its versioned `data/` files. It
-performs consistency checks, then rewrites
-`../iscas2027/data/access-model.csv`. The paper-wide
-`python3 scripts/gen_tables.py` command also regenerates several paper
-tables/figures and depends on the FastConv and SAURIA checkouts; use it from
-`../iscas2027` only when you intend to update those generated paper files.
+The paper table and the access model are maintained in the paper's repository;
+this repository keeps the raw evidence listed in the table above.
 
 ### Reproduce the functional reference
 
@@ -146,8 +132,8 @@ bash asic_scripts/run_sram_access_sweep.sh
 Results go to `reports/sram_access_sweep_cin3_cout12_seed20261010/`. The
 32×32–256×256 cases completed; 512×512 is unsupported by the current parameter
 descriptor generator (see that report's README), and must not be presented as a
-measured count. The paper's modeled image-size access curve is described in
-`iscas2027/scripts/access_model.py`; keep it distinct from this RTL sweep.
+measured count. The paper's modeled image-size access curve is described in the
+paper's access model; keep it distinct from this RTL sweep.
 
 
 
